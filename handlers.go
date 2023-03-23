@@ -25,7 +25,7 @@ func index(ctx *gin.Context) {
 		ctx.HTML(http.StatusOK, "status.html", nil)
 	} else if page == "me" {
 		ctx.HTML(http.StatusOK, "me.html", gin.H{
-			"greeting": fmt.Sprintf("歡迎您，%s 的 %s", user.Department.Name, user.Name),
+			"greeting": fmt.Sprintf("欢迎您，%s 的 %s", user.Department.Name, user.Name),
 		})
 	} else {
 		ctx.HTML(http.StatusOK, "index.html", nil)
@@ -48,5 +48,16 @@ func login(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{
 		"status": "Success",
 		"msg":    "Successfully signed in.",
+	})
+}
+
+func getAvailiable(ctx *gin.Context) {
+	equipment := []Equipment{}
+	db.Model(&Equipment{}).Where(&Equipment{Availiable: true}).Joins("User").Find(&equipment)
+	// log.Println(equipment)
+	ctx.HTML(http.StatusOK, "availableList.html", gin.H{
+		"heads":      []string{"序号", "设备名", "品牌", "操作"},
+		"equipments": equipment,
+		"hello":      "hello",
 	})
 }

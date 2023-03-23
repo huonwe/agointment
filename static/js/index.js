@@ -11,15 +11,39 @@ function getQueryVariable(variable)
 
 function getHTML(key)
 {
+    document.querySelector("#content").innerHTML = "请求中...";
     fetch('/?page='+key)
     .then((res)=>{
         res.text().then((res)=>{
-            document.querySelector("#content").innerHTML = res
+            document.querySelector("#content").innerHTML = res;
+            
+            switch (key) {
+                case "appoint":
+                    getAvailiable()
+                    break;
+            };
+
+        })
+    }
+    ).catch((res)=>{
+        document.querySelector("#content").innerHTML = res;
+    })
+    
+}
+
+function getAvailiable() {
+    document.querySelector("#manifest").innerHTML = "请求中...";
+    fetch('/equipment/getAvailiable')
+    .then((res)=>{
+        res.text().then((res)=>{
+            document.querySelector("#manifest").innerHTML = res
         })
     }
     )
 }
 
-function test() {
-    alert("test")
-}
+
+// window.addEventListener("load", ()=>{
+//     key = getQueryVariable("key");
+//     if(){}
+// })

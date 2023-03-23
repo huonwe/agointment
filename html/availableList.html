@@ -1,0 +1,21 @@
+<div>
+    <table class="" style="width: 100%;">
+        <tr>
+        {{ range $head := .heads }}
+        <th> {{$head}} </th>
+        {{end}}
+        </tr>
+
+        {{range $index,$equipment := .equipments}}
+        <tr>
+            <th>{{$index}}</th>
+            <th>{{$equipment.Name}}</th>
+            <th>{{$equipment.Brand}}</th>
+            <th>op</th>
+        </tr>
+        {{end}}
+
+    </table>
+    
+    
+</div>
