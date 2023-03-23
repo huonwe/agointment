@@ -13,7 +13,7 @@ func LoginFilter() gin.HandlerFunc {
 			ctx.Redirect(http.StatusTemporaryRedirect, "/user/login")
 			return
 		}
-		_, err = ParseToken(token, secret)
+		_, err = ParseToken(token)
 		if err != nil {
 			ctx.Redirect(http.StatusTemporaryRedirect, "/user/login")
 			return

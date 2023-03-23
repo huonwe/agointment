@@ -14,9 +14,12 @@ function getHTML(key)
     fetch('/?page='+key)
     .then((res)=>{
         res.text().then((res)=>{
-            console.log(res)
             document.querySelector("#content").innerHTML = res
         })
     }
     )
+}
+
+function test() {
+    alert("test")
 }

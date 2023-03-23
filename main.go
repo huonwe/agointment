@@ -11,10 +11,11 @@ import (
 var db *gorm.DB
 
 func main() {
-	db, err := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
+	var err error
+	db, err = gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
 	handle(err)
 	db.AutoMigrate(&User{})
-	db.Create(&User{Username: "huonwe", Password: "huonwe"})
+	db.Create(&User{Name: "huonwe", Password: "huonwe"})
 
 	r := gin.Default()
 

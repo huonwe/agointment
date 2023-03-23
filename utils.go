@@ -1,72 +1,73 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"log"
-	"net/http"
-	"strconv"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
 )
 
 var nowDate = time.Now().Format("2006-01-02 15")
-var secret = fmt.Sprintf("%v%v", nowDate, "dF13ayA")
+var jwtSecret = []byte(fmt.Sprintf("%v%v", nowDate, "dF13ayA"))
 
 type MapClaims map[string]interface{}
 type StrStr map[string]string
 
-// GenerateToken 生成Token值
-func GenerateToken(mapClaims jwt.MapClaims, key string) (string, error) {
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, mapClaims)
-	return token.SignedString([]byte(key))
+// Claim是一些实体（通常指的用户）的状态和额外的元数据
+type Claims struct {
+	Username string `json:"username"`
+	UserID   uint   `json:"password"`
+	jwt.StandardClaims
 }
 
-// token: "eyJhbGciO...解析token"
-func ParseToken(tokenString string, secret string) (map[string]interface{}, error) {
-	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
-		}
+// 根据用户的用户名和ID产生token
+func GenerateToken(userID uint, username string) (string, error) {
+	//设置token有效时间
+	nowTime := time.Now()
+	expireTime := nowTime.Add(36 * time.Hour)
 
-		return []byte(secret), nil
+	claims := Claims{
+		UserID:   userID,
+		Username: username,
+		StandardClaims: jwt.StandardClaims{
+			// 过期时间
+			ExpiresAt: expireTime.Unix(),
+			// 指定token发行人
+			// Issuer: "gin-blog",
+		},
+	}
+
+	tokenClaims := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	//该方法内部生成签名字符串，再用于获取完整、已签名的token
+	token, err := tokenClaims.SignedString(jwtSecret)
+	return token, err
+}
+
+// 根据传入的token值获取到Claims对象信息，（进而获取其中的用户名和密码）
+func ParseToken(token string) (*Claims, error) {
+
+	//用于解析鉴权的声明，方法内部主要是具体的解码和校验的过程，最终返回*Token
+	tokenClaims, err := jwt.ParseWithClaims(token, &Claims{}, func(token *jwt.Token) (interface{}, error) {
+		return jwtSecret, nil
 	})
-	if err != nil {
-		return nil, err
+
+	if tokenClaims != nil {
+		// 从tokenClaims中获取到Claims对象，并使用断言，将该对象转换为我们自己定义的Claims
+		// 要传入指针，项目中结构体都是用指针传递，节省空间。
+		if claims, ok := tokenClaims.Claims.(*Claims); ok && tokenClaims.Valid {
+			return claims, nil
+		}
 	}
-
-	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-		// fmt.Println(claims["UserID"])
-		return claims, nil
-	} else {
-		return nil, fmt.Errorf("token unexcepted")
-	}
-
-	// return claim.Claims.(jwt.MapClaims)["cmd"].(string), nil
+	return nil, err
 }
 
-type Response map[string]interface{}
-
-func tokenReader(req *http.Request) map[string]interface{} {
-	token, _ := req.Cookie("token")
-	q, _ := ParseToken(token.Value, secret) // 解析token
-	return q
-}
-
-func UIDReader(q map[string]interface{}) uint64 {
-	UserID := q["UserID"].(string)
-	uid, _ := strconv.Atoi(UserID)
-	return uint64(uid)
-}
-
-func postReader(req *http.Request) map[string]string {
-	con, _ := ioutil.ReadAll(req.Body)
-	data := make(StrStr)
-	_ = json.Unmarshal(con, &data)
-	return data
-}
+// func postReader(req *http.Request) map[string]string {
+// 	con, _ := io.ReadAll(req.Body)
+// 	data := make(StrStr)
+// 	_ = json.Unmarshal(con, &data)
+// 	return data
+// }
 
 func handle(err error) {
 	if err != nil {
