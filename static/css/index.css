@@ -1,0 +1,53 @@
+* {
+    /* outline: purple solid 1px; */
+    /* border: 1px solid purple; */
+}
+
+body {
+    height: 97vh;
+    width: 97vw;
+
+    display: flex;
+    flex-direction: column;
+
+    user-select: none;
+    overflow: hidden;
+}
+
+.content {
+    flex: 1;
+    width: 100%;
+    min-height: 90%;
+}
+
+.bottomNav {
+    /* flex: 0.1; */
+    width: 100%;
+    min-height: 3rem;
+    display: flex;
+    flex-direction: row;
+
+    outline: 1px solid purple;
+}
+
+.bottomNav .btn {
+    flex: 1;
+    height: 100%;
+    text-align: center;
+    font-size: large;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.btn .selected {
+    background-color: aquamarine;
+}
+
+.title {
+    width: 100%;
+    background-color: beige;
+    height: 2rem;
+    font-size: larger;
+    text-align: center;
+}
