@@ -14,8 +14,7 @@ func main() {
 	var err error
 	db, err = gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
 	handle(err)
-	db.AutoMigrate(&User{})
-	db.Create(&User{Name: "huonwe", Password: "huonwe"})
+	initDB(db)
 
 	r := gin.Default()
 

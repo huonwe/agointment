@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -15,7 +16,7 @@ func index(ctx *gin.Context) {
 	}
 
 	user := User{}
-	db.Take(&user, claim.UserID)
+	db.Model(&User{}).Joins("Department").Take(&user, claim.UserID)
 
 	page := ctx.Query("page")
 	if page == "appoint" {
@@ -24,7 +25,7 @@ func index(ctx *gin.Context) {
 		ctx.HTML(http.StatusOK, "status.html", nil)
 	} else if page == "me" {
 		ctx.HTML(http.StatusOK, "me.html", gin.H{
-			"greeting": "歡迎你，" + claim.Username,
+			"greeting": fmt.Sprintf("歡迎您，%s 的 %s", user.Department.Name, user.Name),
 		})
 	} else {
 		ctx.HTML(http.StatusOK, "index.html", nil)

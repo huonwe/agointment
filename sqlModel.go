@@ -18,33 +18,41 @@ const (
 	Rejected
 )
 
-type User struct {
-	gorm.Model
-	Name     string
-	Password string
+type Department struct {
+	Name        string `gorm:"primarykey"`
+	Description string
 
-	Department string
-	IsAdmin    bool
+	Users []User
+	// ...
+}
+
+type User struct {
+	ID             uint `gorm:"primarykey"`
+	Name           string
+	Password       string
+	DepartmentName string
+	Department     Department
+	IsAdmin        bool
 
 	Requests []Request
 }
 
 type Equipment struct {
-	gorm.Model
+	ID           uint `gorm:"primarykey"`
 	Name         string
 	Band         string
-	Type         string
 	SerialNumber string
+	Type         string
 	Price        float64
-	Department   string
-	Contract     string
-	Status       string
 	Class        string
 	Label        string
 	Factory      string
 	Remark       string
 
 	Availiable bool
+	// 佔用這個設備的人
+	UserID uint
+	User   User
 }
 
 type Request struct {
@@ -58,7 +66,7 @@ type Request struct {
 	Equipment   Equipment
 	UserID      uint
 	User        User
-	Process     int
+	Status      int
 }
 
 type UnAssigned struct {
@@ -72,4 +80,24 @@ type Ongoing struct {
 	gorm.Model
 	RequestID uint
 	Request   Request
+}
+
+func initDB(db *gorm.DB) {
+	db.Exec("DROP TABLE departments")
+	db.Exec("DROP TABLE users")
+	db.Exec("DROP TABLE equipment") // equipment is uncountable
+
+	db.AutoMigrate(&User{})
+	db.AutoMigrate(&Department{})
+	db.AutoMigrate(&Equipment{})
+	db.AutoMigrate(&Request{})
+	db.AutoMigrate(&UnAssigned{})
+	db.AutoMigrate(&Ongoing{})
+
+	db.Create(&Department{Name: "設備課", Description: "設備課，測試"})
+	db.Create(&User{Name: "huonwe", Password: "huonwe", DepartmentName: "設備課"})
+	db.Create(&Equipment{Name: "測試設備", ID: 0001, Band: "宏偉製造", SerialNumber: "001", Price: 999.9, Class: "醫用設備", Label: "沒有標註", Factory: "宏偉天津製造工廠"})
+
+	// db.Preload("User").Find(&see, 11)
+	// fmt.Println(see.UserID)
 }
