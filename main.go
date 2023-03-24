@@ -27,7 +27,9 @@ func main() {
 	r.POST("/user/login", login)
 	r.Use(LoginFilter())
 	r.GET("/", index)
-	r.GET("/equipment/getAvailiable", getAvailiable)
+	r.GET("/equipment/availiable", getAvailiable)
+	r.GET("/equipment/makeRequest", equipmentRequest)
 
+	r.GET("/user/myRequest", myRequest)
 	r.Run("0.0.0.0:5500")
 }

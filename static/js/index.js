@@ -21,6 +21,9 @@ function getHTML(key)
                 case "appoint":
                     getAvailiable('')
                     break;
+                case "status":
+                    getMyRequest('')
+                    break;
             };
 
         })
@@ -33,7 +36,7 @@ function getHTML(key)
 
 function getAvailiable(name) {
     document.querySelector("#manifest").innerHTML = "请求中...";
-    fetch('/equipment/getAvailiable?name='+name)
+    fetch('/equipment/availiable?name='+name)
     .then((res)=>{
         res.text().then((res)=>{
             document.querySelector("#manifest").innerHTML = res
@@ -42,10 +45,23 @@ function getAvailiable(name) {
     )
 }
 
-function requestEquipment(){
-    
+async function requestEquipment(equipmentID){
+    const response = await fetch("/equipment/makeRequest?equipmentID="+equipmentID);
+    const res = await response.json()
+    getAvailiable('')
+    alert(res.msg)
 }
 
+function getMyRequest(name) {
+    document.querySelector("#manifest").innerHTML = "请求中...";
+    fetch('/user/myRequest?name='+name)
+    .then((res)=>{
+        res.text().then((res)=>{
+            document.querySelector("#manifest").innerHTML = res
+        })
+    }
+    )
+}
 
 // window.addEventListener("load", ()=>{
 //     key = getQueryVariable("key");

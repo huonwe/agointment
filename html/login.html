@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/login.css">
-    <script src="/static/js/login.js"></script>
+    <!-- <script src="/static/js/login.js"></script> -->
     <title>登錄</title>
 </head>
 
@@ -23,7 +23,26 @@
     </div>
 
 </body>
-
+<script>
+    async function login() {
+    username = document.querySelector("#username").value;
+    password = document.querySelector("#password").value;
+    const formData = new FormData();
+    formData.append('username', username);
+    formData.append('password', password);
+    console.log(formData.getAll("username"));
+    const response = await fetch("/user/login" , {
+        method: 'post',
+        body: formData
+    })
+    const res = await response.json();
+    if(res.status == "Success") {
+        window.location = "/"
+    }else {
+        alert(res.msg)
+    }
+}
+</script>
 </html>
 
 

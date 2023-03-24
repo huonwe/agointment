@@ -72,6 +72,10 @@ body {
 .availiableTable tr th {
     flex: 1;
     font-size: large;
+
+    display: flex;
+    justify-content: center;
+    align-items: center
 }
 
 .availiableTable tr td {

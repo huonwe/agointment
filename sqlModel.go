@@ -7,15 +7,14 @@ import (
 )
 
 const (
-	Requesting int = iota
-	Timing
-	Completed
+	REQUESTING string = "请求中"
+	TIMING     string = "进行中"
+	COMPLETED  string = "已完成"
 
-	Timeout
+	TIMEOUT_REQUEST string = "请求超时"
 
-	Assigned
-
-	Rejected
+	ASSIGNED string = "已指派"
+	REJECTED string = "被拒绝"
 )
 
 type Department struct {
@@ -37,15 +36,17 @@ type User struct {
 	Requests []Request
 }
 
-type Equipment struct {
+type EquipmentUnit struct {
+	EquipmentName string
+	EquipmentID   uint
+	Equipment     Equipment
+	// Name         string
+	// Type         string
+	// Class   string
 	ID           uint `gorm:"primarykey"`
-	EID          uint
-	Name         string
 	Brand        string
 	SerialNumber string
-	Type         string
 	Price        float64
-	Class        string
 	Label        string
 	Factory      string
 	Remark       string
@@ -56,8 +57,18 @@ type Equipment struct {
 	User   User
 }
 
-type EquipmentFree struct {
-	Name string
+type Equipment struct {
+	// gorm.Model
+	ID uint `gorm:"primarykey auto_increment:true"`
+	// 设备名称
+	Name string `gorm:"primarykey auto_increment:false"`
+	// 设备型号
+	Type string
+	// 设备分类
+	Class string
+	// 设备个体
+	// EquipmentUnits []EquipmentUnit
+	Availiable bool
 }
 
 type Request struct {
@@ -67,35 +78,41 @@ type Request struct {
 	SupposeBackAt time.Time
 	DoBackAt      time.Time
 
-	EquipmentNumber string `gorm:"unique"`
 	EquipmentID     uint
 	Equipment       Equipment
+	EquipmentUnitID uint
+	EquipmentUnit   EquipmentUnit
 	UserID          uint
 	User            User
-	Status          int
+	Status          string // REQUESTING
 }
 
 type UnAssigned struct {
-	gorm.Model
-
-	RequestID uint
-	Request   Request
+	Request
 }
 
 type Ongoing struct {
-	gorm.Model
-	RequestID uint
-	Request   Request
+	Request
+}
+
+type Finished struct {
+	Request
 }
 
 func initDB(db *gorm.DB) {
 	db.Exec("DROP TABLE departments")
 	db.Exec("DROP TABLE users")
+	db.Exec("DROP TABLE equipment_units")
+
 	db.Exec("DROP TABLE equipment") // equipment is uncountable
+
 	db.Exec("DROP TABLE requests")
+	db.Exec("DROP TABLE un_assigneds")
+	db.Exec("DROP TABLE ongoings")
 
 	db.AutoMigrate(&User{})
 	db.AutoMigrate(&Department{})
+	db.AutoMigrate(&EquipmentUnit{})
 	db.AutoMigrate(&Equipment{})
 	db.AutoMigrate(&Request{})
 	db.AutoMigrate(&UnAssigned{})
@@ -103,7 +120,9 @@ func initDB(db *gorm.DB) {
 
 	db.Create(&Department{Name: "設備課", Description: "設備課，測試"})
 	db.Create(&User{Name: "huonwe", Password: "huonwe", DepartmentName: "設備課"})
-	db.Create(&Equipment{Name: "測試設備", ID: 0001, EID: 1234, Type: "试做型", Brand: "宏偉製造", SerialNumber: "001", Price: 999.9, Class: "醫用設備", Label: "沒有標註", Factory: "宏偉天津製造工廠", Availiable: true})
+	db.Create(&Equipment{Name: "测试设备", Type: "试做型", Class: "醫用設備", Availiable: true})
+	db.Create(&Equipment{Name: "测试设备", Type: "试做型", Class: "未来科技", Availiable: true})
+	db.Create(&EquipmentUnit{EquipmentName: "测试设备", ID: 0001, Brand: "宏偉製造", SerialNumber: "001", Price: 999.9, Label: "沒有標註", Factory: "宏偉天津製造工廠", Availiable: true})
 
 	// db.Preload("User").Find(&see, 11)
 	// fmt.Println(see.UserID)

@@ -3,9 +3,11 @@ package main
 import (
 	"fmt"
 	"log"
+	"net/http"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
+	"github.com/gin-gonic/gin"
 )
 
 var nowDate = time.Now().Format("2006-01-02 15")
@@ -71,6 +73,16 @@ func ParseToken(token string) (*Claims, error) {
 
 func handle(err error) {
 	if err != nil {
-		log.Fatalln(err.Error())
+		log.Panic(err)
+	}
+}
+
+func handle_resp(err error, ctx *gin.Context) {
+	if err != nil {
+		ctx.JSON(http.StatusOK, gin.H{
+			"status": "Failed",
+			"msg":    "db error",
+		})
+		log.Panicln(err)
 	}
 }

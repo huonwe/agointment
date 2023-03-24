@@ -8,26 +8,27 @@
         </tr>
 
         {{ if gt .total 0}}
-        {{range $index,$equipment := .equipments}}
+        {{range $index,$request := .requests}}
         <tr>
             <td>{{$index}}</td>
-            <td>{{$equipment.Name}}</td>
-            <td>{{$equipment.Type}}</td>
-            <td>{{$equipment.Class}}</td>
+            <td>{{$request.Equipment.Name}}</td>
+            <td>{{$request.Equipment.Type}}</td>
+            <td>{{$request.Equipment.Class}}</td>
+            <td>{{$request.CreatedAt}}</td>
+            <td>{{$request.Status}}</td>
+
             <td>
-                <button onclick="requestEquipment('{{$equipment.ID}}')">申请</button>
+                <button onclick="cancelRequest('')">取消申请</button>
             </td>
         </tr>
         {{end}}
         {{else}}
         <tr>
             <td>0</td>
-            <td>未找到设备</td>
-            <td>换个关键词</td>
+            <td>未找到记录</td>
             <td></td>
-            <td>
-                试试吧
-            </td>
+            <td></td>
+            <td></td>
         </tr>
         {{end}}
 
