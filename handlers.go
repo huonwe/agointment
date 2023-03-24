@@ -53,11 +53,11 @@ func login(ctx *gin.Context) {
 
 func getAvailiable(ctx *gin.Context) {
 	equipment := []Equipment{}
-	db.Model(&Equipment{}).Where(&Equipment{Availiable: true}).Joins("User").Find(&equipment)
-	// log.Println(equipment)
+	db.Model(&Equipment{}).Where(&Equipment{Availiable: true, Name: ctx.Query("name")}).Joins("User").Find(&equipment)
+
 	ctx.HTML(http.StatusOK, "availableList.html", gin.H{
-		"heads":      []string{"序号", "设备名", "品牌", "操作"},
+		"heads":      []string{"序号", "设备名", "品牌", "型号", "操作"},
 		"equipments": equipment,
-		"hello":      "hello",
+		"total":      len(equipment),
 	})
 }

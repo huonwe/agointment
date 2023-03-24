@@ -39,6 +39,7 @@ type User struct {
 
 type Equipment struct {
 	ID           uint `gorm:"primarykey"`
+	EID          uint
 	Name         string
 	Brand        string
 	SerialNumber string
@@ -53,6 +54,10 @@ type Equipment struct {
 	// 佔用這個設備的人
 	UserID uint
 	User   User
+}
+
+type EquipmentFree struct {
+	Name string
 }
 
 type Request struct {
@@ -98,7 +103,7 @@ func initDB(db *gorm.DB) {
 
 	db.Create(&Department{Name: "設備課", Description: "設備課，測試"})
 	db.Create(&User{Name: "huonwe", Password: "huonwe", DepartmentName: "設備課"})
-	db.Create(&Equipment{Name: "測試設備", ID: 0001, Brand: "宏偉製造", SerialNumber: "001", Price: 999.9, Class: "醫用設備", Label: "沒有標註", Factory: "宏偉天津製造工廠", Availiable: true})
+	db.Create(&Equipment{Name: "測試設備", ID: 0001, EID: 1234, Type: "试做型", Brand: "宏偉製造", SerialNumber: "001", Price: 999.9, Class: "醫用設備", Label: "沒有標註", Factory: "宏偉天津製造工廠", Availiable: true})
 
 	// db.Preload("User").Find(&see, 11)
 	// fmt.Println(see.UserID)

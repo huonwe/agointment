@@ -51,3 +51,42 @@ body {
     font-size: larger;
     text-align: center;
 }
+
+
+.availiableTable {
+    width: 100%;
+    scroll-behavior: auto;
+    background-color: blanchedalmond;
+    border-collapse: collapse;
+}
+
+.availiableTable tr {
+    max-height: 3rem;
+    overflow: hidden;
+    border-bottom: 1px solid purple;
+
+    display: flex;
+    flex-direction: row;
+} 
+
+.availiableTable tr th {
+    flex: 1;
+    font-size: large;
+}
+
+.availiableTable tr td {
+    flex: 1;
+    font-size: medium;
+    /* text-align: center; */
+
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+td button {
+    flex: 1;
+    height: 100%;
+    background-color: rgb(255, 216, 131);
+    border-radius: 10px;
+}

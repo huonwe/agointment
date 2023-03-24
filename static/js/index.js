@@ -19,7 +19,7 @@ function getHTML(key)
             
             switch (key) {
                 case "appoint":
-                    getAvailiable()
+                    getAvailiable('')
                     break;
             };
 
@@ -31,15 +31,19 @@ function getHTML(key)
     
 }
 
-function getAvailiable() {
+function getAvailiable(name) {
     document.querySelector("#manifest").innerHTML = "请求中...";
-    fetch('/equipment/getAvailiable')
+    fetch('/equipment/getAvailiable?name='+name)
     .then((res)=>{
         res.text().then((res)=>{
             document.querySelector("#manifest").innerHTML = res
         })
     }
     )
+}
+
+function requestEquipment(){
+    
 }
 
 

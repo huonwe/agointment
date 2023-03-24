@@ -1,17 +1,32 @@
 <div>
-    <table class="" style="width: 100%;">
+    <div>总计 {{.total}} 条记录</div>
+    <table class="availiableTable">
         <tr>
-        {{ range $head := .heads }}
+        {{ range $idx,$head := .heads }}
         <th> {{$head}} </th>
         {{end}}
         </tr>
 
+        {{ if gt .total 0}}
         {{range $index,$equipment := .equipments}}
         <tr>
-            <th>{{$index}}</th>
-            <th>{{$equipment.Name}}</th>
-            <th>{{$equipment.Brand}}</th>
-            <th>op</th>
+            <td>{{$index}}</td>
+            <td>{{$equipment.Name}}</td>
+            <td>{{$equipment.Brand}}</td>
+            <td>{{$equipment.Type}}</td>
+            <td>
+                <button onclick="">申请</button>
+            </td>
+        </tr>
+        {{end}}
+        {{else}}
+        <tr>
+            <td>0</td>
+            <td>未找到设备</td>
+            <td>换个关键词</td>
+            <td>
+                试试吧
+            </td>
         </tr>
         {{end}}
 
