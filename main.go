@@ -17,19 +17,30 @@ func main() {
 	initDB(db)
 
 	r := gin.Default()
-
 	r.LoadHTMLGlob("html/*")
 	r.Static("static", "static")
 
-	r.GET("/user/login", func(ctx *gin.Context) {
+	group_authless := r.Group("/")
+	group_authless.GET("/user/login", func(ctx *gin.Context) {
 		ctx.HTML(http.StatusOK, "login.html", nil)
 	})
-	r.POST("/user/login", login)
+	group_authless.POST("/user/login", login)
+
 	r.Use(LoginFilter())
 	r.GET("/", index)
-	r.GET("/equipment/availiable", getAvailiable)
-	r.GET("/equipment/makeRequest", equipmentRequest)
 
-	r.GET("/user/myRequest", myRequest)
-	r.Run("0.0.0.0:5500")
+	group_equipment := r.Group("/equipment")
+	group_equipment.GET("/availiable", getAvailiable)
+	group_equipment.GET("/makeRequest", equipmentRequest)
+
+	group_user := r.Group("/user")
+	group_user.GET("/myRequest", myRequest)
+	group_user.GET("/myRequestOp", myRequestOp)
+
+	group_admin := r.Group("/admin")
+	group_admin.Use(MustAdmin())
+	group_admin.GET("/requests", adminRequestings)
+	group_admin.GET("/requestsOp", adminRequestingsOp)
+
+	r.Run("0.0.0.0:5501")
 }

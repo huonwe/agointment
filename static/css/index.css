@@ -85,7 +85,8 @@ body {
 
     display: flex;
     justify-content: center;
-    align-items: center
+    align-items: center;
+    font-size: medium;
 }
 
 td button {

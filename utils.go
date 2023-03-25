@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -81,8 +82,14 @@ func handle_resp(err error, ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(http.StatusOK, gin.H{
 			"status": "Failed",
-			"msg":    "db error",
+			"msg":    "error",
 		})
 		log.Panicln(err)
 	}
+}
+
+func str2uint(id string) uint {
+	ID, err := strconv.ParseUint(id, 10, 32)
+	handle(err)
+	return uint(ID)
 }

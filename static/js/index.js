@@ -28,8 +28,8 @@ function getHTML(key)
 
         })
     }
-    ).catch((res)=>{
-        document.querySelector("#content").innerHTML = res;
+    ).catch((e)=>{
+        console.log(e)
     })
     
 }
@@ -54,10 +54,21 @@ async function requestEquipment(equipmentID){
 
 function getMyRequest(name) {
     document.querySelector("#manifest").innerHTML = "请求中...";
-    fetch('/user/myRequest?name='+name)
+    fetch('/user/myRequest?'+'name='+name)
     .then((res)=>{
         res.text().then((res)=>{
             document.querySelector("#manifest").innerHTML = res
+        })
+    }
+    )
+}
+
+function cancelMyRequest(requestID) {
+    fetch('/user/myRequestOp?'+'op='+'cancel&requestID='+requestID)
+    .then((res)=>{
+        res.json().then((res)=>{
+            alert(res.msg)
+            getHTML('status')
         })
     }
     )

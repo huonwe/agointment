@@ -14,11 +14,13 @@
             <td>{{$request.Equipment.Name}}</td>
             <td>{{$request.Equipment.Type}}</td>
             <td>{{$request.Equipment.Class}}</td>
-            <td>{{$request.CreatedAt}}</td>
+            <td>{{$request.CreatedAtStr}}</td>
             <td>{{$request.Status}}</td>
-
             <td>
-                <button onclick="cancelRequest('')">取消申请</button>
+                {{if eq $request.Status "请求中"}}
+                <button onclick="cancelMyRequest('{{$request.ID}}')">取消申请</button>
+                
+                {{end}}
             </td>
         </tr>
         {{end}}

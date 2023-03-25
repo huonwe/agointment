@@ -11,7 +11,7 @@ async function login() {
     })
     const res = await response.json();
     if(res.status == "Success") {
-        window.location = "/"
+        window.location = "http://huonwe.technology:5501/"
     }else {
         alert(res.msg)
     }

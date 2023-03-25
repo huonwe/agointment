@@ -3,10 +3,36 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
+
+func login(ctx *gin.Context) {
+	user := User{}
+	if ctx.PostForm("username") == "" || ctx.PostForm("password") == "" {
+		ctx.JSON(http.StatusOK, gin.H{
+			"status": "Failed",
+			"msg":    "Username or Password Empty.",
+		})
+		return
+	}
+	db.Where(&User{Name: ctx.PostForm("username"), Password: ctx.PostForm("password")}).Take(&user)
+	if user.ID == 0 {
+		ctx.JSON(http.StatusOK, gin.H{
+			"status": "Failed",
+			"msg":    "Username or Password Incorrect.",
+		})
+		return
+	}
+	token, err := GenerateToken(user.ID, user.Name)
+	handle(err)
+	ctx.SetCookie("token", token, 0, "/", "", false, true)
+	ctx.JSON(http.StatusOK, gin.H{
+		"status": "Success",
+		"msg":    "Successfully signed in.",
+	})
+}
 
 func index(ctx *gin.Context) {
 	token, _ := ctx.Cookie("token")
@@ -27,29 +53,11 @@ func index(ctx *gin.Context) {
 	} else if page == "me" {
 		ctx.HTML(http.StatusOK, "me.html", gin.H{
 			"greeting": fmt.Sprintf("欢迎您，%s 的 %s", user.Department.Name, user.Name),
+			"user":     user,
 		})
 	} else {
 		ctx.HTML(http.StatusOK, "index.html", nil)
 	}
-}
-
-func login(ctx *gin.Context) {
-	user := User{}
-	db.Where(&User{Name: ctx.PostForm("username"), Password: ctx.PostForm("password")}).Take(&user)
-	if user.ID == 0 {
-		ctx.JSON(http.StatusOK, gin.H{
-			"status": "Failed",
-			"msg":    "Username or Password Incorrect.",
-		})
-		return
-	}
-	token, err := GenerateToken(user.ID, user.Name)
-	handle(err)
-	ctx.SetCookie("token", token, 0, "/", "", true, true)
-	ctx.JSON(http.StatusOK, gin.H{
-		"status": "Success",
-		"msg":    "Successfully signed in.",
-	})
 }
 
 func getAvailiable(ctx *gin.Context) {
@@ -74,17 +82,20 @@ func equipmentRequest(ctx *gin.Context) {
 		return
 	}
 	// log.Println(ctx.Query("equipmentID"))
-	equipmentID, err := strconv.ParseUint(ctx.Query("equipmentID"), 10, 32)
-	handle(err)
-	request := &Request{
+	// equipmentID, err := strconv.ParseUint(ctx.Query("equipmentID"), 10, 32)
+	// handle(err)
+	equipmentID := str2uint(ctx.Query("equipmentID"))
+	request := Request{
 		EquipmentID: uint(equipmentID),
 		UserID:      claim.UserID,
 		Status:      REQUESTING,
 	}
 
-	request_exist := &UnAssigned{}
+	request.CreatedAtStr = time.Now().Format("2006-01-02 15:04")
 
-	db.Model(&UnAssigned{}).Where(&request).Take(&request_exist)
+	request_exist := UnAssigned{}
+
+	db.Model(&UnAssigned{}).Where(&UnAssigned{request}).Take(&request_exist)
 	if request_exist.ID != 0 {
 		ctx.JSON(http.StatusOK, gin.H{
 			"status": "Failed",
@@ -93,9 +104,9 @@ func equipmentRequest(ctx *gin.Context) {
 		return
 	}
 
-	err = db.Model(&Request{}).Create(request).Error
+	err = db.Model(&Request{}).Create(&request).Error
 	handle_resp(err, ctx)
-	err = db.Model(&UnAssigned{}).Create(&UnAssigned{*request}).Error
+	err = db.Model(&UnAssigned{}).Create(&UnAssigned{request}).Error
 	handle_resp(err, ctx)
 
 	ctx.JSON(http.StatusOK, gin.H{
@@ -112,15 +123,36 @@ func myRequest(ctx *gin.Context) {
 		ctx.Redirect(http.StatusTemporaryRedirect, "/user/login")
 		return
 	}
-
-	// request = &Request{}
 	user := &User{}
 	db.Model(&User{}).Where(&User{ID: claim.UserID}).Preload("Requests").Preload("Requests.Equipment").Take(&user)
-	// log.Println(user.Requests)
+
 	ctx.HTML(http.StatusOK, "myRequestList.html", gin.H{
 		"heads":    []string{"序号", "设备名", "型号", "类别", "创建时间", "状态", "操作"},
 		"requests": user.Requests,
 		"total":    len(user.Requests),
 	})
 
+}
+
+func myRequestOp(ctx *gin.Context) {
+	token, _ := ctx.Cookie("token")
+	claim, err := ParseToken(token)
+	if err != nil {
+		ctx.Redirect(http.StatusTemporaryRedirect, "/user/login")
+		return
+	}
+	op := ctx.Query("op")
+	request := Request{
+		ID:     str2uint(ctx.Query("requestID")),
+		UserID: claim.UserID,
+	}
+	switch op {
+	case "cancel":
+		handle_resp(db.Model(&UnAssigned{}).Delete(&UnAssigned{request}).Error, ctx)
+		handle_resp(db.Model(&request).Update("status", CANCELED).Delete(&request).Error, ctx)
+		ctx.JSON(http.StatusOK, gin.H{
+			"status": "Success",
+			"msg":    "取消成功",
+		})
+	}
 }

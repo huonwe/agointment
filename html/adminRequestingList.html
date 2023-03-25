@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/index.css">
+    <title>管理</title>
+</head>
+<body>
+    <div>
+        <div>总计 {{.total}} 条申请待处理</div>
+        <table class="availiableTable">
+            <tr>
+                {{ range $idx,$head := .heads }}
+                <th> {{$head}} </th>
+                {{end}}
+            </tr>
+
+            {{ if gt .total 0}}
+            {{range $index,$request := .un_assigneds}}
+            <tr>
+                <td>{{$index}}</td>
+                <td>{{$request.Equipment.Name}}</td>
+                <td>{{$request.Equipment.Type}}</td>
+                <td>{{$request.CreatedAtStr}}</td>
+                <td>
+                    <button onclick="adminRequestingOp('{{$request.ID}}', 'reject')">拒绝申请</button>
+                    <button onclick="adminRequestingOp('{{$request.ID}}', 'assign')">分配设备</button>
+                </td>
+            </tr>
+            {{end}}
+            {{else}}
+            <tr>
+                <td>0</td>
+                <td>未找到记录</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            {{end}}
+        </table>
+    </div>
+</body>
+</html>

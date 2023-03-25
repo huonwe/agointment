@@ -4,4 +4,11 @@
     <div class="flex1 gap_from_top">
         <div id="greeting" class="line">{{.greeting}}</div>
     </div>
+    {{if .user.IsAdmin }}
+    <div>
+        <a href="">科室管理</a>
+        <a href="/admin/requests">申请管理</a>
+        <a href="">全部记录</a>
+    </div>
+    {{end}}
 </div>
