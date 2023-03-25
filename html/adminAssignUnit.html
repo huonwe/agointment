@@ -6,7 +6,7 @@
             </legend>
             {{if gt .total 0}}
             {{range $idx,$unit := .units}}
-                {{if eq $unit.Availiable true}}
+                {{if $unit.Availiable}}
                 <input type="radio" name="unitID" id="{{$unit.ID}}" value="{{$unit.ID}}" {{if eq $idx 0}} checked {{end}}>
                 {{else}}
                 <input type="radio" disabled="true" name="unitID" id="{{$unit.ID}}" value="{{$unit.ID}}">

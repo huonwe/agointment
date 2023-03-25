@@ -67,7 +67,9 @@ function myRequestOp(requestID, op) {
     fetch('/user/myRequestOp?'+'op='+op+'&requestID='+requestID)
     .then((res)=>{
         res.json().then((res)=>{
-            alert(res.msg)
+            if(res.status != "Success"){
+                alert(res.msg)
+            }
             getHTML('status')
         })
     }

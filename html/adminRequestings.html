@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/index.css">
+    <link rel="stylesheet" href="/static/css/common.css">
+    <script src="/static/js/admin.js"></script>
+    <title>管理</title>
+</head>
+<body>
+    <div>
+        <div>总计 {{.total}} 条申请待处理</div>
+        <table class="availiableTable">
+            <tr>
+                {{ range $idx,$head := .heads }}
+                <th> {{$head}} </th>
+                {{end}}
+            </tr>
+
+            {{ if gt .total 0}}
+            {{range $index,$request := .un_assigneds}}
+            <tr>
+                <td>{{$index}}</td>
+                <td>{{$request.User.Name}}@{{$request.User.DepartmentName}}</td>
+                <td>{{$request.EquipmentUnitID}}</td>
+                <td>{{$request.Equipment.Name}}</td>
+                <td>{{$request.Equipment.Type}}</td>
+                <td>{{$request.CreatedAtStr}}</td>
+                
+                <td>
+                    {{if eq $request.Status "请求中"}}
+                    <button onclick="adminRequestingOp('{{$request.ID}}', 'reject')">拒绝申请</button>
+                    <button onclick="adminRequestingOp('{{$request.ID}}', 'assign', '{{$request.Equipment.ID}}', '{{$request.User.ID}}')">分配设备</button>
+                    {{else if eq $request.Status "进行中"}}
+                    <button onclick="adminRequestingOp('{{$request.ID}}', 'finish')">确认归还</button>
+                    {{end}}
+                </td>
+            </tr>
+            {{end}}
+            {{else}}
+            <tr>
+                <td>0</td>
+                <td>未找到记录</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            {{end}}
+        </table>
+    </div>
+</body>
+</html>

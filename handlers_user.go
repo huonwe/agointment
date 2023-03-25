@@ -45,7 +45,7 @@ func myRequestOp(ctx *gin.Context) {
 			"msg":    "取消成功",
 		})
 	case "delete":
-		handle_resp(db.Model(&request).Update("status", CANCELED).Delete(&request).Error, ctx)
+		handle_resp(db.Model(&request).Delete(&request).Error, ctx)
 		ctx.JSON(http.StatusOK, gin.H{
 			"status": "Success",
 			"msg":    "删除成功",

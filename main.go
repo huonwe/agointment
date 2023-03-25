@@ -44,6 +44,8 @@ func main() {
 	group_admin.GET("/requestingsOp", adminRequestingsOp)
 	group_admin.GET("/assignUnits", getAvailiableUnits) // HTML
 	group_admin.POST("/assignUnits", assignUnits)       // HTML
+	group_admin.GET("/ongoings", adminOngoings)         // HTML
+	group_admin.GET("/all", adminAll)
 
 	r.Run("0.0.0.0:5501")
 }

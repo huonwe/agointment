@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/index.css">
+    <link rel="stylesheet" href="/static/css/common.css">
+    <script src="/static/js/admin.js"></script>
+    <title>全部记录</title>
+</head>
+<body>
+    <div>
+        <div>总计 {{.total}} 条</div>
+        <table class="availiableTable">
+            <tr>
+                {{ range $idx,$head := .heads }}
+                <th> {{$head}} </th>
+                {{end}}
+            </tr>
+
+            {{ if gt .total 0}}
+            {{range $index,$request := .requests}}
+            <tr>
+                <td>{{$request.ID}}</td>
+                <td>{{$request.User.Name}}@{{$request.User.DepartmentName}}</td>
+                <td>{{$request.EquipmentUnitID}}</td>
+                <td>{{$request.Equipment.Name}}</td>
+                <td>{{$request.Equipment.Type}}</td>
+                <td>{{$request.BeginAtStr}}</td>
+                <td>{{$request.EndAtStr}}</td>
+                <td>{{$request.Status}}</td>
+
+
+                <td>
+                    <button onclick="adminRequestingOp('{{$request.ID}}', 'detail')">查看详情</button>
+                </td>
+            </tr>
+            {{end}}
+            {{else}}
+            <tr>
+                <td>0</td>
+                <td>未找到记录</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            {{end}}
+        </table>
+    </div>
+</body>
+</html>

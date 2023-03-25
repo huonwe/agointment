@@ -51,6 +51,7 @@ type EquipmentUnit struct {
 	Label        string
 	Factory      string
 	Remark       string
+	Status       string
 
 	Availiable bool
 	// 佔用這個設備的人
@@ -105,32 +106,32 @@ type Finished struct {
 }
 
 func initDB(db *gorm.DB) {
-	db.Exec("DROP TABLE departments")
-	db.Exec("DROP TABLE users")
-	db.Exec("DROP TABLE equipment_units")
+	// db.Exec("DROP TABLE departments")
+	// db.Exec("DROP TABLE users")
+	// db.Exec("DROP TABLE equipment_units")
 
-	db.Exec("DROP TABLE equipment") // equipment is uncountable
+	// db.Exec("DROP TABLE equipment") // equipment is uncountable
 
-	db.Exec("DROP TABLE requests")
-	db.Exec("DROP TABLE un_assigneds")
-	db.Exec("DROP TABLE ongoings")
+	// db.Exec("DROP TABLE requests")
+	// db.Exec("DROP TABLE un_assigneds")
+	// db.Exec("DROP TABLE ongoings")
 
-	db.AutoMigrate(&User{})
-	db.AutoMigrate(&Department{})
-	db.AutoMigrate(&EquipmentUnit{})
-	db.AutoMigrate(&Equipment{})
-	db.AutoMigrate(&Request{})
-	db.AutoMigrate(&UnAssigned{})
-	db.AutoMigrate(&Ongoing{})
+	// db.AutoMigrate(&User{})
+	// db.AutoMigrate(&Department{})
+	// db.AutoMigrate(&EquipmentUnit{})
+	// db.AutoMigrate(&Equipment{})
+	// db.AutoMigrate(&Request{})
+	// db.AutoMigrate(&UnAssigned{})
+	// db.AutoMigrate(&Ongoing{})
 
-	db.Create(&Department{Name: "設備課", Description: "設備課，測試"})
-	db.Create(&User{Name: "huonwe", Password: "huonwe", DepartmentName: "設備課", IsAdmin: true})
-	db.Create(&Equipment{Name: "测试设备", Type: "试做型", Class: "醫用設備", Availiable: true})
-	db.Create(&Equipment{Name: "测试设备", Type: "试做型", Class: "未来科技", Availiable: true})
-	db.Create(&Equipment{Name: "空想具现", Type: "试做型", Class: "宏伟制造", Availiable: true})
+	// db.Create(&Department{Name: "設備課", Description: "設備課，測試"})
+	// db.Create(&User{Name: "huonwe", Password: "huonwe", DepartmentName: "設備課", IsAdmin: true})
+	// db.Create(&Equipment{Name: "测试设备", Type: "试做型", Class: "醫用設備", Availiable: true})
+	// db.Create(&Equipment{Name: "测试设备", Type: "试做型", Class: "未来科技", Availiable: true})
+	// db.Create(&Equipment{Name: "空想具现", Type: "试做型", Class: "宏伟制造", Availiable: true})
 
-	db.Create(&EquipmentUnit{Name: "测试设备", Type: "试做型", Class: "醫用設備", ID: 0001, Brand: "宏偉製造", SerialNumber: "001", Price: 999.9, Label: "沒有標註", Factory: "宏偉天津製造工廠", Availiable: true})
-	db.Create(&EquipmentUnit{Name: "测试设备", Type: "试做型", Class: "醫用設備", ID: 0002, Brand: "宏偉製造", SerialNumber: "001", Price: 999.9, Label: "沒有標註", Factory: "宏偉天津製造工廠", Availiable: true})
+	// db.Create(&EquipmentUnit{Name: "测试设备", Type: "试做型", Class: "醫用設備", ID: 0001, Brand: "宏偉製造", SerialNumber: "001", Price: 999.9, Label: "沒有標註", Factory: "宏偉天津製造工廠", Availiable: true})
+	// db.Create(&EquipmentUnit{Name: "测试设备", Type: "试做型", Class: "醫用設備", ID: 0002, Brand: "宏偉製造", SerialNumber: "001", Price: 999.9, Label: "沒有標註", Factory: "宏偉天津製造工廠", Availiable: true})
 
 	// db.Preload("User").Find(&see, 11)
 	// fmt.Println(see.UserID)

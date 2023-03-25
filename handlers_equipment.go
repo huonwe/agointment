@@ -71,7 +71,7 @@ func getAvailiableUnits(ctx *gin.Context) {
 	db.Take(&equipment, equipmentID)
 
 	units := []EquipmentUnit{}
-	db.Model(&EquipmentUnit{}).Where(&EquipmentUnit{Name: equipment.Name}).Find(&units)
+	db.Model(&EquipmentUnit{}).Order("availiable desc").Where(&EquipmentUnit{Name: equipment.Name}).Find(&units)
 	// for _, unit := range units {
 	// 	log.Println(unit.Availiable)
 	// }
@@ -101,16 +101,16 @@ func assignUnits(ctx *gin.Context) {
 		UserID:      requestorID,
 		Availiable:  false, // 0值, updates不会更新这条
 	}
-	tx := db.Begin()
 
+	tx := db.Begin()
 	// 更新实体所有者
-	err := db.Model(&unit).Updates(&unit).Error
+	err := tx.Model(&unit).Updates(&unit).Error
 	if err != nil {
 		tx.Rollback()
 		handle_resp(err, ctx)
 	}
 	// 单独更新Availiable
-	err = db.Model(&unit).Update("Availiable", false).Error
+	err = tx.Model(&unit).Update("Availiable", false).Error
 	if err != nil {
 		tx.Rollback()
 		handle_resp(err, ctx)
@@ -124,18 +124,18 @@ func assignUnits(ctx *gin.Context) {
 		Status:          ONGOING,
 	}
 	// 更新Request状态
-	err = db.Model(&Request{ID: requestID}).Updates(&request_new_state).Error
+	err = tx.Model(&Request{ID: requestID}).Updates(&request_new_state).Take(&request_new_state, requestID).Error
 	if err != nil {
 		tx.Rollback()
 		handle_resp(err, ctx)
 	}
 	// 更新Request池
-	err = db.Delete(&UnAssigned{Request{ID: requestID}}).Error
+	err = tx.Delete(&UnAssigned{Request{ID: requestID}}).Error
 	if err != nil {
 		tx.Rollback()
 		handle_resp(err, ctx)
 	}
-	err = db.Create(&Ongoing{request_new_state}).Error
+	err = tx.Create(&Ongoing{request_new_state}).Error
 	if err != nil {
 		tx.Rollback()
 		handle_resp(err, ctx)
