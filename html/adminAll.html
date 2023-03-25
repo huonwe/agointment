@@ -11,10 +11,10 @@
 </head>
 <body>
     <div>
-        <div>总计 {{.total}} 条</div>
         <table class="availiableTable">
             <tr>
                 {{ range $idx,$head := .heads }}
+                
                 <th> {{$head}} </th>
                 {{end}}
             </tr>
