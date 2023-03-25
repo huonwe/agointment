@@ -7,6 +7,7 @@ function adminRequestingOp(requestID, op, equipmentID, requestorID) {
                     mask.innerHTML = res;
 
                     let btn = document.createElement("button");
+                    btn.className = "hideBtn"
                     btn.onclick = hideMask;
                     btn.innerText = "取消";
                     mask.appendChild(btn);
@@ -140,6 +141,7 @@ function adminRequestingOp(requestID, op, equipmentID, requestorID) {
                             
                             `
                             let btn = document.createElement("button");
+                            btn.className = "hideBtn"
                             btn.onclick = hideMask;
                             btn.innerText = "返回";
                             mask.appendChild(btn);

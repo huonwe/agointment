@@ -5,15 +5,21 @@
                 分派设备实体
             </legend>
             {{if gt .total 0}}
+
             {{range $idx,$unit := .units}}
+            <div>
                 {{if $unit.Availiable}}
                 <input type="radio" name="unitID" id="{{$unit.ID}}" value="{{$unit.ID}}" {{if eq $idx 0}} checked {{end}}>
                 {{else}}
                 <input type="radio" disabled="true" name="unitID" id="{{$unit.ID}}" value="{{$unit.ID}}">
                 {{end}}
-            <label
-                for="{{$unit.ID}}">编号:{{$unit.ID}}-序列号:{{$unit.SerialNumber}}-{{$unit.Brand}}-{{$unit.Price}}-{{$unit.Factory}}</label>
+
+                <label
+                    for="{{$unit.ID}}">设备ID:{{$unit.ID}}&nbsp;序列号:{{$unit.SerialNumber}}&nbsp;状态:{{$unit.Status}}&nbsp;备注:{{$unit.Remark}}</label>
+            </div>
             {{end}}
+            
+
             <button type="submit">分配</button>
             {{else}}
             <div>没有可用的设备实体</div>

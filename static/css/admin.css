@@ -1,7 +1,32 @@
 .assign {
-
+    display: flex;
+    flex-direction: column;
+    font-size: medium;
 }
 
 .assign legend {
     color: green;
+    font-size: larger;
 }
+
+.assign button {
+    background-color: rgb(0,0,128, 0.382);
+    border-radius: 5px;
+    border: 0;
+    margin: auto;
+    margin-top: 1rem;
+    font-size: large;
+    height: 2rem;
+    width: 5rem;
+    color: rgb(128,0,0) ;
+}
+
+.assign button:hover {
+    cursor: pointer;
+}
+
+
+/* .assign div {
+    flex-direction: row;
+    display: inline;
+} */
