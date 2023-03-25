@@ -63,8 +63,8 @@ function getMyRequest(name) {
     )
 }
 
-function cancelMyRequest(requestID) {
-    fetch('/user/myRequestOp?'+'op='+'cancel&requestID='+requestID)
+function myRequestOp(requestID, op) {
+    fetch('/user/myRequestOp?'+'op='+op+'&requestID='+requestID)
     .then((res)=>{
         res.json().then((res)=>{
             alert(res.msg)

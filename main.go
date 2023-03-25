@@ -30,8 +30,9 @@ func main() {
 	r.GET("/", index)
 
 	group_equipment := r.Group("/equipment")
-	group_equipment.GET("/availiable", getAvailiable)
-	group_equipment.GET("/makeRequest", equipmentRequest)
+	group_equipment.GET("/availiable", getAvailiable)           // HTML
+	group_equipment.GET("/makeRequest", equipmentRequest)       // JSON
+	group_equipment.GET("/availiableUnits", getAvailiableUnits) // JSON
 
 	group_user := r.Group("/user")
 	group_user.GET("/myRequest", myRequest)
@@ -39,8 +40,9 @@ func main() {
 
 	group_admin := r.Group("/admin")
 	group_admin.Use(MustAdmin())
-	group_admin.GET("/requests", adminRequestings)
-	group_admin.GET("/requestsOp", adminRequestingsOp)
+	group_admin.GET("/requestings", adminRequestings)
+	group_admin.GET("/requestingsOp", adminRequestingsOp)
+	group_admin.GET("/availiableUnits", adminRequestingsOp)
 
 	r.Run("0.0.0.0:5501")
 }

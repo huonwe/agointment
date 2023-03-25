@@ -18,8 +18,10 @@
             <td>{{$request.Status}}</td>
             <td>
                 {{if eq $request.Status "请求中"}}
-                <button onclick="cancelMyRequest('{{$request.ID}}')">取消申请</button>
-                
+                <button onclick="myRequestOp('{{$request.ID}}', 'cancel')">取消申请</button>
+                {{else if eq $request.Status "被拒绝"}}
+                <button onclick="myRequestOp('{{$request.ID}}', 'delete')">删除记录</button>
+
                 {{end}}
             </td>
         </tr>
