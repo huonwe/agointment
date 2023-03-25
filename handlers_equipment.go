@@ -38,7 +38,7 @@ func equipmentRequest(ctx *gin.Context) {
 		Status:      REQUESTING,
 	}
 
-	request.CreatedAtStr = time.Now().Format("2006-01-02 15:04")
+	request.CreatedAtStr = now()
 
 	request_exist := UnAssigned{}
 
@@ -63,12 +63,88 @@ func equipmentRequest(ctx *gin.Context) {
 
 }
 
+// assignUnits GET
 func getAvailiableUnits(ctx *gin.Context) {
 	equipmentID := str2uint(ctx.Query("equipmentID"))
 
-	units := EquipmentUnit{}
-	db.Model(&EquipmentUnit{}).Where(&EquipmentUnit{EquipmentID: equipmentID}).Find(&units)
-	ctx.HTML(http.StatusOK, "selectEquipmentUnit.html", gin.H{
+	equipment := Equipment{}
+	db.Take(&equipment, equipmentID)
+
+	units := []EquipmentUnit{}
+	db.Model(&EquipmentUnit{}).Where(&EquipmentUnit{Name: equipment.Name}).Find(&units)
+	// for _, unit := range units {
+	// 	log.Println(unit.Availiable)
+	// }
+	ctx.HTML(http.StatusOK, "adminAssignUnit.html", gin.H{
 		"units": units,
+		"total": len(units),
+	})
+}
+
+// assignUnits POST
+func assignUnits(ctx *gin.Context) {
+	if ctx.PostForm("unitID") == "" {
+		ctx.JSON(http.StatusOK, gin.H{
+			"status": "Failed",
+			"msg":    "value error",
+		})
+		return
+	}
+	unitID := str2uint(ctx.PostForm("unitID"))
+	requestID := str2uint(ctx.PostForm("requestID"))
+	equipmentID := str2uint(ctx.PostForm("equipmentID"))
+	requestorID := str2uint(ctx.PostForm("requestorID"))
+	// log.Println(unitID)
+	unit := EquipmentUnit{
+		ID:          unitID,
+		EquipmentID: equipmentID,
+		UserID:      requestorID,
+		Availiable:  false, // 0值, updates不会更新这条
+	}
+	tx := db.Begin()
+
+	// 更新实体所有者
+	err := db.Model(&unit).Updates(&unit).Error
+	if err != nil {
+		tx.Rollback()
+		handle_resp(err, ctx)
+	}
+	// 单独更新Availiable
+	err = db.Model(&unit).Update("Availiable", false).Error
+	if err != nil {
+		tx.Rollback()
+		handle_resp(err, ctx)
+	}
+
+	request_new_state := Request{
+		ID:              requestID,
+		BeginAt:         time.Now(),
+		BeginAtStr:      now(),
+		EquipmentUnitID: unitID,
+		Status:          ONGOING,
+	}
+	// 更新Request状态
+	err = db.Model(&Request{ID: requestID}).Updates(&request_new_state).Error
+	if err != nil {
+		tx.Rollback()
+		handle_resp(err, ctx)
+	}
+	// 更新Request池
+	err = db.Delete(&UnAssigned{Request{ID: requestID}}).Error
+	if err != nil {
+		tx.Rollback()
+		handle_resp(err, ctx)
+	}
+	err = db.Create(&Ongoing{request_new_state}).Error
+	if err != nil {
+		tx.Rollback()
+		handle_resp(err, ctx)
+	}
+	err = tx.Commit().Error
+	handle_resp(err, ctx)
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"status": "Success",
+		"msg":    "分配成功",
 	})
 }

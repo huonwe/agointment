@@ -29,7 +29,7 @@
                 <td>{{$request.CreatedAtStr}}</td>
                 <td>
                     <button onclick="adminRequestingOp('{{$request.ID}}', 'reject')">拒绝申请</button>
-                    <button onclick="adminRequestingOp('{{$request.ID}}', 'assign')">分配设备</button>
+                    <button onclick="adminRequestingOp('{{$request.ID}}', 'assign', '{{$request.Equipment.ID}}', '{{$request.User.ID}}')">分配设备</button>
                 </td>
             </tr>
             {{end}}

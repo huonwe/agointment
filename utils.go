@@ -93,3 +93,7 @@ func str2uint(id string) uint {
 	handle(err)
 	return uint(ID)
 }
+
+func now() string {
+	return time.Now().Format("2006-01-02 15:04")
+}

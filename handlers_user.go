@@ -17,7 +17,7 @@ func myRequest(ctx *gin.Context) {
 	db.Model(&User{}).Where(&User{ID: claim.UserID}).Preload("Requests").Preload("Requests.Equipment").Take(&user)
 
 	ctx.HTML(http.StatusOK, "myRequestList.html", gin.H{
-		"heads":    []string{"序号", "设备名", "型号", "类别", "创建时间", "状态", "操作"},
+		"heads":    []string{"序号", "设备名", "型号", "设备ID", "创建时间", "状态", "操作"},
 		"requests": user.Requests,
 		"total":    len(user.Requests),
 	})
