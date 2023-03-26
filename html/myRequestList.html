@@ -10,7 +10,7 @@
         {{ if gt .total 0}}
         {{range $index,$request := .requests}}
         <tr>
-            <td>{{$index}}</td>
+            <td>{{$request.ID}}</td>
             <td>{{$request.Equipment.Name}}</td>
             <td>{{$request.Equipment.Type}}</td>
             <td>{{$request.EquipmentUnitID}}</td>
@@ -21,6 +21,8 @@
                 <button onclick="myRequestOp('{{$request.ID}}', 'cancel')">取消申请</button>
                 {{else if eq $request.Status "被拒绝" "已完成"}}
                 <button onclick="myRequestOp('{{$request.ID}}', 'delete')">删除记录</button>
+                {{else if eq $request.Status "进行中"}}
+                <button disabled>归还请联系管理员</button>
 
                 {{end}}
             </td>
@@ -35,8 +37,18 @@
             <td></td>
         </tr>
         {{end}}
-
     </table>
-    
-    
+
+    <div class="pageSelect">
+        {{if gt .page 1}}
+        <button onclick="getMyRequest(document.querySelector('#filter').value, '{{.page}}', 15, 'prev')">上一页</button>
+        {{end}}
+        <span>{{.page}}</span>
+        {{if lt .page .total_page}}
+        <button onclick="getMyRequest(document.querySelector('#filter').value, '{{.page}}', 15, 'next')">下一页</button>
+        {{end}}
+        <!-- <button class="next" onclick="getMyRequest(document.querySelector('#filter').value, '{{.page}}', 15)">
+            查看更多
+        </button> -->
+    </div>
 </div>

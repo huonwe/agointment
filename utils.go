@@ -9,6 +9,7 @@ import (
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 var nowDate = time.Now().Format("2006-01-02 15")
@@ -94,6 +95,16 @@ func str2uint(id string) uint {
 	return uint(ID)
 }
 
+func str2int(i string) int {
+	I, err := strconv.ParseInt(i, 10, 32)
+	handle(err)
+	return int(I)
+}
+
 func now() string {
 	return time.Now().Format("2006-01-02 15:04")
+}
+
+func order_desc_createdAt(db *gorm.DB) *gorm.DB {
+	return db.Order("created_at desc")
 }

@@ -84,6 +84,7 @@ type Request struct {
 	EndAtStr     string
 
 	EquipmentID     uint
+	EquipmentName   string
 	Equipment       Equipment
 	EquipmentUnitID uint
 	EquipmentUnit   EquipmentUnit
@@ -133,6 +134,4 @@ func initDB(db *gorm.DB) {
 	// db.Create(&EquipmentUnit{Name: "测试设备", Type: "试做型", Class: "醫用設備", ID: 0001, Brand: "宏偉製造", SerialNumber: "001", Price: 999.9, Label: "沒有標註", Factory: "宏偉天津製造工廠", Availiable: true})
 	// db.Create(&EquipmentUnit{Name: "测试设备", Type: "试做型", Class: "醫用設備", ID: 0002, Brand: "宏偉製造", SerialNumber: "001", Price: 999.9, Label: "沒有標註", Factory: "宏偉天津製造工廠", Availiable: true})
 
-	// db.Preload("User").Find(&see, 11)
-	// fmt.Println(see.UserID)
 }

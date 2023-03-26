@@ -1,9 +1,11 @@
 package main
 
 import (
+	"math"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 func myRequest(ctx *gin.Context) {
@@ -13,13 +15,25 @@ func myRequest(ctx *gin.Context) {
 		ctx.Redirect(http.StatusTemporaryRedirect, "/user/login")
 		return
 	}
-	user := &User{}
-	db.Model(&User{}).Where(&User{ID: claim.UserID}).Preload("Requests").Preload("Requests.Equipment").Take(&user)
+	// log.Println(ctx.Query("name"))
+	page := str2int(ctx.Query("page"))
+	pageSize := str2int(ctx.Query("pageSize"))
+	var total int64 = 0
+	user := &User{
+		ID: claim.UserID,
+	}
+	db.Model(&user).Preload("Requests", order_desc_createdAt, func(db *gorm.DB) *gorm.DB {
+		return db.Where("equipment_name LIKE ?", "%"+ctx.Query("name")+"%").Limit(pageSize).Offset((page - 1) * pageSize)
+	}).Preload("Requests.Equipment").Take(&user)
 
+	db.Model(&Request{}).Where("user_id = ?", claim.UserID).Where("equipment_name LIKE ?", "%"+ctx.Query("name")+"%").Count(&total)
 	ctx.HTML(http.StatusOK, "myRequestList.html", gin.H{
-		"heads":    []string{"序号", "设备名", "型号", "设备ID", "创建时间", "状态", "操作"},
-		"requests": user.Requests,
-		"total":    len(user.Requests),
+		"heads":      []string{"请求序号", "设备名", "型号", "设备ID", "创建时间", "状态", "操作"},
+		"requests":   user.Requests,
+		"total":      total,
+		"page":       page,
+		"pageSize":   pageSize,
+		"total_page": int(math.Ceil(float64(total) / float64(pageSize))),
 	})
 
 }

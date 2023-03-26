@@ -32,10 +32,13 @@ func equipmentRequest(ctx *gin.Context) {
 	// equipmentID, err := strconv.ParseUint(ctx.Query("equipmentID"), 10, 32)
 	// handle(err)
 	equipmentID := str2uint(ctx.Query("equipmentID"))
+	equipment := Equipment{}
+	db.Take(&equipment, equipmentID)
 	request := Request{
-		EquipmentID: uint(equipmentID),
-		UserID:      claim.UserID,
-		Status:      REQUESTING,
+		EquipmentID:   equipment.ID,
+		EquipmentName: equipment.Name,
+		UserID:        claim.UserID,
+		Status:        REQUESTING,
 	}
 
 	request.CreatedAtStr = now()

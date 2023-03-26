@@ -52,9 +52,13 @@ async function requestEquipment(equipmentID){
     alert(res.msg)
 }
 
-function getMyRequest(name) {
+function getMyRequest(name, page, pageSize, op) {
+    page = parseInt(page) || 1;
+    pageSize = parseInt(pageSize) || 15;
+    if(op == "prev") page = page -1;
+    if(op == "next") page = page +1;
     document.querySelector("#manifest").innerHTML = "请求中...";
-    fetch('/user/myRequest?'+'name='+name)
+    fetch( `/user/myRequest?name=${name}&page=${page}&pageSize=${pageSize}`)
     .then((res)=>{
         res.text().then((res)=>{
             document.querySelector("#manifest").innerHTML = res
