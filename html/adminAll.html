@@ -30,8 +30,6 @@
                 <td>{{$request.BeginAtStr}}</td>
                 <td>{{$request.EndAtStr}}</td>
                 <td>{{$request.Status}}</td>
-
-
                 <td>
                     <button onclick="adminRequestingOp('{{$request.ID}}', 'detail')">查看详情</button>
                 </td>
@@ -47,6 +45,20 @@
             </tr>
             {{end}}
         </table>
+        <div class="pageSelect">
+            {{if gt .page 1}}
+            <button class="prev" onclick="adminAll('', '{{.page}}', '{{.pageSize}}', 'prev')">上一页</button>
+            {{else}}
+            <button class="prev" disabled>上一页</button>
+            {{end}}
+            
+            <span>{{.page}}</span>
+            {{if lt .page .total_page}}
+            <button class="next" onclick="adminAll('', '{{.page}}', '{{.pageSize}}', 'next')">下一页</button>
+            {{else}}
+            <button class="next" disabled>下一页</button>
+            {{end}}
+        </div>
     </div>
 </body>
 </html>

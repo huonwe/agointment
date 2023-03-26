@@ -115,7 +115,7 @@ function adminRequestingOp(requestID, op, equipmentID, requestorID) {
                                 </div>
                                 <div>
                                     <span>完成日期</span>
-                                    <span>${detail.BeginAtStr}</span>
+                                    <span>${detail.EndAtStr}</span>
                                 </div>
                                 <div>
                                     <span>设备状态</span>
@@ -179,6 +179,22 @@ function showMask(text) {
 
 function hideMask() {
     document.body.removeChild(document.querySelector("#c"))
+}
+
+function adminAll(name, page, pageSize, op) {
+    page = parseInt(page) || 1;
+    pageSize = parseInt(pageSize) || 15;
+    if(op == "prev") page = page -1;
+    if(op == "next") page = page +1;
+    window.location = `/admin/all?name=${name}&page=${page}&pageSize=${pageSize}`
+    // document.querySelector("#manifest").innerHTML = "请求中...";
+    // fetch( `/admin/all?name=${name}&page=${page}&pageSize=${pageSize}`)
+    // .then((res)=>{
+    //     res.text().then((res)=>{
+    //         document.querySelector("#manifest").innerHTML = res
+    //     })
+    // }
+    // )
 }
 
 function customizeJsonObj(json) {

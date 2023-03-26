@@ -102,7 +102,7 @@ func str2int(i string) int {
 }
 
 func now() string {
-	return time.Now().Format("2006-01-02 15:04")
+	return time.Now().In(time.FixedZone("CST", 8*3600)).Format("2006-01-02 15:04")
 }
 
 func order_desc_createdAt(db *gorm.DB) *gorm.DB {

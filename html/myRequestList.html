@@ -41,14 +41,11 @@
 
     <div class="pageSelect">
         {{if gt .page 1}}
-        <button onclick="getMyRequest(document.querySelector('#filter').value, '{{.page}}', 15, 'prev')">上一页</button>
+        <button class="prev" onclick="getMyRequest(document.querySelector('#filter').value, '{{.page}}', 15, 'prev')">上一页</button>
         {{end}}
         <span>{{.page}}</span>
         {{if lt .page .total_page}}
-        <button onclick="getMyRequest(document.querySelector('#filter').value, '{{.page}}', 15, 'next')">下一页</button>
+        <button class="next" onclick="getMyRequest(document.querySelector('#filter').value, '{{.page}}', 15, 'next')">下一页</button>
         {{end}}
-        <!-- <button class="next" onclick="getMyRequest(document.querySelector('#filter').value, '{{.page}}', 15)">
-            查看更多
-        </button> -->
     </div>
 </div>

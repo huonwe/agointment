@@ -1,3 +1,130 @@
+.content {
+    flex: 1;
+    width: 100%;
+    min-height: 90%;
+    overflow: auto;
+    
+}
+
+.bottomNav {
+    /* flex: 0.1; */
+    width: 100%;
+    min-height: 3rem;
+    display: flex;
+    flex-direction: row;
+
+    outline: 1px solid purple;
+}
+
+.bottomNav .btn {
+    flex: 1;
+    height: 100%;
+    text-align: center;
+    font-size: large;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.btn .selected {
+    background-color: aquamarine;
+    
+}
+
+.title {
+    width: 100%;
+    background-color: beige;
+    height: 2rem;
+    font-size: larger;
+    text-align: center;
+}
+
+
+.availiableTable {
+    width: 100%;
+    scroll-behavior: auto;
+    background-color: blanchedalmond;
+    border-collapse: collapse;
+
+    border-radius: 10px;
+}
+
+.availiableTable tr {
+    max-height: 3rem;
+    overflow: hidden;
+    border-bottom: 1px solid purple;
+
+    display: flex;
+    flex-direction: row;
+} 
+
+.availiableTable tr th {
+    flex: 1;
+    font-size: large;
+
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+.availiableTable tr td {
+    flex: 1;
+    font-size: medium;
+    /* text-align: center; */
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: medium;
+}
+
+td button {
+    flex: 1;
+    height: 100%;
+    background-color: rgb(255, 216, 131);
+    border-radius: 10px;
+}
+
+.pageSelect {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    font-weight: 600;
+}
+
+.pageSelect span {
+    font-size: larger;
+    /* background-color: aqua; */
+    display: flex;
+    align-items: center
+}
+
+.pageSelect button {
+    width: 4rem;
+    height: 3rem;
+    background-color: rgba(233, 221, 221, 0.37);
+    border: 0;
+}
+
+.pageSelect button.next {
+    margin-left: 10px;
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
+}
+
+.pageSelect button.prev {
+    margin-right: 10px;
+    border-top-left-radius: 50%;
+    border-bottom-left-radius: 50%;
+}
+
+.pageSelect button:hover {
+    cursor: pointer;
+}
+
+
 .flex1 {
     flex: 1;
 }

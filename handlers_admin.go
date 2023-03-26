@@ -1,6 +1,7 @@
 package main
 
 import (
+	"math"
 	"net/http"
 	"time"
 
@@ -94,12 +95,20 @@ func adminRequestingsOp(ctx *gin.Context) {
 }
 
 func adminAll(ctx *gin.Context) {
+	page := str2int(ctx.Query("page"))
+	pageSize := str2int(ctx.Query("pageSize"))
+	var total int64 = 0
+
 	requests := []Request{}
-	db.Unscoped().Order("created_at desc").Preload("User").Preload("Equipment").Preload("EquipmentUnit").Find(&requests)
+	db.Unscoped().Model(&Request{}).Order("created_at desc").Preload("User").Preload("Equipment").Preload("EquipmentUnit").Limit(pageSize).Offset((page - 1) * pageSize).Find(&requests)
+	db.Unscoped().Model(&Request{}).Count(&total)
 
 	ctx.HTML(http.StatusOK, "adminAll.html", gin.H{
-		"heads":    []string{"记录号", "联系人", "设备ID", "设备名", "型号", "开始时间", "完成时间", "状态", "操作"},
-		"requests": requests,
-		"total":    len(requests),
+		"heads":      []string{"记录号", "联系人", "设备ID", "设备名", "型号", "开始时间", "完成时间", "状态", "操作"},
+		"requests":   requests,
+		"total":      total,
+		"page":       page,
+		"pageSize":   pageSize,
+		"total_page": int(math.Ceil(float64(total) / float64(pageSize))),
 	})
 }
