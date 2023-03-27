@@ -21,10 +21,10 @@ func main() {
 	r.Static("static", "static")
 
 	group_authless := r.Group("/")
-	group_authless.GET("/user/login", func(ctx *gin.Context) {
+	group_authless.GET("/login", func(ctx *gin.Context) {
 		ctx.HTML(http.StatusOK, "login.html", nil)
 	})
-	group_authless.POST("/user/login", login)
+	group_authless.POST("/login", login)
 
 	r.Use(LoginFilter())
 	r.GET("/", index)

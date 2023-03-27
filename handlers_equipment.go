@@ -89,7 +89,7 @@ func assignUnits(ctx *gin.Context) {
 	if ctx.PostForm("unitID") == "" {
 		ctx.JSON(http.StatusOK, gin.H{
 			"status": "Failed",
-			"msg":    "value error",
+			"msg":    "未选择设备实体",
 		})
 		return
 	}

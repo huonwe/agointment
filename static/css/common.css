@@ -99,6 +99,10 @@
         border-bottom: 0px solid rgb(135, 116, 135);
     }
 
+    25% {
+        border-bottom-width: 3px;
+    }
+
     50% {
         border-bottom: 3px solid rgb(131, 55, 131);
     }

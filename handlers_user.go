@@ -10,11 +10,8 @@ import (
 
 func myRequest(ctx *gin.Context) {
 	token, _ := ctx.Cookie("token")
-	claim, err := ParseToken(token)
-	if err != nil {
-		ctx.Redirect(http.StatusTemporaryRedirect, "/user/login")
-		return
-	}
+	claim, _ := ParseToken(token)
+
 	// log.Println(ctx.Query("name"))
 	page := str2int(ctx.Query("page"))
 	pageSize := str2int(ctx.Query("pageSize"))
@@ -40,11 +37,8 @@ func myRequest(ctx *gin.Context) {
 
 func myRequestOp(ctx *gin.Context) {
 	token, _ := ctx.Cookie("token")
-	claim, err := ParseToken(token)
-	if err != nil {
-		ctx.Redirect(http.StatusTemporaryRedirect, "/user/login")
-		return
-	}
+	claim, _ := ParseToken(token)
+
 	op := ctx.Query("op")
 	request := Request{
 		ID:     str2uint(ctx.Query("requestID")),

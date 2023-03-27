@@ -35,11 +35,7 @@ func login(ctx *gin.Context) {
 
 func index(ctx *gin.Context) {
 	token, _ := ctx.Cookie("token")
-	claim, err := ParseToken(token)
-	if err != nil {
-		ctx.Redirect(http.StatusTemporaryRedirect, "/user/login")
-		return
-	}
+	claim, _ := ParseToken(token)
 
 	user := User{}
 	db.Model(&User{}).Joins("Department").Take(&user, claim.UserID)
