@@ -24,7 +24,16 @@ func LoginFilter() gin.HandlerFunc {
 
 func MustAdmin() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		token, _ := ctx.Cookie("token")
+		token, err := ctx.Cookie("token")
+		if err != nil {
+			ctx.Redirect(http.StatusTemporaryRedirect, "/login")
+			return
+		}
+		_, err = ParseToken(token)
+		if err != nil {
+			ctx.Redirect(http.StatusTemporaryRedirect, "/login")
+			return
+		}
 		claims, _ := ParseToken(token)
 		user := &User{}
 		db.Where(&User{ID: claims.UserID}).Take(&user)
