@@ -54,7 +54,9 @@ func index(ctx *gin.Context) {
 			"greeting": fmt.Sprintf("欢迎您，%s 的 %s", user.Department.Name, user.Name),
 			"user":     user,
 		})
-	} else {
+	} else if page == "index" {
 		ctx.HTML(http.StatusOK, "index.html", nil)
+	} else {
+		ctx.Redirect(http.StatusTemporaryRedirect, "/?page=index")
 	}
 }

@@ -52,7 +52,7 @@
             <button class="prev" disabled>上一页</button>
             {{end}}
             
-            <span>{{.page}}</span>
+            <span>{{.page}}/{{.total_page}}</span>
             {{if lt .page .total_page}}
             <button class="next" onclick="adminAll('', '{{.page}}', '{{.pageSize}}', 'next')">下一页</button>
             {{else}}

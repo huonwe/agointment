@@ -1,5 +1,5 @@
 <div>
-    <div>总计 {{.total}} 条记录</div>
+    <div class="hint">总计 {{.total}} 条记录</div>
     <table class="availiableTable">
         <tr>
         {{ range $idx,$head := .heads }}
@@ -13,9 +13,21 @@
             <td>{{$request.ID}}</td>
             <td>{{$request.Equipment.Name}}</td>
             <td>{{$request.Equipment.Type}}</td>
+            {{if eq $request.EquipmentUnitID 0}}
+            <td>未分配</td>
+            {{else}}
             <td>{{$request.EquipmentUnitID}}</td>
-            <td>{{$request.CreatedAtStr}}</td>
-            <td>{{$request.Status}}</td>
+            {{end}}
+            {{if eq $request.Status "被拒绝"}}
+            <td class="color_attention">{{$request.Status}}</td>
+            {{else if eq $request.Status "已完成"}}
+            <td class="color_ok">{{$request.Status}}</td>
+            {{else if eq $request.Status "请求中"}}
+            <td class="color_cool">{{$request.Status}}</td>
+            {{else if eq $request.Status "进行中"}}
+            <td class="color_normal">{{$request.Status}}</td>
+
+            {{end}}
             <td>
                 {{if eq $request.Status "请求中"}}
                 <button onclick="myRequestOp('{{$request.ID}}', 'cancel')">取消申请</button>
@@ -42,10 +54,14 @@
     <div class="pageSelect">
         {{if gt .page 1}}
         <button class="prev" onclick="getMyRequest(document.querySelector('#filter').value, '{{.page}}', 15, 'prev')">上一页</button>
+        {{else}}
+        <button disabled class="prev" onclick="getMyRequest(document.querySelector('#filter').value, '{{.page}}', 15, 'prev')">上一页</button>
         {{end}}
-        <span>{{.page}}</span>
+        <span>{{.page}}/{{.total_page}}</span>
         {{if lt .page .total_page}}
         <button class="next" onclick="getMyRequest(document.querySelector('#filter').value, '{{.page}}', 15, 'next')">下一页</button>
+        {{else}}
+        <button disabled class="next" onclick="getMyRequest(document.querySelector('#filter').value, '{{.page}}', 15, 'next')">下一页</button>
         {{end}}
     </div>
 </div>

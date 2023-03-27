@@ -1,15 +1,15 @@
 <div>
-    <div class="title">我的</div>
-
     <div class="flex1 gap_from_top">
         <div id="greeting" class="line">{{.greeting}}</div>
     </div>
     {{if .user.IsAdmin }}
-    <div>
+    <fieldset class="adminOperation">
+        <legend>管理员操作</legend>
         <a href="/admin/users">人员管理</a>
         <a href="/admin/requestings">申请管理</a>
         <a href="/admin/ongoings">归还管理</a>
-        <a href="/admin/all?page=1&pageSize=25">全部记录</a>
-    </div>
+        <a href="/admin/all?page=1&pageSize=20">全部记录</a>
+    </fieldset>
+
     {{end}}
 </div>

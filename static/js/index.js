@@ -9,21 +9,32 @@ function getQueryVariable(variable)
     return(false);
 }
 
+function unsetBtn() {
+    document.querySelector("#appoint").classList.remove("selected")
+    document.querySelector("#me").classList.remove("selected")
+    document.querySelector("#status").classList.remove("selected")
+}
+
 function getHTML(key)
 {
     document.querySelector("#content").innerHTML = "请求中...";
     fetch('/?page='+key)
     .then((res)=>{
         res.text().then((res)=>{
+            unsetBtn();
             document.querySelector("#content").innerHTML = res;
-            
+            document.querySelector(`#${key}`).classList.add("selected")
             switch (key) {
                 case "appoint":
+                    document.title = "申请";
                     getAvailiable('')
                     break;
                 case "status":
+                    document.title = "我的申请";
                     getMyRequest('')
                     break;
+                case "me":
+                    document.title = "我的信息";
             };
 
         })

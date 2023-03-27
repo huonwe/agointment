@@ -1,5 +1,5 @@
 body {
-    height: 92vh;
+    height: 93vh;
     width: 97vw;
 
     display: flex;
@@ -7,6 +7,9 @@ body {
 
     user-select: none;
     overflow: hidden;
+
+    background-image: url("/static/img/1.png");
+    
 }
 
 .content {
@@ -24,10 +27,12 @@ body {
     display: flex;
     flex-direction: row;
 
-    outline: 1px solid purple;
+    border: 2px solid purple;
+    border-radius: 25px;
+    /* outline: 1px solid purple; */
 }
 
-.bottomNav .btn {
+.bottomNav div {
     flex: 1;
     height: 100%;
     text-align: center;
@@ -37,33 +42,39 @@ body {
     justify-content: center;
 }
 
-.btn .selected {
-    background-color: aquamarine;
-    
+.bottomNav div.selected {
+    border: 1px solid white;
+    border-radius: 25px;
+    background-color: rgba(126, 91, 254, 0.618);
 }
+
 
 .title {
     width: 100%;
-    background-color: beige;
     height: 2rem;
     font-size: larger;
     text-align: center;
+
+    border-bottom: 2px solid rgb(22, 101, 101);
 }
 
 
 .availiableTable {
     width: 100%;
     scroll-behavior: auto;
-    background-color: blanchedalmond;
+    background-color: rgb(205, 237, 255);
     border-collapse: collapse;
 
     border-radius: 10px;
+
+    font-weight: 500;
 }
 
 .availiableTable tr {
     max-height: 3rem;
+    min-height: 2rem;
     overflow: hidden;
-    border-bottom: 1px solid purple;
+    border-bottom: 1px solid rgba(74, 129, 255, 0.458);
 
     display: flex;
     flex-direction: row;
@@ -92,8 +103,31 @@ body {
 td button {
     flex: 1;
     height: 100%;
-    background-color: rgb(255, 216, 131);
+    background-color: rgb(147, 178, 255);
+
+    border: 0;
     border-radius: 10px;
+}
+
+td button:hover {
+    cursor: pointer;
+}
+
+
+.color_attention {
+    color: rgb(255, 140, 0);
+}
+
+.color_normal {
+    color:rgb(153, 0, 255)
+}
+
+.color_ok {
+    color: green;
+}
+
+.color_cool {
+    color: rgb(97, 129, 193);
 }
 
 .pageSelect {
@@ -103,6 +137,7 @@ td button {
     justify-content: center;
 
     font-weight: 600;
+
 }
 
 .pageSelect span {
@@ -113,10 +148,12 @@ td button {
 }
 
 .pageSelect button {
-    width: 4rem;
-    height: 3rem;
-    background-color: rgba(233, 221, 221, 0.37);
+    width: 3.5rem;
+    height: 2rem;
+    background-color: rgba(74, 129, 255, 0.458);
     border: 0;
+    font-size: smaller;
+    font-weight: 500;
 }
 
 .pageSelect button.next {
@@ -133,4 +170,14 @@ td button {
 
 .pageSelect button:hover {
     cursor: pointer;
+}
+
+
+.adminOperation {
+    margin-top: 20px;
+    color: purple;
+    border-color: plum ;
+    border-radius: 10px;
+    padding: 5px;
+    /* outline: 1px solid blueviolet; */
 }

@@ -28,7 +28,7 @@ func myRequest(ctx *gin.Context) {
 
 	db.Model(&Request{}).Where("user_id = ?", claim.UserID).Where("equipment_name LIKE ?", "%"+ctx.Query("name")+"%").Count(&total)
 	ctx.HTML(http.StatusOK, "myRequestList.html", gin.H{
-		"heads":      []string{"请求序号", "设备名", "型号", "设备ID", "创建时间", "状态", "操作"},
+		"heads":      []string{"请求序号", "设备名", "型号", "设备ID", "状态", "操作"},
 		"requests":   user.Requests,
 		"total":      total,
 		"page":       page,
