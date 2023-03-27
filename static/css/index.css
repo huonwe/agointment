@@ -46,6 +46,7 @@ body {
     border: 1px solid white;
     border-radius: 25px;
     background-color: rgba(126, 91, 254, 0.618);
+    pointer-events: none;
 }
 
 

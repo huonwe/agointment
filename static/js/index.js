@@ -23,7 +23,7 @@ function getHTML(key)
         res.text().then((res)=>{
             unsetBtn();
             document.querySelector("#content").innerHTML = res;
-            document.querySelector(`#${key}`).classList.add("selected")
+            document.querySelector(`#${key}`).classList.add("selected");
             switch (key) {
                 case "appoint":
                     document.title = "申请";
