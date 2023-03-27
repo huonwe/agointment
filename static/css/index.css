@@ -42,6 +42,10 @@ body {
     justify-content: center;
 }
 
+.bottomNav div:hover {
+    cursor: pointer;
+}
+
 .bottomNav div.selected {
     border: 1px solid white;
     border-radius: 25px;
@@ -150,7 +154,7 @@ td button:hover {
 
 .pageSelect button {
     width: 3.5rem;
-    height: 2rem;
+    height: 2.5rem;
     background-color: rgba(74, 129, 255, 0.458);
     border: 0;
     font-size: smaller;

@@ -125,8 +125,8 @@ func initDB(db *gorm.DB) {
 	// db.AutoMigrate(&UnAssigned{})
 	// db.AutoMigrate(&Ongoing{})
 
-	// db.Create(&Department{Name: "設備課", Description: "設備課，測試"})
-	// db.Create(&User{Name: "huonwe", Password: "huonwe", DepartmentName: "設備課", IsAdmin: true})
+	// db.Create(&Department{Name: "德国骨科", Description: "德国骨科..."})
+	// db.Create(&User{Name: "test", Password: "123456", DepartmentName: "德国骨科", IsAdmin: false})
 	// db.Create(&Equipment{Name: "测试设备", Type: "试做型", Class: "醫用設備", Availiable: true})
 	// db.Create(&Equipment{Name: "测试设备", Type: "试做型", Class: "未来科技", Availiable: true})
 	// db.Create(&Equipment{Name: "空想具现", Type: "试做型", Class: "宏伟制造", Availiable: true})

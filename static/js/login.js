@@ -5,13 +5,13 @@ async function login() {
     formData.append('username', username);
     formData.append('password', password);
     console.log(formData.getAll("username"));
-    const response = await fetch("/user/login" , {
+    const response = await fetch("/login" , {
         method: 'post',
         body: formData
     })
     const res = await response.json();
     if(res.status == "Success") {
-        window.location = "http://huonwe.technology:5501/"
+        window.location = "/"
     }else {
         alert(res.msg)
     }
