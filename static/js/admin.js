@@ -1,4 +1,7 @@
 function adminRequestingOp(requestID, op, equipmentID, requestorID) {
+    equipmentID = equipmentID || ""
+    requestorID = requestorID || ""
+
     switch (op) {
         case "assign":
             var mask = showMask()
