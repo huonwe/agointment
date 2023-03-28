@@ -45,13 +45,14 @@ func main() {
 	group_user.GET("/myRequestOp", myRequestOp)
 
 	group_admin := r.Group("/admin")
-	group_admin.Use(MustAdmin())
+	group_admin.Use(LoginFilter(), MustAdmin())
 	group_admin.GET("/requestings", adminRequestings)
 	group_admin.GET("/requestingsOp", adminRequestingsOp)
 	group_admin.GET("/assignUnits", getAvailiableUnits) // HTML
 	group_admin.POST("/assignUnits", assignUnits)       // HTML
 	group_admin.GET("/ongoings", adminOngoings)         // HTML
 	group_admin.GET("/all", adminAll)
+	group_admin.GET("/users", adminUsers)
 
 	r.NoRoute(redirect2home)
 

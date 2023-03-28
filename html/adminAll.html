@@ -24,7 +24,11 @@
             <tr>
                 <td>{{$request.ID}}</td>
                 <td>{{$request.User.Name}}@{{$request.User.DepartmentName}}</td>
+                {{if eq $request.EquipmentUnitID 0}}
+                <td></td>
+                {{else}}
                 <td>{{$request.EquipmentUnitID}}</td>
+                {{end}}
                 <td>{{$request.Equipment.Name}}</td>
                 <td>{{$request.Equipment.Type}}</td>
                 <td>{{$request.BeginAtStr}}</td>

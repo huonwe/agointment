@@ -44,7 +44,7 @@ func MustAdmin() gin.HandlerFunc {
 			ctx.Abort()
 			return
 		}
-		ctx.Set("user", user)
+		ctx.Set("userID", user.ID)
 		ctx.Next()
 	}
 }

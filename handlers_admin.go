@@ -112,3 +112,7 @@ func adminAll(ctx *gin.Context) {
 		"total_page": int(math.Ceil(float64(total) / float64(pageSize))),
 	})
 }
+
+func adminUsers(ctx *gin.Context) {
+	ctx.HTML(http.StatusOK, "adminUsers.html", nil)
+}

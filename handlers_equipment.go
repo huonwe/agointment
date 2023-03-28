@@ -18,22 +18,20 @@ func getAvailiable(ctx *gin.Context) {
 }
 
 func equipmentRequest(ctx *gin.Context) {
-	token, _ := ctx.Cookie("token")
-	claim, err := ParseToken(token)
-	if err != nil {
+	value, exist := ctx.Get("user")
+	user, ok := value.(User)
+	if !exist || !ok {
 		ctx.Redirect(http.StatusTemporaryRedirect, "/login")
 		return
 	}
-	// log.Println(ctx.Query("equipmentID"))
-	// equipmentID, err := strconv.ParseUint(ctx.Query("equipmentID"), 10, 32)
-	// handle(err)
+
 	equipmentID := str2uint(ctx.Query("equipmentID"))
 	equipment := Equipment{}
 	db.Take(&equipment, equipmentID)
 	request := Request{
 		EquipmentID:   equipment.ID,
 		EquipmentName: equipment.Name,
-		UserID:        claim.UserID,
+		UserID:        user.ID,
 	}
 
 	var count int64
@@ -48,7 +46,7 @@ func equipmentRequest(ctx *gin.Context) {
 	request.CreatedAtStr = now()
 	request.Status = REQUESTING
 
-	err = db.Model(&Request{}).Create(&request).Error
+	err := db.Model(&Request{}).Create(&request).Error
 	handle_resp(err, ctx)
 	err = db.Model(&UnAssigned{}).Create(&UnAssigned{request}).Error
 	handle_resp(err, ctx)

@@ -38,14 +38,12 @@ func login(ctx *gin.Context) {
 }
 
 func index(ctx *gin.Context) {
-	token, _ := ctx.Cookie("token")
-	claim, err := ParseToken(token)
-	if err != nil {
+	value, exist := ctx.Get("user")
+	user, ok := value.(User)
+	if !exist || !ok {
 		ctx.Redirect(http.StatusTemporaryRedirect, "/login")
 		return
 	}
-	user := User{}
-	db.Model(&User{}).Joins("Department").Take(&user, claim.UserID)
 
 	name := ctx.Param("name")
 	if name == "appoint" {
@@ -54,7 +52,7 @@ func index(ctx *gin.Context) {
 		ctx.HTML(http.StatusOK, "status.html", nil)
 	} else if name == "me" {
 		ctx.HTML(http.StatusOK, "me.html", gin.H{
-			"greeting": fmt.Sprintf("欢迎您，%s 的 %s", user.Department.Name, user.Name),
+			"greeting": fmt.Sprintf("欢迎您，%s 的 %s", user.DepartmentName, user.Name),
 			"user":     user,
 		})
 	} else if name == "index" {

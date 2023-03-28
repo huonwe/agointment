@@ -25,8 +25,11 @@
     cursor: pointer;
 }
 
+.dpt_user_admin {
+    display: flex;
+    flex-direction: column;
+}
 
-/* .assign div {
-    flex-direction: row;
-    display: inline;
-} */
+.dpt_user_admin fieldset {
+    border-radius: 10px;
+}
