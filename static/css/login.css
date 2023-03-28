@@ -1,16 +1,26 @@
 body {
     height: 97vh;
     width: 97vw;
-
+    text-align: center;
+    line-height: 2em;
     display: flex;
     flex-direction: column;
-
+    margin-top: 1.5cm;
     user-select: none;
     overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    /* static前面有 / */
+    background-image:url(/static/img/1.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+
 }
 
 .title {
     text-align: center;
+    margin-top: 2cm;
     font-size: larger;
     margin-bottom: 10px;
     color: rgb(113, 79, 172);

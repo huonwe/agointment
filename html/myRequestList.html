@@ -2,7 +2,7 @@
     <div class="hint">总计 {{.total}} 条记录</div>
     <table class="availiableTable">
         <tr>
-        {{ range $idx,$head := .heads }}
+        {{range $idx,$head := .heads}}
         <th> {{$head}} </th>
         {{end}}
         </tr>
@@ -19,7 +19,7 @@
             <td class="color_ok">{{$request.EquipmentUnitID}}</td>
             {{end}}
             {{if eq $request.Status "被拒绝"}}
-            <td class="color_attention">{{$request.Status}}</td>
+            <td class="color_attention">不可用</td>
             {{else if eq $request.Status "已完成"}}
             <td class="color_ok">{{$request.Status}}</td>
             {{else if eq $request.Status "请求中"}}
@@ -35,7 +35,6 @@
                 <button onclick="myRequestOp('{{$request.ID}}', 'delete')">删除</button>
                 {{else if eq $request.Status "进行中"}}
                 <button disabled>联系管理员归还</button>
-
                 {{end}}
             </td>
         </tr>

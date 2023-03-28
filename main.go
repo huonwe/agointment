@@ -25,6 +25,10 @@ func main() {
 		ctx.HTML(http.StatusOK, "login.html", nil)
 	})
 	group_authless.POST("/login", login)
+	group_authless.GET("/signup", func(ctx *gin.Context) {
+		ctx.HTML(http.StatusOK, "signup.html", nil)
+	})
+	group_authless.POST("/signup", signup)
 
 	group_home := r.Group("/home")
 	group_home.Use(LoginFilter())

@@ -37,6 +37,38 @@ func login(ctx *gin.Context) {
 	})
 }
 
+func signup(ctx *gin.Context) {
+	if ctx.PostForm("username") == "" || ctx.PostForm("password") == "" || ctx.PostForm("dept") == "" {
+		ctx.JSON(http.StatusOK, gin.H{
+			"status": "Failed",
+			"msg":    "参数不足",
+		})
+	}
+
+	user := User{
+		Name:           ctx.PostForm("username"),
+		Password:       ctx.PostForm("password"),
+		DepartmentName: ctx.PostForm("dept"),
+	}
+
+	var count int64
+	db.Model(&Department{Name: user.DepartmentName}).Count(&count)
+	if count == 0 {
+		ctx.JSON(http.StatusOK, gin.H{
+			"status": "Failed",
+			"msg":    "没有这个部门",
+		})
+		return
+	}
+
+	db.Create(&user)
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"status": "Success",
+		"msg":    "注册成功",
+	})
+}
+
 func index(ctx *gin.Context) {
 	value, exist := ctx.Get("user")
 	user, ok := value.(User)
