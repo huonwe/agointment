@@ -26,15 +26,21 @@ func main() {
 	})
 	group_authless.POST("/login", login)
 
-	r.Use(LoginFilter())
-	r.GET("/", index)
+	group_home := r.Group("/home")
+	group_home.Use(LoginFilter())
+	group_home.GET("/:name", index)
+	group_home.GET("/", func(ctx *gin.Context) {
+		ctx.Redirect(http.StatusPermanentRedirect, "/home/index")
+	})
 
 	group_equipment := r.Group("/equipment")
+	group_equipment.Use(LoginFilter())
 	group_equipment.GET("/availiable", getAvailiable)     // HTML
 	group_equipment.GET("/makeRequest", equipmentRequest) // JSON
 	// group_equipment.GET("/availiableUnits", getAvailiableUnits) // HTML
 
 	group_user := r.Group("/user")
+	group_user.Use(LoginFilter())
 	group_user.GET("/myRequest", myRequest)
 	group_user.GET("/myRequestOp", myRequestOp)
 

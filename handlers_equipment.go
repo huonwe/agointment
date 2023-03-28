@@ -25,7 +25,7 @@ func equipmentRequest(ctx *gin.Context) {
 	token, _ := ctx.Cookie("token")
 	claim, err := ParseToken(token)
 	if err != nil {
-		ctx.Redirect(http.StatusTemporaryRedirect, "/user/login")
+		ctx.Redirect(http.StatusTemporaryRedirect, "/login")
 		return
 	}
 	// log.Println(ctx.Query("equipmentID"))

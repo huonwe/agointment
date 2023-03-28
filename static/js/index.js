@@ -18,7 +18,7 @@ function unsetBtn() {
 function getHTML(key)
 {
     document.querySelector("#content").innerHTML = "请求中...";
-    fetch('/?page='+key)
+    fetch('/home/'+key)
     .then((res)=>{
         res.text().then((res)=>{
             unsetBtn();

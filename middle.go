@@ -38,7 +38,7 @@ func MustAdmin() gin.HandlerFunc {
 		user := &User{}
 		db.Where(&User{ID: claims.UserID}).Take(&user)
 		if !user.IsAdmin || user.ID == 0 {
-			ctx.Redirect(http.StatusTemporaryRedirect, "/")
+			ctx.Redirect(http.StatusTemporaryRedirect, "/home")
 			return
 		}
 		ctx.Next()
