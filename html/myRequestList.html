@@ -14,7 +14,7 @@
             <td>{{$request.Equipment.Name}}</td>
             <td>{{$request.Equipment.Type}}</td>
             {{if eq $request.EquipmentUnitID 0}}
-            <td>未分配</td>
+            <td></td>
             {{else}}
             <td class="color_ok">{{$request.EquipmentUnitID}}</td>
             {{end}}
@@ -30,11 +30,11 @@
             {{end}}
             <td>
                 {{if eq $request.Status "请求中"}}
-                <button onclick="myRequestOp('{{$request.ID}}', 'cancel')">取消申请</button>
+                <button onclick="myRequestOp('{{$request.ID}}', 'cancel')">取消</button>
                 {{else if eq $request.Status "被拒绝" "已完成"}}
-                <button onclick="myRequestOp('{{$request.ID}}', 'delete')">删除记录</button>
+                <button onclick="myRequestOp('{{$request.ID}}', 'delete')">删除</button>
                 {{else if eq $request.Status "进行中"}}
-                <button disabled>归还请联系管理员</button>
+                <button disabled>联系管理员归还</button>
 
                 {{end}}
             </td>

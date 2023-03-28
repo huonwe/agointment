@@ -8,9 +8,9 @@
         </tr>
 
         {{ if gt .total 0}}
-        {{range $index,$equipment := .equipments}}
+        {{range $equipment := .equipments}}
         <tr>
-            <td>{{$index}}</td>
+            <td>{{$equipment.ID}}</td>
             <td>{{$equipment.Name}}</td>
             <td>{{$equipment.Type}}</td>
             <td>{{$equipment.Class}}</td>

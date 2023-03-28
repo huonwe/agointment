@@ -9,11 +9,7 @@ import (
 
 func getAvailiable(ctx *gin.Context) {
 	equipment := []Equipment{}
-	//&Equipment{Availiable: true, Name: ctx.Query("name")}
 	db.Model(&Equipment{}).Where("name LIKE ?", "%"+ctx.Query("name")+"%").Find(&equipment)
-	// log.Println(ctx.Query("name"))
-	// log.Println(equipment)
-
 	ctx.HTML(http.StatusOK, "availableList.html", gin.H{
 		"heads":      []string{"序号", "设备名", "型号", "类别", "操作"},
 		"equipments": equipment,
@@ -38,21 +34,19 @@ func equipmentRequest(ctx *gin.Context) {
 		EquipmentID:   equipment.ID,
 		EquipmentName: equipment.Name,
 		UserID:        claim.UserID,
-		Status:        REQUESTING,
 	}
 
-	request.CreatedAtStr = now()
-
-	request_exist := UnAssigned{}
-
-	db.Model(&UnAssigned{}).Where(&UnAssigned{request}).Take(&request_exist)
-	if request_exist.ID != 0 {
+	var count int64
+	db.Model(&UnAssigned{}).Where(&UnAssigned{request}).Count(&count)
+	if count > 0 {
 		ctx.JSON(http.StatusOK, gin.H{
 			"status": "Failed",
 			"msg":    "请勿重复申请",
 		})
 		return
 	}
+	request.CreatedAtStr = now()
+	request.Status = REQUESTING
 
 	err = db.Model(&Request{}).Create(&request).Error
 	handle_resp(err, ctx)
@@ -144,7 +138,10 @@ func assignUnits(ctx *gin.Context) {
 		handle_resp(err, ctx)
 	}
 	err = tx.Commit().Error
-	handle_resp(err, ctx)
+	if err != nil {
+		tx.Rollback()
+		handle_resp(err, ctx)
+	}
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"status": "Success",

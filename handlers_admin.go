@@ -16,7 +16,7 @@ func adminRequestings(ctx *gin.Context) {
 	db.Model(&UnAssigned{}).Order("created_at desc").Preload("Equipment").Preload("User").Find(&un_assigneds)
 
 	ctx.HTML(http.StatusOK, "adminRequestings.html", gin.H{
-		"heads":        []string{"序号", "申请人", "设备ID", "设备名", "型号", "创建时间", "操作"},
+		"heads":        []string{"序号", "申请人", "设备名", "型号", "创建时间", "操作"},
 		"un_assigneds": un_assigneds,
 		"total":        len(un_assigneds),
 	})
