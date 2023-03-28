@@ -16,7 +16,7 @@
             {{if eq $request.EquipmentUnitID 0}}
             <td>未分配</td>
             {{else}}
-            <td>{{$request.EquipmentUnitID}}</td>
+            <td class="color_ok">{{$request.EquipmentUnitID}}</td>
             {{end}}
             {{if eq $request.Status "被拒绝"}}
             <td class="color_attention">{{$request.Status}}</td>

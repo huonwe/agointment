@@ -7,6 +7,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func redirect2home(ctx *gin.Context) {
+	ctx.Redirect(http.StatusPermanentRedirect, "/home/index")
+}
+
 func login(ctx *gin.Context) {
 	user := User{}
 	if ctx.PostForm("username") == "" || ctx.PostForm("password") == "" {

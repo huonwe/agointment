@@ -53,5 +53,7 @@ func main() {
 	group_admin.GET("/ongoings", adminOngoings)         // HTML
 	group_admin.GET("/all", adminAll)
 
+	r.NoRoute(redirect2home)
+
 	r.Run("0.0.0.0:5501")
 }

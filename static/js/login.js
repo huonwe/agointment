@@ -4,7 +4,7 @@ async function login() {
     const formData = new FormData();
     formData.append('username', username);
     formData.append('password', password);
-    console.log(formData.getAll("username"));
+    // console.log(formData.getAll("username"));
     const response = await fetch("/login" , {
         method: 'post',
         body: formData
