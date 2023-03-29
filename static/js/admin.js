@@ -190,20 +190,25 @@ function adminAll(name, page, pageSize, op) {
 }
 
 function deptOp(deptName, op) {
+    // console.log(deptName)
     let formData = new FormData()
-    if(op == "new"){
+    if(op == "deptNew"){
         let name = document.querySelector("#dept_add_name").value;
         let description = document.querySelector("#dept_add_dscrpt").value;
+        console.log(name,description)
         formData.append("deptName",name);
         formData.append("deptDescpt",description);
     }else {
-        formData.append("detpName", deptName)
+        formData.append("deptName", deptName)
+        // console.log(formData.getAll("deptName"))
     }
+    // console.log(formData.get("deptName"))
     fetch(`/admin/users/${op}`,{
         method: "post",
         body: formData
     }).then((res)=>{
         res.json().then((res)=>{
+            // alert(res.msg)
             if(res.status != "Success"){
                 alert(res.msg);
             }else {

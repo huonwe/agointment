@@ -5,14 +5,60 @@
 .outline_ok {
     outline: green solid 1px;
 }
-
-input {
-    border: 0;
-    /* border-bottom: 1px solid palevioletred;
-    background-color: rgba(255, 255, 255, 0); */
+.signup-box {
+    display: flex;
+    justify-content: center;
+    /*居中排列*/
+    align-content: space-around;
+    flex-wrap: wrap;
+    /*项目排在一条线上，换行，第一行在上方*/
+    margin-top: 0.3px;
+    height: 15rem;
+    width: 25rem;
+}
+.signup-box h4{
+    display: flex;
+    justify-content: center;
+    /*居中排列*/
+    align-content: space-around;
+    flex-wrap: wrap;
+    /*项目排在一条线上，换行，第一行在上方*/
+    margin-top: 0.2px;
+}
+#signupForm{
+    display: flex;
+    justify-content: center;
+    /*居中排列*/
+    align-content: space-around;
+    flex-wrap: wrap;
+    /*项目排在一条线上，换行，第一行在上方*/
+    margin-top: 0.9px;
+    height: 10rem;
+    width: 25rem;
+}
+#signupForm .p3{
+    display: flex;
+    align-content: space-around;
+    margin-top: 0.9px;
+}
+#signup-submit{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 0.5rem;
+    color: #fff;
+    font-size: 12px;
+}
+.signup-box .login{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 0.4rem;
+    color: #fff;
+    font-size: 12px;
 }
 
-input:focus {
+/* #signup-submit input:focus {
     border: 0;
     outline: 0;
     border-bottom: 2px solid rgb(58, 68, 203);
@@ -28,4 +74,4 @@ input:focus {
     100% {
         border-bottom: 2px solid rgb(58, 68, 203);
     }
-}
+} */

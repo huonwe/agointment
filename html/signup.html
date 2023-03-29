@@ -15,12 +15,14 @@
     <div class="signup-box">
         <h4 class="p1">新用户注册</h4>
         <div class="signup-input">
-            <form id="signupForm" action="/signup" method="post">
-                <!--  -->
+            <form id="signupForm" method="post">
+                <!-- 这个action的URL我感觉写的不太对，你看一下是不是有点不对劲 -->
+                <!-- 这个URL不写也行，我已经重写了它的行为，在signup.js -->
+                <!-- 那我删掉了 -->
                 <table>
                      <!-- 用户名 -->
                     <tr>
-                        <td align="center" class="p1">
+                        <td align="center" class="p3">
                             <label for="username">用户名:</label>
                         </td>
                         <td class="p2">
@@ -28,8 +30,9 @@
                         </td>
                     </tr>
                     <tr>
-                        <td align="center" class="p1">
-                            <label for="departmentname">部门名称:</label>
+                        <td align="center" class="p3">
+                            <!-- <label for="departmentname">部门名称:</label> -->
+                            部门名称:
                         </td>
                         <td class="p2">
                             <input type="text" name="dept" id="dept" placeholder="请输入部门名称">
@@ -37,7 +40,7 @@
                     </tr>
                    <!-- 密码 -->
                     <tr>
-                        <td align="center" class="p1">
+                        <td align="center" class="p3">
                             <label for="pass">密&nbsp&nbsp码:</label>
                         </td>
                         <td class="p2">
@@ -46,7 +49,7 @@
                     </tr>
                     <!-- 确认密码 -->
                     <tr>
-                        <td align="center" class="p1">
+                        <td align="center" class="p3">
                             <label for="repass">确认密码:</label>
                         </td>
                         <td class="p2">

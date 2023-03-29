@@ -25,11 +25,112 @@
     cursor: pointer;
 }
 
-.dpt_user_admin {
-    display: flex;
-    flex-direction: column;
+fieldset {
+    border-radius: 5px;
 }
 
-.dpt_user_admin fieldset {
+.dpt_admin {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.dpt_admin fieldset {
     border-radius: 10px;
+}
+
+.dpt_admin input {
+    border: 0;
+    border-bottom: 1px solid black;
+
+    margin-left: 5px;
+    padding-left: 1rem;
+}
+
+.dpt_admin input::placeholder {
+    text-align: center;
+}
+
+.dpt_admin input:focus {
+    outline: 0;
+}
+
+.dpt_admin .deptExist {
+    display: flex;
+    flex-direction: column-reverse;
+    padding: 5px;
+}
+
+.dpt_admin .deptExist .deptLine {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2px;
+
+    color: rgb(0, 56, 140);
+}
+
+.deptLine button {
+    border: 0;
+    border-radius: 5px;
+
+    background-color: rgba(0, 102, 255, 0.627);
+}
+
+.deptLine button:hover {
+    background-color: rgba(0, 102, 255, 0.8);
+    cursor: pointer;
+}
+
+.users_admin {
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+
+    /* width: 100%; */
+}
+
+.users_admin .line_add_user {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.users_admin input {
+    border: 0;
+    border-bottom: 1px solid black;
+    padding-left: 5px;
+
+    /* margin-left: 5px; */
+}
+
+.users_admin input:nth-child(1) {
+    width: 5rem;
+}
+.users_admin input:nth-child(2) {
+    width: 8rem;
+}
+.users_admin input:nth-child(3) {
+    width: 10rem;
+}
+
+.users_admin input:focus {
+    outline: 0;
+}
+
+.users_admin input::placeholder {
+    text-align: center;
+}
+
+.users_admin button {
+    border: 0;
+    border-radius: 5px;
+    background-color: rgba(0, 102, 255, 0.627);
+}
+
+.users_admin button:hover {
+    cursor: pointer;
+    background-color: rgba(0, 102, 255, 0.8);
 }

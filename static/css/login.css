@@ -24,7 +24,7 @@ body {
     flex-wrap: wrap;
     /*项目排在一条线上，换行，第一行在上方*/
     height: 15rem;
-    width: 65vw;
+    width: 25rem;
     background-color: rgba(215, 242, 239, 0.153);
     border: 10px;
     padding: 20px 50px;
@@ -69,7 +69,7 @@ body {
     padding: 6px;
     border-bottom: 1px solid white;
     background-color: #ffffff00;
-    color: #fff;
+    color: #ffffff;
     margin-top: 10px;
 }
 
@@ -86,7 +86,6 @@ body {
     border-radius: 25px;
     cursor: pointer;
 
-    /* (*^_^*) */
     border: 0;
 }
 
@@ -116,9 +115,8 @@ body {
     border-bottom: 3px solid green;
     animation-name: color_trans;
     animation-duration: 1s;
-    /* -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6); */
-    /* box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6) */
 }
+
 @keyframes color_trans {
     0% {
         border-bottom: 1px solid white;

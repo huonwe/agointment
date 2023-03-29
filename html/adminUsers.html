@@ -7,49 +7,52 @@
     <link rel="stylesheet" href="/static/css/index.css">
     <link rel="stylesheet" href="/static/css/common.css">
     <link rel="stylesheet" href="/static/css/admin.css">
+
+    <script src="/static/js/admin.js"></script>
     <title>部门与用户管理</title>
 </head>
 <body>
     <div class="dpt_user_admin">
-        <fieldset>
+        <fieldset class="dpt_admin">
             <legend>部门管理</legend>
-            <div>
+            <div class="deptExist">
                 {{range $dept := .depts}}
-                <div>
-                    <span>部门:{{$dept.Name}}</span>
-                    <span>, {{$dept.Description}}</span>
+                <div class="deptLine">
+                    <span>部门: {{$dept.Name}}</span>
+                    <span>{{$dept.Description}}</span>
                     <span>
                         <button onclick="deptOp('{{$dept.Name}}','deptDel')">删除</button>
                         {{if $dept.Availiable}}
                         <button onclick="deptOp('{{$dept.Name}}','deptBan')">禁用</button>
                         {{else}}
-                        <button>启用</button>
+                        <button onclick="deptOp('{{$dept.Name}}','deptActive')">启用</button>
                         {{end}}
                     </span>
                 </div>
                 {{end}}
-                <div>
-                    <span>部门:<input id="dept_add_name" type="text"></span>
-                    <span>, <input id="dept_add_dscrpt" type="text"></span>
+                <div class="deptLine">
+                    <span>部门:<input id="dept_add_name" type="text" placeholder="部门名"></span>
+                    <span><input id="dept_add_dscrpt" type="text" placeholder="部门描述"></span>
                     <span>
-                        <button onabort="deptOp('','deptNew')">添加</button>
+                        <button onclick="deptOp('','deptNew')">添加</button>
                     </span>
                 </div>
             </div>
         </fieldset>
 
-        <fieldset>
+        <fieldset class="users_admin">
             <legend>用户管理</legend>
-            <div>
+            <div class="line_add_user">
+                <input type="text" placeholder="部门">
                 <input type="text" placeholder="用户名">
                 <input type="text" placeholder="密码">
-                <input type="text" placeholder="部门">
                 <button>添加</button>
             </div>
             <div>
                 <div>
-                    我想要对<input type="text">的<input type="text">用户进行操作
+                    我想要对<input type="text" placeholder="部门">的<input type="text" placeholder="用户名">用户进行操作<button>搜索</button>
                 </div>
+                
                 <div>
 
                 </div>

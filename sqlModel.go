@@ -21,7 +21,7 @@ const (
 type Department struct {
 	Name        string `gorm:"primarykey"`
 	Description string
-	Availiable  bool
+	Availiable  bool `gorm:"default:true"`
 	// ...
 }
 
@@ -31,7 +31,7 @@ type User struct {
 	Password       string
 	DepartmentName string
 	Department     Department
-	IsAdmin        bool
+	IsAdmin        bool `gorm:"default:false"`
 
 	Requests []Request
 }

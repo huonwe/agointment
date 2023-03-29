@@ -54,7 +54,7 @@ window.onload = function () {
 
     let form = document.querySelector("#signupForm")
     form.addEventListener("submit", (ev) => {
-        ev.preventDefault()
+        ev.preventDefault() // 阻止默认行为，实际执行的是下面的代码
         let data = new FormData(form);
         let username = data.get("username");
         let password = data.get("pass");

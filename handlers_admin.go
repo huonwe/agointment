@@ -3,6 +3,7 @@ package main
 import (
 	"math"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -124,33 +125,70 @@ func adminUsers(ctx *gin.Context) {
 
 func adminUsersOp(ctx *gin.Context) {
 	op := ctx.Param("op")
+	deptName := ctx.PostForm("deptName")
+	if op == "" {
+		ctx.JSON(http.StatusOK, gin.H{
+			"status": "Failed",
+			"msg":    "参数错误",
+		})
+		return
+	}
+	if strings.Contains(op, "dept") {
+		if deptName == "" {
+			ctx.JSON(http.StatusOK, gin.H{
+				"status": "Failed",
+				"msg":    "参数错误",
+			})
+			return
+		}
+	}
 	switch op {
 	case "deptDel":
-		deptName := ctx.PostForm("deptName")
 		db.Delete(&Department{Name: deptName})
 		ctx.JSON(http.StatusOK, gin.H{
 			"status": "Success",
 			"msg":    "删除成功",
 		})
 	case "deptBan":
-		deptName := ctx.PostForm("deptName")
 		dept := Department{
 			Name:       deptName,
 			Availiable: false,
 		}
-		db.Model(&dept).Select("Name", "Availiable").Updates(&dept)
+		db.Where(&Department{Name: dept.Name}).Select("Name", "Availiable").Updates(&dept)
 		ctx.JSON(http.StatusOK, gin.H{
 			"status": "Success",
 			"msg":    "禁用成功",
 		})
+	case "deptActive":
+		dept := Department{
+			Name:       deptName,
+			Availiable: true,
+		}
+		// log.Println(deptName)
+		db.Where(&Department{Name: dept.Name}).Select("Name", "Availiable").Updates(dept)
+		ctx.JSON(http.StatusOK, gin.H{
+			"status": "Success",
+			"msg":    "启用成功",
+		})
+
 	case "deptNew":
-		deptName := ctx.PostForm("deptName")
-		deptDescpt := ctx.PostForm("deptDescpt")
 		dept := Department{
 			Name:        deptName,
-			Description: deptDescpt,
+			Description: ctx.PostForm("deptDescpt"),
 		}
-		db.Model(&Department{}).Create(&dept)
+		var count int64
+		db.Where(&Department{Name: deptName}).Count(&count)
+		if count > 0 {
+			ctx.JSON(http.StatusOK, gin.H{
+				"status": "Failed",
+				"msg":    "部门名重复",
+			})
+			return
+		}
+		err := db.Model(&Department{}).Create(&dept).Error
+		if err != nil {
+			handle_resp(err, ctx)
+		}
 		ctx.JSON(http.StatusOK, gin.H{
 			"status": "Success",
 			"msg":    "创建成功",
