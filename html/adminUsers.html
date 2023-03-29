@@ -43,20 +43,19 @@
         <fieldset class="users_admin">
             <legend>用户管理</legend>
             <div class="line_add_user">
-                <input type="text" placeholder="部门">
-                <input type="text" placeholder="用户名">
-                <input type="text" placeholder="密码">
-                <button>添加</button>
+                <input id="add_user_dept" type="text" placeholder="部门">
+                <input id="add_user_username" type="text" placeholder="用户名">
+                <input id="add_user_password" type="text" placeholder="密码">
+                <button onclick="userOp('new')">添加</button>
             </div>
-            <div>
+            <div class="line_search_user">
                 <div>
-                    我想要对<input type="text" placeholder="部门">的<input type="text" placeholder="用户名">用户进行操作<button>搜索</button>
+                    我想要对<input type="text" placeholder="部门">的<input type="text" placeholder="用户名">用户进行操作
                 </div>
+                <button>搜索</button>
                 
-                <div>
-
-                </div>
             </div>
+            <div id="user_found"></div>
             
         </fieldset>
     </div>

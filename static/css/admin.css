@@ -134,3 +134,11 @@ fieldset {
     cursor: pointer;
     background-color: rgba(0, 102, 255, 0.8);
 }
+
+.users_admin .line_search_user {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}

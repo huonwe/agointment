@@ -217,3 +217,11 @@ function deptOp(deptName, op) {
         })
     })
 }
+
+
+function userOp(op, username, userid) {
+    switch(op) {
+        case "new":
+            let user_dpt = document.querySelector("#user_add_dept")
+    }
+}
