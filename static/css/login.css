@@ -14,7 +14,6 @@ body {
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-
 }
 
 .login-box {
@@ -24,7 +23,7 @@ body {
     align-content: space-around;
     flex-wrap: wrap;
     /*项目排在一条线上，换行，第一行在上方*/
-    height: 30vh;
+    height: 15rem;
     width: 65vw;
     background-color: rgba(215, 242, 239, 0.153);
     border: 10px;
@@ -112,9 +111,9 @@ body {
     text-decoration: none;
 }
 
-/* (⌐■_■) */
+/* (⌐■_■) 🪄*/
 .login-box .input-box .input-name input:focus {
-    border-bottom: 1px solid green;
+    border-bottom: 3px solid green;
     animation-name: color_trans;
     animation-duration: 1s;
     /* -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6); */
@@ -125,6 +124,6 @@ body {
         border-bottom: 1px solid white;
     }
     100% {
-        border-bottom: 1px solid green;
+        border-bottom: 3px solid green;
     }
 }

@@ -38,11 +38,12 @@ func login(ctx *gin.Context) {
 }
 
 func signup(ctx *gin.Context) {
-	if ctx.PostForm("username") == "" || ctx.PostForm("password") == "" || ctx.PostForm("dept") == "" {
+	if ctx.PostForm("username") == "" || ctx.PostForm("pass") == "" || ctx.PostForm("dept") == "" {
 		ctx.JSON(http.StatusOK, gin.H{
 			"status": "Failed",
 			"msg":    "参数不足",
 		})
+		return
 	}
 
 	user := User{
@@ -52,7 +53,7 @@ func signup(ctx *gin.Context) {
 	}
 
 	var count int64
-	db.Model(&Department{Name: user.DepartmentName}).Count(&count)
+	db.Where(&Department{Name: user.DepartmentName}).Count(&count)
 	if count == 0 {
 		ctx.JSON(http.StatusOK, gin.H{
 			"status": "Failed",
@@ -61,7 +62,7 @@ func signup(ctx *gin.Context) {
 		return
 	}
 
-	db.Model(&User{Name: user.Name}).Count(&count)
+	db.Where(&User{Name: user.Name}).Count(&count)
 	if count > 0 {
 		ctx.JSON(http.StatusOK, gin.H{
 			"status": "Failed",
