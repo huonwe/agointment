@@ -21,14 +21,13 @@ const (
 type Department struct {
 	Name        string `gorm:"primarykey"`
 	Description string
-
-	Users []User
+	Availiable  bool
 	// ...
 }
 
 type User struct {
-	ID             uint `gorm:"primarykey"`
-	Name           string
+	ID             uint   `gorm:"primarykey"`
+	Name           string `gorm:"unique"`
 	Password       string
 	DepartmentName string
 	Department     Department
@@ -106,6 +105,24 @@ type Finished struct {
 	Request
 }
 
+// func (u *User) AfterFind(tx *gorm.DB) (err error) {
+// 	dept := Department{}
+// 	db.Model(&Department{Name: u.DepartmentName}).Take(&dept)
+// 	if dept.Availiable {
+// 		return
+// 	}
+// 	return errors.New("Department Unavailiable")
+// }
+
+// func (u *User) AfterTake(tx *gorm.DB) (err error) {
+// 	dept := Department{}
+// 	db.Model(&Department{Name: u.DepartmentName}).Take(&dept)
+// 	if dept.Availiable {
+// 		return
+// 	}
+// 	return errors.New("Department Unavailiable")
+// }
+
 func initDB(db *gorm.DB) {
 	// db.Exec("DROP TABLE departments")
 	// db.Exec("DROP TABLE users")
@@ -125,6 +142,7 @@ func initDB(db *gorm.DB) {
 	// db.AutoMigrate(&UnAssigned{})
 	// db.AutoMigrate(&Ongoing{})
 
+	// db.Model(&Department{Name: "設備課"}).Updates(&Department{Availiable: true})
 	// db.Create(&Department{Name: "德国骨科", Description: "德国骨科..."})
 	// db.Create(&User{Name: "test", Password: "123456", DepartmentName: "德国骨科", IsAdmin: false})
 	// db.Create(&Equipment{Name: "测试设备", Type: "试做型", Class: "醫用設備", Availiable: true})

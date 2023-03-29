@@ -13,10 +13,48 @@
     <div class="dpt_user_admin">
         <fieldset>
             <legend>部门管理</legend>
+            <div>
+                {{range $dept := .depts}}
+                <div>
+                    <span>部门:{{$dept.Name}}</span>
+                    <span>, {{$dept.Description}}</span>
+                    <span>
+                        <button onclick="deptOp('{{$dept.Name}}','deptDel')">删除</button>
+                        {{if $dept.Availiable}}
+                        <button onclick="deptOp('{{$dept.Name}}','deptBan')">禁用</button>
+                        {{else}}
+                        <button>启用</button>
+                        {{end}}
+                    </span>
+                </div>
+                {{end}}
+                <div>
+                    <span>部门:<input id="dept_add_name" type="text"></span>
+                    <span>, <input id="dept_add_dscrpt" type="text"></span>
+                    <span>
+                        <button onabort="deptOp('','deptNew')">添加</button>
+                    </span>
+                </div>
+            </div>
         </fieldset>
 
         <fieldset>
             <legend>用户管理</legend>
+            <div>
+                <input type="text" placeholder="用户名">
+                <input type="text" placeholder="密码">
+                <input type="text" placeholder="部门">
+                <button>添加</button>
+            </div>
+            <div>
+                <div>
+                    我想要对<input type="text">的<input type="text">用户进行操作
+                </div>
+                <div>
+
+                </div>
+            </div>
+            
         </fieldset>
     </div>
 </body>

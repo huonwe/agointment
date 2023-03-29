@@ -8,15 +8,90 @@ body {
     margin-top: 1.5cm;
     user-select: none;
     overflow: hidden;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
-    /* static前面有 / */
-    background-image:url(/static/img/1.png);
+    background-image:url(/static/img/2.jpg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
 
 }
+.login-box{
+    display: flex;
+    justify-content: center;  /*居中排列*/
+    align-content:space-around;
+    flex-wrap: wrap;  /*项目排在一条线上，换行，第一行在上方*/
+    height: 30vh;
+    width: 65vw;
+    background-color: rgba(215, 242, 239, 0.153);
+    border: 10px;
+    padding: 20px 50px;
+    border-radius: 20px;
+}/* 整体 */
+.login-box h4{
+    width: 120%;
+    display: flex;
+    justify-content: center;
+    color: aliceblue;
+    font-size: 20px;
+    margin-top: 1.5cm;
+    margin-bottom: 1cm;
+}   /*  标题 */
+.login-box .input-box{
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    transform: translateY(-35px);
+    line-height: 2.8em;
+}
+.login-box  .input-box  .input-name{
+    width: 100%;
+    display: flex;
+    justify-content: center; 
+}
+
+.login-box  .input-box  .input-name span{
+    color: aliceblue;
+    font-size: 18px;
+    margin-top: 10px;
+}
+.login-box  .input-box  .input-name input{
+    border: 0;
+    outline:none;
+    padding: 6px;
+    border-bottom: 1px solid white;
+    background-color: #ffffff00;
+    color: #fff;
+    margin-top: 10px;
+}
+/* 输入框 */
+    .login-box  .input-box  .button button{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 5.7px;
+        width: 240px;
+        height: 25px;
+        color: #fff;
+        background: linear-gradient(120deg,#a6c0fe 0%, #62b1d0 100%);
+        border-radius: 25px;
+        cursor: pointer;
+    }
+    /* 登录 */
+    .login-box  .input-box  .signup{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-top: 1px;
+        color: #fff;
+        font-size: 12px;
+     
+    }
+    .login-box  .input-box  .signup a{
+        color: #05572e;
+        text-decoration: none;
+    }
+
 
 .title {
     text-align: center;
@@ -26,3 +101,7 @@ body {
     color: rgb(113, 79, 172);
 }
 
+
+#input:focus {
+    border-bottom: 1px solid green;
+}

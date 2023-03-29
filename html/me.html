@@ -5,11 +5,10 @@
     {{if .user.IsAdmin }}
     <fieldset class="adminOperation">
         <legend>管理员操作</legend>
-        <a href="/admin/users">人员管理</a>
-        <a href="/admin/requestings">申请管理</a>
-        <a href="/admin/ongoings">归还管理</a>
-        <a href="/admin/all?page=1&pageSize=15">全部记录</a>
+        <a href="/admin/users"><img src="/static/img/user.ico" width="30px" height="40px"><span>人员管理</span></a>
+        <a href="/admin/requestings"><img src="/static/img/request.ico" width="30px" height="40px"><span>申请管理</span></a>
+        <a href="/admin/ongoings"><img src="/static/img/back.ico" width="30px" height="40px"><span>归还管理</span></a>
+        <a href="/admin/all?page=1&pageSize=18"><img src="/static/img/all.ico" width="30px" height="40px"><span>全部记录</span></a>
     </fieldset>
-
     {{end}}
 </div>

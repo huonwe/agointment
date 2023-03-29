@@ -21,7 +21,12 @@ func LoginFilter() gin.HandlerFunc {
 			return
 		}
 		user := User{}
-		db.Where(&User{ID: claims.UserID}).Take(&user)
+		err = db.Where(&User{ID: claims.UserID}).Take(&user).Error
+		if err != nil {
+			ctx.String(http.StatusBadRequest, "认证失败")
+			ctx.Abort()
+			return
+		}
 		ctx.Set("user", user)
 		ctx.Next()
 	}

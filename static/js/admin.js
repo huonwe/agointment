@@ -200,24 +200,26 @@ function adminAll(name, page, pageSize, op) {
     // )
 }
 
-function customizeJsonObj(json) {
-    if (typeof json != 'string') {
-        json = JSON.stringify(json, undefined, 2);
+function deptOp(deptName, op) {
+    let formData = new FormData()
+    if(op == "new"){
+        let name = document.querySelector("#dept_add_name").value;
+        let description = document.querySelector("#dept_add_dscrpt").value;
+        formData.append("deptName",name);
+        formData.append("deptDescpt",description);
+    }else {
+        formData.append("detpName", deptName)
     }
-    json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function(match) {
-        var cls = 'number';
-        if (/^"/.test(match)) {
-            if (/:$/.test(match)) {
-                cls = 'key';
-            } else {
-                cls = 'string';
+    fetch(`/admin/users/${op}`,{
+        method: "post",
+        body: formData
+    }).then((res)=>{
+        res.json().then((res)=>{
+            if(res.status != "Success"){
+                alert(res.msg);
+            }else {
+                location.reload();
             }
-        } else if (/true|false/.test(match)) {
-            cls = 'boolean';
-        } else if (/null/.test(match)) {
-            cls = 'null';
-        }
-        return '<div class="' + cls + '">' + match + '</div>';
-    });
+        })
+    })
 }

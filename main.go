@@ -57,6 +57,7 @@ func main() {
 	group_admin.GET("/ongoings", adminOngoings)         // HTML
 	group_admin.GET("/all", adminAll)
 	group_admin.GET("/users", adminUsers)
+	group_admin.POST("/users/:op", adminUsersOp) // JSON
 
 	r.NoRoute(redirect2home)
 

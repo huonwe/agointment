@@ -114,5 +114,48 @@ func adminAll(ctx *gin.Context) {
 }
 
 func adminUsers(ctx *gin.Context) {
-	ctx.HTML(http.StatusOK, "adminUsers.html", nil)
+	depts := []Department{}
+	db.Find(&depts)
+
+	ctx.HTML(http.StatusOK, "adminUsers.html", gin.H{
+		"depts": depts,
+	})
+}
+
+func adminUsersOp(ctx *gin.Context) {
+	op := ctx.Param("op")
+	switch op {
+	case "deptDel":
+		deptName := ctx.PostForm("deptName")
+		db.Delete(&Department{Name: deptName})
+		ctx.JSON(http.StatusOK, gin.H{
+			"status": "Success",
+			"msg":    "删除成功",
+		})
+	case "deptBan":
+		deptName := ctx.PostForm("deptName")
+		dept := Department{
+			Name:       deptName,
+			Availiable: false,
+		}
+		db.Model(&dept).Select("Name", "Availiable").Updates(&dept)
+		ctx.JSON(http.StatusOK, gin.H{
+			"status": "Success",
+			"msg":    "禁用成功",
+		})
+	case "deptNew":
+		deptName := ctx.PostForm("deptName")
+		deptDescpt := ctx.PostForm("deptDescpt")
+		dept := Department{
+			Name:        deptName,
+			Description: deptDescpt,
+		}
+		db.Model(&Department{}).Create(&dept)
+		ctx.JSON(http.StatusOK, gin.H{
+			"status": "Success",
+			"msg":    "创建成功",
+		})
+	case "userAdd":
+
+	}
 }

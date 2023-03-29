@@ -1,5 +1,5 @@
 body {
-    height: 93vh;
+    height: 95vh;
     width: 97vw;
 
     display: flex;
@@ -62,6 +62,8 @@ body {
     border-radius: 10px;
 
     font-weight: 500;
+
+    /* word-wrap: break-word; */
 }
 
 .availiableTable tr {
@@ -174,7 +176,10 @@ td button:hover {
     border-radius: 10px;
     padding: 5px;
     /* outline: 1px solid blueviolet; */
-    height: 6rem;
+    /* height: 6rem; */
+
+    display: flex;
+    flex-direction: row;
 }
 
 .adminOperation legend {
@@ -192,5 +197,17 @@ td button:hover {
     margin-bottom: 2rem;
     padding: 1rem;
 
+    display: flex;
+    flex-direction: column;
+    align-items: center
     /* background-color: blue; */
 }
+
+/* a div {
+    display: inline;
+} */
+
+/* a .ico {
+    width: 1rem;
+    height: 2rem;
+} */
