@@ -1,13 +1,72 @@
 <!DOCTYPE html>
 <html lang="zh">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/login.css">
+    <link rel="stylesheet" href="/static/css/signup.css">
+    <script src="/static/js/signup.js"></script>
     <title>注册</title>
 </head>
+
 <body>
-    
+    <div class="signup-box">
+        <h4 class="p1">新用户注册</h4>
+        <div class="signup-input">
+            <form id="signupForm" action="/signup" method="post">
+                <!--  -->
+                <table>
+                     <!-- 用户名 -->
+                    <tr>
+                        <td align="center" class="p1">
+                            <label for="username">用户名:</label>
+                        </td>
+                        <td class="p2">
+                            <input type="text" name="username" id="username" placeholder="请输入用户名">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" class="p1">
+                            <label for="departmentname">部门名称:</label>
+                        </td>
+                        <td class="p2">
+                            <input type="text" name="dept" id="dept" placeholder="请输入部门名称">
+                        </td>
+                    </tr>
+                   <!-- 密码 -->
+                    <tr>
+                        <td align="center" class="p1">
+                            <label for="pass">密&nbsp&nbsp码:</label>
+                        </td>
+                        <td class="p2">
+                            <input type="password" name="pass" id="pass" placeholder="请输入密码"><br>
+                        </td>
+                    </tr>
+                    <!-- 确认密码 -->
+                    <tr>
+                        <td align="center" class="p1">
+                            <label for="repass">确认密码:</label>
+                        </td>
+                        <td class="p2">
+                            <input type="password" name="repass" id="repass" placeholder="请再次输入密码"><br>
+                        </td>
+                    </tr>
+                    <!-- 注册 -->
+                    <tr>
+                        <td align="center" colspan="2">
+                            <input type="submit" value="注&nbsp&nbsp册" id="signup-submit">
+                        </td>
+                    </tr> 
+                </table>
+            </form>
+        </div>
+        <div class="login">
+            <p>已有账号?<a href="/login">立即登录</a></p>
+        </div>
+    </div>
+    </div>
 </body>
+
 </html>

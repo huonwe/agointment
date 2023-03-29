@@ -16,8 +16,8 @@ body {
     flex: 1;
     width: 100%;
     min-height: 90%;
-    overflow: auto;
-    
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .bottomNav {
@@ -37,9 +37,15 @@ body {
     height: 100%;
     text-align: center;
     font-size: large;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center
+}
+
+.bottomNav div img {
+    transform: scale(0.7);
 }
 
 .bottomNav div:hover {
@@ -179,33 +185,47 @@ td button:hover {
     /* height: 6rem; */
 
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+
+    word-break: keep-all;
+
+    background-color: rgba(255, 255, 255, 0.9);
+
+    /* width: fit-content; */
 }
 
 .adminOperation legend {
     margin-bottom: 1rem;
 }
 
-.adminOperation a {
+.adminOperation div {
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-around
+}
+
+.adminOperation div a {
     text-decoration: none;
     color: palevioletred;
 
-    height: 5rem;
-    width: 5rem;
+    /* height: 5rem;
+    width: 5rem; */
 
     margin: 1rem;
-    margin-bottom: 2rem;
-    padding: 1rem;
+    /* margin-bottom: 1rem; */
+    padding: 0.5rem;
 
     display: flex;
     flex-direction: column;
-    align-items: center
+    align-items: center;
     /* background-color: blue; */
+    /* outline: 1px solid palevioletred; */
 }
 
-/* a div {
-    display: inline;
-} */
+a img {
+    transform: scale(0.7);
+}
 
 /* a .ico {
     width: 1rem;

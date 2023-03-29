@@ -61,7 +61,19 @@ func signup(ctx *gin.Context) {
 		return
 	}
 
-	db.Create(&user)
+	db.Model(&User{Name: user.Name}).Count(&count)
+	if count > 0 {
+		ctx.JSON(http.StatusOK, gin.H{
+			"status": "Failed",
+			"msg":    "用户名已存在",
+		})
+		return
+	}
+
+	err := db.Create(&user).Error
+	if err != nil {
+		handle_resp(err, ctx)
+	}
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"status": "Success",

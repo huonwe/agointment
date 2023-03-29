@@ -148,17 +148,6 @@ function adminRequestingOp(requestID, op, equipmentID, requestorID) {
                             btn.onclick = hideMask;
                             btn.innerText = "返回";
                             mask.appendChild(btn);
-
-                            
-
-                            // let div = document.createElement("div")
-                            // for(key in res.detail) {
-                            //     let div_new = document.createElement("div");
-                            //     div_new.innerHTML = `${key}:${res.detail[key]}`
-                            //     div.appendChild(div_new)
-                            // }
-
-                            // mask.appendChild(div)
                         }
                     })
                 }

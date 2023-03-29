@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/sqlite"
@@ -21,6 +22,11 @@ func main() {
 	r.Static("static", "static")
 
 	group_authless := r.Group("/")
+	group_authless.GET("/shell", func(ctx *gin.Context) {
+		time.Sleep(12 * time.Second)           // 优雅的准备12s
+		ctx.String(http.StatusBadRequest, "🖕") // 国际友好手势
+		ctx.Abort()                            // 人生多别离
+	})
 	group_authless.GET("/login", func(ctx *gin.Context) {
 		ctx.HTML(http.StatusOK, "login.html", nil)
 	})
