@@ -142,3 +142,15 @@ fieldset {
     margin-top: 10px;
     margin-bottom: 15px;
 }
+
+.users_found {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.users_found div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

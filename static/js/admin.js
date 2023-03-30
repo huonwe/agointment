@@ -221,7 +221,65 @@ function deptOp(deptName, op) {
 
 function userOp(op, username, userid) {
     switch(op) {
-        case "new":
-            let user_dpt = document.querySelector("#user_add_dept")
+        case "userNew":
+            let user_dpt = document.querySelector("#user_add_dept").value;
+            let user_name = document.querySelector("#user_add_name").value;
+            let user_password = document.querySelector("#user_add_password").value;
+            let formData = new FormData();
+            formData.append("user_dept", user_dpt);
+            formData.append("user_name", user_name);
+            formData.append("user_password", user_password);
+            console.log(formData.get("user_dept"))
+            fetch(`/admin/users/${op}`,{
+                method: "post",
+                body: formData
+            }).then((res)=>{
+                res.json().then((res)=>{
+                    alert(res.msg)
+                    if(res.status == "Success"){
+                        // location.reload();
+                    }
+                })
+            })
+            break
+        case "userSearch":
+            let user_search_dept = document.querySelector("#user_search_dept").value || "";
+            let user_search_name = document.querySelector("#user_search_name").value || "";
+
+            fetch(`/admin/users/userSearch?dept=${user_search_dept}&name=${user_search_name}`,{method: "post"}).then((res)=>{
+                // console.log(res)
+                res.text().then((res)=>{
+                document.querySelector("#users_found").innerHTML = res
+            })})
+            break;
+        case "userDel":
+            let formData1 = new FormData()
+            formData1.append("name", username)
+            formData1.append("id",userid)
+            fetch(`/admin/users/userDel`,{
+                method: "post",
+                body: formData1
+            }).then((res)=>{
+                console.log(res)
+                res.json().then((res)=>{
+                alert(res.msg)
+            })})
+            break;
+        case "userPasswd":
+            let new_passwd = prompt("请输入新的密码");
+            if(new_passwd == "" || new_passwd == null){
+                return
+            }
+            let formData2 = new FormData()
+            formData2.append("name", username)
+            formData2.append("id",userid)
+            formData2.append("newPasswd", new_passwd)
+            fetch(`/admin/users/userPasswd`,{
+                method: "post",
+                body: formData2
+            }).then((res)=>{res.json().then((res)=>{
+                alert(res.msg)
+            })})
+            break;
     }
 }

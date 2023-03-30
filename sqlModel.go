@@ -26,9 +26,12 @@ type Department struct {
 }
 
 type User struct {
-	ID             uint   `gorm:"primarykey"`
-	Name           string `gorm:"unique"`
-	Password       string
+	ID       uint `gorm:"primarykey"`
+	Name     string
+	Password string
+	// 微信的openid
+	WeChat string
+
 	DepartmentName string
 	Department     Department
 	IsAdmin        bool `gorm:"default:false"`
@@ -52,7 +55,7 @@ type EquipmentUnit struct {
 	Remark       string
 	Status       string
 
-	Availiable bool
+	Availiable bool `gorm:"default:true"`
 	// 佔用這個設備的人
 	UserID uint
 	User   User
@@ -69,7 +72,7 @@ type Equipment struct {
 	Class string
 	// 设备个体
 	// EquipmentUnits []EquipmentUnit
-	Availiable bool
+	Availiable bool `gorm:"default:true"`
 }
 
 type Request struct {
@@ -124,32 +127,35 @@ type Finished struct {
 // }
 
 func initDB(db *gorm.DB) {
-	// db.Exec("DROP TABLE departments")
-	// db.Exec("DROP TABLE users")
-	// db.Exec("DROP TABLE equipment_units")
+	db.Exec("DROP TABLE departments")
+	db.Exec("DROP TABLE users")
+	db.Exec("DROP TABLE equipment_units")
 
-	// db.Exec("DROP TABLE equipment") // equipment is uncountable
+	db.Exec("DROP TABLE equipment") // equipment is uncountable
 
-	// db.Exec("DROP TABLE requests")
-	// db.Exec("DROP TABLE un_assigneds")
-	// db.Exec("DROP TABLE ongoings")
+	db.Exec("DROP TABLE requests")
+	db.Exec("DROP TABLE un_assigneds")
+	db.Exec("DROP TABLE ongoings")
 
-	// db.AutoMigrate(&User{})
-	// db.AutoMigrate(&Department{})
-	// db.AutoMigrate(&EquipmentUnit{})
-	// db.AutoMigrate(&Equipment{})
-	// db.AutoMigrate(&Request{})
-	// db.AutoMigrate(&UnAssigned{})
-	// db.AutoMigrate(&Ongoing{})
+	db.AutoMigrate(&User{})
+	db.AutoMigrate(&Department{})
+	db.AutoMigrate(&EquipmentUnit{})
+	db.AutoMigrate(&Equipment{})
+	db.AutoMigrate(&Request{})
+	db.AutoMigrate(&UnAssigned{})
+	db.AutoMigrate(&Ongoing{})
 
-	// db.Model(&Department{Name: "設備課"}).Updates(&Department{Availiable: true})
-	// db.Create(&Department{Name: "德国骨科", Description: "德国骨科..."})
-	// db.Create(&User{Name: "test", Password: "123456", DepartmentName: "德国骨科", IsAdmin: false})
-	// db.Create(&Equipment{Name: "测试设备", Type: "试做型", Class: "醫用設備", Availiable: true})
-	// db.Create(&Equipment{Name: "测试设备", Type: "试做型", Class: "未来科技", Availiable: true})
-	// db.Create(&Equipment{Name: "空想具现", Type: "试做型", Class: "宏伟制造", Availiable: true})
+	db.Create(&Department{Name: "德国骨科", Description: "德国骨科..."})
+	db.Create(&Department{Name: "测试部门", Description: "测试..."})
 
-	// db.Create(&EquipmentUnit{Name: "测试设备", Type: "试做型", Class: "醫用設備", ID: 0001, Brand: "宏偉製造", SerialNumber: "001", Price: 999.9, Label: "沒有標註", Factory: "宏偉天津製造工廠", Availiable: true})
-	// db.Create(&EquipmentUnit{Name: "测试设备", Type: "试做型", Class: "醫用設備", ID: 0002, Brand: "宏偉製造", SerialNumber: "001", Price: 999.9, Label: "沒有標註", Factory: "宏偉天津製造工廠", Availiable: true})
+	db.Create(&User{Name: "test", Password: "123456", DepartmentName: "德国骨科", IsAdmin: false})
+	db.Create(&User{Name: "huonwe", Password: "huonwe", DepartmentName: "测试部门", IsAdmin: true})
+
+	db.Create(&Equipment{Name: "测试设备", Type: "试做型", Class: "醫用設備", Availiable: true})
+	db.Create(&Equipment{Name: "测试设备", Type: "试做型", Class: "未来科技", Availiable: true})
+	db.Create(&Equipment{Name: "空想具现", Type: "试做型", Class: "宏伟制造", Availiable: true})
+
+	db.Create(&EquipmentUnit{Name: "测试设备", Type: "试做型", Class: "醫用設備", ID: 0001, Brand: "宏偉製造", SerialNumber: "001", Price: 999.9, Label: "沒有標註", Factory: "宏偉天津製造工廠", Availiable: true})
+	db.Create(&EquipmentUnit{Name: "测试设备", Type: "试做型", Class: "醫用設備", ID: 0002, Brand: "宏偉製造", SerialNumber: "001", Price: 999.9, Label: "沒有標註", Factory: "宏偉天津製造工廠", Availiable: true})
 
 }

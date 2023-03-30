@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"math"
 	"net/http"
 	"strings"
@@ -177,7 +178,7 @@ func adminUsersOp(ctx *gin.Context) {
 			Description: ctx.PostForm("deptDescpt"),
 		}
 		var count int64
-		db.Where(&Department{Name: deptName}).Count(&count)
+		db.Model(&dept).Where("name = ?", deptName).Count(&count)
 		if count > 0 {
 			ctx.JSON(http.StatusOK, gin.H{
 				"status": "Failed",
@@ -193,7 +194,85 @@ func adminUsersOp(ctx *gin.Context) {
 			"status": "Success",
 			"msg":    "创建成功",
 		})
-	case "userAdd":
+	case "userNew":
+		userName := ctx.PostForm("user_name")
+		userDept := ctx.PostForm("user_dept")
+		userPassword := ctx.PostForm("user_password")
+		if userDept == "" || userName == "" || userPassword == "" {
+			ctx.JSON(http.StatusOK, gin.H{
+				"status": "Failed",
+				"msg":    "参数错误",
+			})
+			return
+		}
 
+		var count int64
+		db.Model(&Department{}).Where("name = ?", userDept).Count(&count)
+		if count == 0 {
+			ctx.JSON(http.StatusOK, gin.H{
+				"status": "Failed",
+				"msg":    "部门不存在",
+			})
+			return
+		}
+
+		user := User{
+			Name:           userName,
+			DepartmentName: userDept,
+		}
+		db.Model(&user).Where(&user).Count(&count)
+		if count > 0 {
+			ctx.JSON(http.StatusOK, gin.H{
+				"status": "Failed",
+				"msg":    "用户重复",
+			})
+			return
+		}
+		user.Password = userPassword
+		err := db.Model(&user).Create(&user).Error
+		if err != nil {
+			handle_resp(err, ctx)
+		}
+
+		log.Println(user)
+		ctx.JSON(http.StatusOK, gin.H{
+			"status": "Success",
+			"msg":    "创建成功",
+		})
+	case "userSearch": // HTML
+		name := ctx.Query("name")
+		dept := ctx.Query("dept")
+		users := []User{}
+		db.Model(&User{}).Where("name LIKE ? AND department_name LIKE ?", "%"+name+"%", "%"+dept+"%").Find(&users)
+		ctx.HTML(http.StatusOK, "adminUsersUsers.html", gin.H{
+			"users": users,
+		})
+
+	case "userDel":
+		// name := ctx.PostForm("name")
+		id := str2uint(ctx.PostForm("id"))
+		// newPasswd := ctx.PostForm("newPasswd")
+		user := User{ID: id}
+		err := db.Model(&User{}).Delete(&user).Error
+		handle_resp(err, ctx)
+		ctx.JSON(http.StatusOK, gin.H{
+			"status": "Success",
+			"msg":    "删除用户成功",
+		})
+	case "userPasswd":
+		// name := ctx.PostForm("name")
+		id := str2uint(ctx.PostForm("id"))
+		newPasswd := ctx.PostForm("newPasswd")
+		user := User{ID: id, Password: newPasswd}
+		err := db.Model(&user).Updates(&user).Error
+		handle_resp(err, ctx)
+		ctx.JSON(http.StatusOK, gin.H{
+			"status": "Success",
+			"msg":    "更新密码成功",
+		})
 	}
+}
+
+func adminEquipment(ctx *gin.Context) {
+	ctx.HTML(http.StatusOK, "adminEquipment.html", nil)
 }

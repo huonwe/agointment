@@ -20,11 +20,19 @@ func login(ctx *gin.Context) {
 		})
 		return
 	}
-	db.Where(&User{Name: ctx.PostForm("username"), Password: ctx.PostForm("password")}).Take(&user)
+	db.Model(&User{}).Where(&User{Name: ctx.PostForm("username"), Password: ctx.PostForm("password")}).Preload("Department").Take(&user)
 	if user.ID == 0 {
 		ctx.JSON(http.StatusOK, gin.H{
 			"status": "Failed",
 			"msg":    "Username or Password Incorrect.",
+		})
+		return
+	}
+
+	if !user.Department.Availiable {
+		ctx.JSON(http.StatusOK, gin.H{
+			"status": "Failed",
+			"msg":    "用户不可用",
 		})
 		return
 	}
@@ -48,12 +56,12 @@ func signup(ctx *gin.Context) {
 
 	user := User{
 		Name:           ctx.PostForm("username"),
-		Password:       ctx.PostForm("password"),
+		Password:       ctx.PostForm("pass"),
 		DepartmentName: ctx.PostForm("dept"),
 	}
 
 	var count int64
-	db.Where(&Department{Name: user.DepartmentName}).Count(&count)
+	db.Model(&Department{}).Where(&Department{Name: user.DepartmentName}).Count(&count)
 	if count == 0 {
 		ctx.JSON(http.StatusOK, gin.H{
 			"status": "Failed",
@@ -62,7 +70,7 @@ func signup(ctx *gin.Context) {
 		return
 	}
 
-	db.Where(&User{Name: user.Name}).Count(&count)
+	db.Model(&User{}).Where(&User{Name: user.Name, DepartmentName: user.DepartmentName}).Count(&count)
 	if count > 0 {
 		ctx.JSON(http.StatusOK, gin.H{
 			"status": "Failed",
