@@ -156,6 +156,13 @@ func equipmentImport(ctx *gin.Context) {
 
 	f, err := excelize.OpenFile("./static/files/equipment.xlsx")
 	handle_resp(err, ctx)
+	defer func() {
+		// Close the spreadsheet.
+		if err := f.Close(); err != nil {
+			log.Println(err)
+		}
+	}()
+
 	rows, _ := f.GetRows("Sheet1")
 
 	var units []EquipmentUnit
