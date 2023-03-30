@@ -274,5 +274,24 @@ func adminUsersOp(ctx *gin.Context) {
 }
 
 func adminEquipment(ctx *gin.Context) {
-	ctx.HTML(http.StatusOK, "adminEquipment.html", nil)
+	if ctx.Query("page") == "" || ctx.Query("pageSize") == "" {
+		ctx.JSON(http.StatusBadRequest, nil)
+		return
+	}
+	page := str2int(ctx.Query("page"))
+	pageSize := str2int(ctx.Query("pageSize"))
+	var total int64 = 0
+
+	equipments := []Equipment{}
+	db.Model(&Equipment{}).Order("id desc").Where("name LIKE ?", "%"+ctx.Query("name")+"%").Limit(pageSize).Offset((page - 1) * pageSize).Find(&equipments)
+	db.Model(&Equipment{}).Where("name LIKE ?", "%"+ctx.Query("name")+"%").Count(&total)
+
+	ctx.HTML(http.StatusOK, "adminEquipment.html", gin.H{
+		"heads":      []string{"EID", "设备名", "设备型号", "设备分类", "是否可用", "操作"},
+		"equipments": equipments,
+		"total":      total,
+		"page":       page,
+		"pageSize":   pageSize,
+		"total_page": int(math.Ceil(float64(total) / float64(pageSize))),
+	})
 }

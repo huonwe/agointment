@@ -47,7 +47,7 @@ func main() {
 	group_equipment.Use(LoginFilter())
 	group_equipment.GET("/availiable", getAvailiable)     // HTML
 	group_equipment.GET("/makeRequest", equipmentRequest) // JSON
-	// group_equipment.GET("/availiableUnits", getAvailiableUnits) // HTML
+	group_equipment.POST("/import", equipmentImport)
 
 	group_user := r.Group("/user")
 	group_user.Use(LoginFilter())

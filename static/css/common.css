@@ -123,3 +123,120 @@
     padding-top: 0.8rem;
     padding-left: 0.5rem;
 }
+
+
+
+.availiableTable {
+    width: 100%;
+    scroll-behavior: auto;
+    background-color: rgba(205, 237, 255, 0.9);
+    border-collapse: collapse;
+
+    border-radius: 10px;
+
+    font-weight: 500;
+
+    /* word-wrap: break-word; */
+}
+
+.availiableTable tr {
+    max-height: 3rem;
+    min-height: 2rem;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(74, 129, 255, 0.458);
+
+    display: flex;
+    flex-direction: row;
+} 
+
+.availiableTable tr th {
+    flex: 1;
+    font-size: large;
+
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+.availiableTable tr td {
+    flex: 1;
+    font-size: medium;
+    /* text-align: center; */
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: medium;
+}
+
+td button {
+    flex: 1;
+    height: 100%;
+    background-color: rgb(147, 178, 255);
+
+    border: 0;
+    border-radius: 10px;
+}
+
+td button:hover {
+    cursor: pointer;
+}
+
+
+.color_attention {
+    color: rgb(255, 140, 0);
+}
+
+.color_normal {
+    color:rgb(153, 0, 255)
+}
+
+.color_ok {
+    color: green;
+}
+
+.color_cool {
+    color: rgb(97, 129, 193);
+}
+
+.pageSelect {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    font-weight: 600;
+
+}
+
+.pageSelect span {
+    font-size: larger;
+    /* background-color: aqua; */
+    display: flex;
+    align-items: center
+}
+
+.pageSelect button {
+    width: 3.5rem;
+    height: 2.5rem;
+    background-color: rgba(74, 129, 255, 0.458);
+    border: 0;
+    font-size: smaller;
+    font-weight: 500;
+}
+
+.pageSelect button.next {
+    margin-left: 10px;
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
+}
+
+.pageSelect button.prev {
+    margin-right: 10px;
+    border-top-left-radius: 50%;
+    border-bottom-left-radius: 50%;
+}
+
+.pageSelect button:hover {
+    cursor: pointer;
+}

@@ -47,6 +47,7 @@
     justify-content: center;
     margin-top: 0.5rem;
     color: #fff;
+    border:0;
     font-size: 12px;
     background: linear-gradient(120deg, #a6c0fe 0%, #62b1d0 100%);
     border-radius: 25px;

@@ -13,7 +13,7 @@
             <td>{{$request.ID}}</td>
             <td>{{$request.Equipment.Name}}</td>
             <td>{{$request.Equipment.Type}}</td>
-            {{if eq $request.EquipmentUnitID 0}}
+            {{if eq $request.EquipmentUnitID "0"}}
             <td></td>
             {{else}}
             <td class="color_ok">{{$request.EquipmentUnitID}}</td>

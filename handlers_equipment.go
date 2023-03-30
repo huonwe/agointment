@@ -1,10 +1,12 @@
 package main
 
 import (
+	"log"
 	"net/http"
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/xuri/excelize/v2"
 )
 
 func getAvailiable(ctx *gin.Context) {
@@ -85,7 +87,7 @@ func assignUnits(ctx *gin.Context) {
 		})
 		return
 	}
-	unitID := str2uint(ctx.PostForm("unitID"))
+	unitID := ctx.PostForm("unitID")
 	requestID := str2uint(ctx.PostForm("requestID"))
 	equipmentID := str2uint(ctx.PostForm("equipmentID"))
 	requestorID := str2uint(ctx.PostForm("requestorID"))
@@ -144,5 +146,45 @@ func assignUnits(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{
 		"status": "Success",
 		"msg":    "分配成功",
+	})
+}
+
+func equipmentImport(ctx *gin.Context) {
+	file, _ := ctx.FormFile("file")
+	log.Println(file.Filename)
+	ctx.SaveUploadedFile(file, "./static/files/equipment.xlsx")
+
+	f, err := excelize.OpenFile("./static/files/equipment.xlsx")
+	handle_resp(err, ctx)
+	rows, _ := f.GetRows("Sheet1")
+
+	var units []EquipmentUnit
+	for index, row := range rows {
+		if index == 0 {
+			continue
+		}
+		// log.Println(row)
+
+		unit := EquipmentUnit{
+			Class:        row[0],
+			Name:         row[1],
+			Type:         row[2],
+			Brand:        row[3],
+			Factory:      row[4],
+			Price:        row[5],
+			ID:           row[6],
+			SerialNumber: row[7],
+			Label:        row[8],
+			Status:       row[9],
+			Remark:       row[10],
+		}
+		units = append(units, unit)
+	}
+	err = db.Save(&units).Error
+	handle_resp(err, ctx)
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"stauts": "Success",
+		"msg":    "成功",
 	})
 }

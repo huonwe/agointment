@@ -46,10 +46,10 @@ type EquipmentUnit struct {
 	Class       string
 	Name        string
 
-	ID           uint `gorm:"primarykey"`
+	ID           string `gorm:"primarykey"`
 	Brand        string
 	SerialNumber string
-	Price        float64
+	Price        string
 	Label        string
 	Factory      string
 	Remark       string
@@ -70,8 +70,9 @@ type Equipment struct {
 	Type string
 	// 设备分类
 	Class string
-	// 设备个体
-	// EquipmentUnits []EquipmentUnit
+	// 品牌
+	Brand string
+
 	Availiable bool `gorm:"default:true"`
 }
 
@@ -88,7 +89,7 @@ type Request struct {
 	EquipmentID     uint
 	EquipmentName   string
 	Equipment       Equipment
-	EquipmentUnitID uint
+	EquipmentUnitID string
 	EquipmentUnit   EquipmentUnit
 	UserID          uint
 	User            User
@@ -101,10 +102,6 @@ type UnAssigned struct {
 }
 
 type Ongoing struct {
-	Request
-}
-
-type Finished struct {
 	Request
 }
 
@@ -125,6 +122,16 @@ type Finished struct {
 // 	}
 // 	return errors.New("Department Unavailiable")
 // }
+
+func (eu *EquipmentUnit) AfterCreate(tx *gorm.DB) (err error) {
+	var count int64
+	tx.Model(&Equipment{}).Where(&Equipment{Class: eu.Class, Name: eu.Name, Type: eu.Type}).Count(&count)
+	if count > 0 {
+		return
+	}
+	err = tx.Model(&Equipment{}).Create(&Equipment{Name: eu.Name, Type: eu.Type, Class: eu.Class}).Error
+	return
+}
 
 func initDB(db *gorm.DB) {
 	db.Exec("DROP TABLE departments")
@@ -155,7 +162,7 @@ func initDB(db *gorm.DB) {
 	db.Create(&Equipment{Name: "测试设备", Type: "试做型", Class: "未来科技", Availiable: true})
 	db.Create(&Equipment{Name: "空想具现", Type: "试做型", Class: "宏伟制造", Availiable: true})
 
-	db.Create(&EquipmentUnit{Name: "测试设备", Type: "试做型", Class: "醫用設備", ID: 0001, Brand: "宏偉製造", SerialNumber: "001", Price: 999.9, Label: "沒有標註", Factory: "宏偉天津製造工廠", Availiable: true})
-	db.Create(&EquipmentUnit{Name: "测试设备", Type: "试做型", Class: "醫用設備", ID: 0002, Brand: "宏偉製造", SerialNumber: "001", Price: 999.9, Label: "沒有標註", Factory: "宏偉天津製造工廠", Availiable: true})
+	db.Create(&EquipmentUnit{Name: "测试设备", Type: "试做型", Class: "醫用設備", ID: "0001", Brand: "宏偉製造", SerialNumber: "001", Price: "999.9", Label: "沒有標註", Factory: "宏偉天津製造工廠", Availiable: true})
+	db.Create(&EquipmentUnit{Name: "测试设备", Type: "试做型", Class: "醫用設備", ID: "0002", Brand: "宏偉製造", SerialNumber: "001", Price: "999.9", Label: "沒有標註", Factory: "宏偉天津製造工廠", Availiable: true})
 
 }
