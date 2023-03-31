@@ -205,7 +205,7 @@ func adminEquipmentImport(ctx *gin.Context) {
 		var count int64
 		db.Model(&EquipmentUnit{}).Where(&EquipmentUnit{UID: unit.UID, SerialNumber: unit.SerialNumber}).Count(&count)
 		if count == 0 {
-			log.Println("count = 0")
+			// log.Println("count = 0")
 			units_new = append(units_new, unit)
 		} else {
 			db.Model(&EquipmentUnit{}).Where(&EquipmentUnit{UID: unit.UID, SerialNumber: unit.SerialNumber}).Updates(&unit)
