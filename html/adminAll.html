@@ -24,7 +24,7 @@
             <tr>
                 <td>{{$request.ID}}</td>
                 <td>{{$request.User.Name}}@{{$request.User.DepartmentName}}</td>
-                {{if eq $request.EquipmentUnitID 0}}
+                {{if eq $request.EquipmentUnitID "0"}}
                 <td></td>
                 {{else}}
                 <td>{{$request.EquipmentUnitID}}</td>

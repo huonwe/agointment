@@ -129,7 +129,8 @@ func (eu *EquipmentUnit) AfterCreate(tx *gorm.DB) (err error) {
 	if count > 0 {
 		return
 	}
-	err = tx.Model(&Equipment{}).Create(&Equipment{Name: eu.Name, Type: eu.Type, Class: eu.Class}).Error
+	// log.Println(eu.EquipmentID)
+	err = tx.Model(&Equipment{ID: eu.EquipmentID}).Save(&Equipment{ID: eu.EquipmentID, Name: eu.Name, Type: eu.Type, Class: eu.Class, Brand: eu.Brand, Availiable: true}).Error
 	return
 }
 
@@ -157,6 +158,7 @@ func initDB(db *gorm.DB) {
 
 	db.Create(&User{Name: "test", Password: "123456", DepartmentName: "德国骨科", IsAdmin: false})
 	db.Create(&User{Name: "huonwe", Password: "huonwe", DepartmentName: "测试部门", IsAdmin: true})
+	db.Create(&User{Name: "jimengxvan", Password: "jimengxvan", DepartmentName: "测试部门", IsAdmin: true})
 
 	db.Create(&Equipment{Name: "测试设备", Type: "试做型", Class: "醫用設備", Availiable: true})
 	db.Create(&Equipment{Name: "测试设备", Type: "试做型", Class: "未来科技", Availiable: true})

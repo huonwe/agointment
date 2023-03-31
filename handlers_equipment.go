@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -11,7 +12,7 @@ import (
 
 func getAvailiable(ctx *gin.Context) {
 	equipment := []Equipment{}
-	db.Model(&Equipment{}).Where("name LIKE ?", "%"+ctx.Query("name")+"%").Find(&equipment)
+	db.Model(&Equipment{}).Where(&Equipment{Availiable: true}).Where("name LIKE ?", "%"+ctx.Query("name")+"%").Find(&equipment)
 	ctx.HTML(http.StatusOK, "availableList.html", gin.H{
 		"heads":      []string{"序号", "设备名", "型号", "类别", "操作"},
 		"equipments": equipment,
@@ -151,6 +152,13 @@ func assignUnits(ctx *gin.Context) {
 
 func equipmentImport(ctx *gin.Context) {
 	file, _ := ctx.FormFile("file")
+	if !strings.HasSuffix(file.Filename, ".xlsx") {
+		ctx.JSON(http.StatusOK, gin.H{
+			"static": "Failed",
+			"msg":    "文件格式错误",
+		})
+		return
+	}
 	log.Println(file.Filename)
 	ctx.SaveUploadedFile(file, "./static/files/equipment.xlsx")
 
@@ -173,19 +181,23 @@ func equipmentImport(ctx *gin.Context) {
 		// log.Println(row)
 
 		unit := EquipmentUnit{
-			Class:        row[0],
-			Name:         row[1],
-			Type:         row[2],
-			Brand:        row[3],
-			Factory:      row[4],
-			Price:        row[5],
-			ID:           row[6],
-			SerialNumber: row[7],
-			Label:        row[8],
-			Status:       row[9],
-			Remark:       row[10],
+			Class:        row[1],
+			Name:         row[2],
+			Type:         row[3],
+			Brand:        row[4],
+			Factory:      row[5],
+			Price:        row[6],
+			ID:           row[7],
+			SerialNumber: row[8],
+			Label:        row[9],
+			Status:       row[10],
+			Remark:       row[11],
+		}
+		if row[0] != "" {
+			unit.EquipmentID = str2uint(row[0])
 		}
 		units = append(units, unit)
+
 	}
 	err = db.Save(&units).Error
 	handle_resp(err, ctx)
@@ -194,4 +206,39 @@ func equipmentImport(ctx *gin.Context) {
 		"stauts": "Success",
 		"msg":    "成功",
 	})
+}
+
+func equipmentOp(ctx *gin.Context) {
+	op := ctx.Query("op")
+	id := ctx.Query("id")
+	if op == "" || id == "" {
+		ctx.JSON(http.StatusOK, gin.H{
+			"stauts": "Failed",
+			"msg":    "参数错误",
+		})
+		return
+	}
+	ID := str2uint(id)
+	switch op {
+	case "del":
+		err := db.Model(&Equipment{ID: ID}).Where(&Equipment{ID: ID}).Delete(ID).Error
+		handle_resp(err, ctx)
+
+		ctx.JSON(http.StatusOK, gin.H{
+			"stauts": "Success",
+			"msg":    "删除成功",
+		})
+	case "enable":
+		db.Model(&Equipment{ID: ID}).Where(&Equipment{ID: ID}).Update("availiable", true)
+		ctx.JSON(http.StatusOK, gin.H{
+			"stauts": "Success",
+			"msg":    "启用成功",
+		})
+	case "disable":
+		db.Model(&Equipment{ID: ID}).Where(&Equipment{ID: ID}).Update("availiable", false)
+		ctx.JSON(http.StatusOK, gin.H{
+			"stauts": "Success",
+			"msg":    "禁用成功",
+		})
+	}
 }

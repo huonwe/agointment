@@ -1,9 +1,9 @@
 .outline_attention {
-    outline: red solid 1px;
+    outline: #9a2b34 solid 1.5px;
 }
 
 .outline_ok {
-    outline: green solid 1px;
+    outline: #04804c solid 1.5px;
 }
 .signup-box {
     display: flex;
@@ -12,18 +12,21 @@
     align-content: space-around;
     flex-wrap: wrap;
     /*项目排在一条线上，换行，第一行在上方*/
-    margin-top: 0.3px;
-    height: 15rem;
+    height: 17rem;
     width: 25rem;
+    background-color: rgba(215, 242, 239, 0.153);
+    border: 10px;
+    padding: 20px 50px;
+    border-radius: 20px;
 }
 .signup-box h4{
+    width: 100%;
     display: flex;
     justify-content: center;
-    /*居中排列*/
-    align-content: space-around;
-    flex-wrap: wrap;
-    /*项目排在一条线上，换行，第一行在上方*/
-    margin-top: 0.2px;
+    color: aliceblue;
+    font-size: 20px;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
 }
 #signupForm{
     display: flex;
@@ -32,23 +35,44 @@
     align-content: space-around;
     flex-wrap: wrap;
     /*项目排在一条线上，换行，第一行在上方*/
-    margin-top: 0.9px;
-    height: 10rem;
+    margin-top: 0.1px;
+    height: 9rem;
     width: 25rem;
-}
+    line-height: 2em;
+    }
 #signupForm .p3{
     display: flex;
     align-content: space-around;
-    margin-top: 0.9px;
+    margin-top: 0.1rem;
+    color: #707070;
+}
+input {
+    border: 0;
+    outline: none;
+    /* padding: 6px; */
+    border-bottom: 1px solid white;
+    background-color: #ffffff00;
+    color: #ffffff;
+    width: 11rem
+}
+input::placeholder{
+    text-align: center;
+    color:#70707077
+}
+input:focus {
+    border-bottom: 3px solid green;
+    animation-name: color_trans;
+    animation-duration: 1s;
 }
 #signup-submit{
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-top: 0.5rem;
+    margin-top: 0.3rem;
     color: #fff;
     border:0;
-    font-size: 12px;
+    height: 2rem;
+    font-size: 13px;
     background: linear-gradient(120deg, #a6c0fe 0%, #62b1d0 100%);
     border-radius: 25px;
     cursor: pointer;
@@ -57,38 +81,7 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-top: 0.4rem;
+    margin-top: 1.2rem;
     color: #fff;
     font-size: 12px;
 }
-/* .signup-box .login{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 5.7px;
-    width: 240px;
-    height: 2rem;
-    color: #fff;
-    background: linear-gradient(120deg, #a6c0fe 0%, #62b1d0 100%);
-    border-radius: 25px;
-    cursor: pointer;
-
-    border: 0;
-} */
-/* #signup-submit input:focus {
-    border: 0;
-    outline: 0;
-    border-bottom: 2px solid rgb(58, 68, 203);
-
-    animation-name: color_trans_1;
-    animation-duration: 1s;
-}
-
-@keyframes color_trans_1 {
-    0% {
-        border-bottom: 1px solid palevioletred;
-    }
-    100% {
-        border-bottom: 2px solid rgb(58, 68, 203);
-    }
-} */
