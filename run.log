@@ -1,0 +1,324 @@
+nohup: ignoring input
+[GIN] 2023/03/31 - 10:45:15 | 200 |     5.04965ms |     192.168.2.1 | GET      "/home/index"
+
+2023/03/31 10:45:15 [31;1m/home/huonwe/agointment/handlers.go:108 [35;1mrecord not found
+[0m[33m[0.424ms] [34;1m[rows:0][0m SELECT * FROM `requests` WHERE `requests`.`user_id` = 1 AND `requests`.`deleted` IS NULL ORDER BY created_at desc,`requests`.`id` LIMIT 1
+[GIN] 2023/03/31 - 10:45:15 | 200 |    1.662569ms |     192.168.2.1 | GET      "/home/me"
+[GIN] 2023/03/31 - 10:45:15 | 307 |     137.147µs |     192.168.2.1 | GET      "/favicon.ico"
+[GIN] 2023/03/31 - 10:45:15 | 200 |     629.843µs |     192.168.2.1 | GET      "/home/index"
+[GIN] 2023/03/31 - 10:45:25 | 200 |    1.179261ms |     192.168.2.1 | GET      "/home/index"
+[GIN] 2023/03/31 - 10:45:25 | 307 |     109.795µs |     192.168.2.1 | GET      "/favicon.ico"
+[GIN] 2023/03/31 - 10:45:25 | 200 |    1.305315ms |     192.168.2.1 | GET      "/home/index"
+
+2023/03/31 10:45:25 [31;1m/home/huonwe/agointment/handlers.go:108 [35;1mrecord not found
+[0m[33m[0.750ms] [34;1m[rows:0][0m SELECT * FROM `requests` WHERE `requests`.`user_id` = 1 AND `requests`.`deleted` IS NULL ORDER BY created_at desc,`requests`.`id` LIMIT 1
+[GIN] 2023/03/31 - 10:45:25 | 200 |    2.184857ms |     192.168.2.1 | GET      "/home/me"
+[GIN] 2023/03/31 - 10:45:28 | 200 |    2.403188ms |     192.168.2.1 | GET      "/admin/equipment?page=1&pageSize=18"
+[GIN] 2023/03/31 - 10:45:28 | 200 |   13.739083ms |     192.168.2.1 | GET      "/static/js/admin_equipment.js"
+[GIN] 2023/03/31 - 10:45:28 | 307 |      69.258µs |     192.168.2.1 | GET      "/favicon.ico"
+[GIN] 2023/03/31 - 10:45:28 | 200 |      633.62µs |     192.168.2.1 | GET      "/home/index"
+[GIN] 2023/03/31 - 10:45:29 | 307 |       70.48µs |     192.168.2.1 | GET      "/favicon.ico"
+[GIN] 2023/03/31 - 10:45:29 | 200 |     627.139µs |     192.168.2.1 | GET      "/home/index"
+[GIN] 2023/03/31 - 10:45:31 | 200 |      753.99µs |     192.168.2.1 | GET      "/home/appoint"
+[GIN] 2023/03/31 - 10:45:31 | 200 |    1.373888ms |     192.168.2.1 | GET      "/equipment/availiable?name="
+
+2023/03/31 10:45:35 [31;1m/home/huonwe/agointment/handlers.go:108 [35;1mrecord not found
+[0m[33m[0.693ms] [34;1m[rows:0][0m SELECT * FROM `requests` WHERE `requests`.`user_id` = 1 AND `requests`.`deleted` IS NULL ORDER BY created_at desc,`requests`.`id` LIMIT 1
+[GIN] 2023/03/31 - 10:45:35 | 200 |    2.399726ms |     192.168.2.1 | GET      "/home/me"
+[GIN] 2023/03/31 - 10:45:36 | 200 |    1.404555ms |     192.168.2.1 | GET      "/home/status"
+[GIN] 2023/03/31 - 10:45:36 | 200 |    4.588435ms |     192.168.2.1 | GET      "/user/myRequest?name=&page=1&pageSize=15"
+
+2023/03/31 10:45:37 [31;1m/home/huonwe/agointment/handlers.go:108 [35;1mrecord not found
+[0m[33m[0.630ms] [34;1m[rows:0][0m SELECT * FROM `requests` WHERE `requests`.`user_id` = 1 AND `requests`.`deleted` IS NULL ORDER BY created_at desc,`requests`.`id` LIMIT 1
+[GIN] 2023/03/31 - 10:45:37 | 200 |    2.364782ms |     192.168.2.1 | GET      "/home/me"
+[GIN] 2023/03/31 - 10:45:38 | 200 |    9.996989ms |     192.168.2.1 | GET      "/admin/equipment?page=1&pageSize=18"
+[GIN] 2023/03/31 - 10:45:38 | 307 |     213.441µs |     192.168.2.1 | GET      "/favicon.ico"
+[GIN] 2023/03/31 - 10:45:38 | 200 |    2.276227ms |     192.168.2.1 | GET      "/home/index"
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+2023/03/31 10:49:37 count = 0
+
+2023/03/31 10:49:37 [31;1m/home/huonwe/agointment/sqlModel.go:144 [35;1mrecord not found
+[0m[33m[0.374ms] [34;1m[rows:0][0m SELECT * FROM `equipment` WHERE `equipment`.`name` = "电脑" AND `equipment`.`type` = "普通" AND `equipment`.`class` = "自主预约" LIMIT 1
+[GIN] 2023/03/31 - 10:49:37 | 200 |  122.213854ms |     192.168.2.1 | POST     "/equipment/import"
+[GIN] 2023/03/31 - 10:49:38 | 200 |    1.589314ms |     192.168.2.1 | GET      "/admin/equipment?page=1&pageSize=18"
+[GIN] 2023/03/31 - 10:49:38 | 304 |      230.46µs |     192.168.2.1 | GET      "/static/js/admin_equipment.js"
+[GIN] 2023/03/31 - 10:49:38 | 307 |      54.944µs |     192.168.2.1 | GET      "/favicon.ico"
+[GIN] 2023/03/31 - 10:49:38 | 200 |     662.085µs |     192.168.2.1 | GET      "/home/index"
+[GIN] 2023/03/31 - 10:49:40 | 307 |      73.888µs |     192.168.2.1 | GET      "/favicon.ico"
+[GIN] 2023/03/31 - 10:49:40 | 200 |     587.659µs |     192.168.2.1 | GET      "/home/index"
+[GIN] 2023/03/31 - 10:49:42 | 200 |     689.269µs |     192.168.2.1 | GET      "/home/appoint"
+[GIN] 2023/03/31 - 10:49:42 | 200 |    1.054987ms |     192.168.2.1 | GET      "/equipment/availiable?name="
+[GIN] 2023/03/31 - 10:49:46 | 200 |   27.713333ms |     192.168.2.1 | GET      "/equipment/makeRequest?equipmentID=1"
+[GIN] 2023/03/31 - 10:49:46 | 200 |    2.367693ms |     192.168.2.1 | GET      "/equipment/availiable?name="
+[GIN] 2023/03/31 - 10:49:47 | 200 |    2.327806ms |     192.168.2.1 | GET      "/home/me"
+[GIN] 2023/03/31 - 10:49:49 | 200 |    4.907274ms |     192.168.2.1 | GET      "/admin/requestings"
+[GIN] 2023/03/31 - 10:49:49 | 200 |     634.789µs |     192.168.2.1 | GET      "/static/css/admin.css"
+[GIN] 2023/03/31 - 10:49:49 | 200 |    1.718924ms |     192.168.2.1 | GET      "/static/js/admin.js"
+[GIN] 2023/03/31 - 10:49:49 | 307 |     305.903µs |     192.168.2.1 | GET      "/favicon.ico"
+[GIN] 2023/03/31 - 10:49:49 | 200 |     1.09808ms |     192.168.2.1 | GET      "/home/index"
+[GIN] 2023/03/31 - 10:49:50 | 200 |   19.566209ms |     192.168.2.1 | GET      "/admin/assignUnits?requestID=1&equipmentID=1"
+[GIN] 2023/03/31 - 10:51:37 | 200 |    3.243741ms |     192.168.2.1 | GET      "/admin/requestings"
+[GIN] 2023/03/31 - 10:51:37 | 200 |     275.348µs |     192.168.2.1 | GET      "/static/css/index.css"
+[GIN] 2023/03/31 - 10:51:37 | 200 |     243.515µs |     192.168.2.1 | GET      "/static/css/admin.css"
+[GIN] 2023/03/31 - 10:51:37 | 200 |     360.311µs |     192.168.2.1 | GET      "/static/css/common.css"
+[GIN] 2023/03/31 - 10:51:37 | 200 |     445.532µs |     192.168.2.1 | GET      "/static/js/admin.js"
+[GIN] 2023/03/31 - 10:51:37 | 200 |     406.792µs |     192.168.2.1 | GET      "/static/img/1.png"
+[GIN] 2023/03/31 - 10:51:37 | 307 |      55.018µs |     192.168.2.1 | GET      "/favicon.ico"
+[GIN] 2023/03/31 - 10:51:37 | 200 |     645.029µs |     192.168.2.1 | GET      "/home/index"
+[GIN] 2023/03/31 - 10:51:38 | 200 |     7.83593ms |     192.168.2.1 | GET      "/admin/assignUnits?requestID=1&equipmentID=1"
+[GIN] 2023/03/31 - 10:51:56 | 200 |    4.151156ms |     192.168.2.1 | GET      "/admin/requestings"
+[GIN] 2023/03/31 - 10:51:56 | 200 |     511.216µs |     192.168.2.1 | GET      "/static/css/index.css"
+[GIN] 2023/03/31 - 10:51:56 | 200 |     661.955µs |     192.168.2.1 | GET      "/static/css/admin.css"
+[GIN] 2023/03/31 - 10:51:56 | 200 |     790.565µs |     192.168.2.1 | GET      "/static/css/common.css"
+[GIN] 2023/03/31 - 10:51:56 | 200 |     831.565µs |     192.168.2.1 | GET      "/static/js/admin.js"
+[GIN] 2023/03/31 - 10:51:56 | 200 |     867.342µs |     192.168.2.1 | GET      "/static/img/1.png"
+[GIN] 2023/03/31 - 10:51:56 | 307 |     114.739µs |     192.168.2.1 | GET      "/favicon.ico"
+[GIN] 2023/03/31 - 10:51:56 | 200 |     1.10708ms |     192.168.2.1 | GET      "/home/index"
+[GIN] 2023/03/31 - 10:51:57 | 200 |   18.682307ms |     192.168.2.1 | GET      "/admin/assignUnits?requestID=1&equipmentID=1"
+[GIN] 2023/03/31 - 10:53:06 | 304 |     198.405µs |     192.168.2.1 | GET      "/static/css/common.css"
+[GIN] 2023/03/31 - 10:54:05 | 200 |    3.671534ms |     192.168.2.1 | GET      "/admin/requestings"
+[GIN] 2023/03/31 - 10:54:05 | 200 |     284.738µs |     192.168.2.1 | GET      "/static/css/index.css"
+[GIN] 2023/03/31 - 10:54:05 | 200 |     462.366µs |     192.168.2.1 | GET      "/static/css/common.css"
+[GIN] 2023/03/31 - 10:54:05 | 200 |     223.665µs |     192.168.2.1 | GET      "/static/css/admin.css"
+[GIN] 2023/03/31 - 10:54:05 | 200 |      467.31µs |     192.168.2.1 | GET      "/static/js/admin.js"
+[GIN] 2023/03/31 - 10:54:05 | 200 |     416.143µs |     192.168.2.1 | GET      "/static/img/1.png"
+[GIN] 2023/03/31 - 10:54:05 | 307 |      58.685µs |     192.168.2.1 | GET      "/favicon.ico"
+[GIN] 2023/03/31 - 10:54:05 | 200 |     752.381µs |     192.168.2.1 | GET      "/home/index"
+[GIN] 2023/03/31 - 10:54:06 | 200 |    7.836656ms |     192.168.2.1 | GET      "/admin/assignUnits?requestID=1&equipmentID=1"
+[GIN] 2023/03/31 - 10:54:39 | 200 |    1.889295ms |     192.168.2.1 | GET      "/admin/requestings"
+[GIN] 2023/03/31 - 10:54:39 | 200 |     251.812µs |     192.168.2.1 | GET      "/static/css/index.css"
+[GIN] 2023/03/31 - 10:54:39 | 200 |     335.293µs |     192.168.2.1 | GET      "/static/css/common.css"
+[GIN] 2023/03/31 - 10:54:39 | 200 |     246.571µs |     192.168.2.1 | GET      "/static/css/admin.css"
+[GIN] 2023/03/31 - 10:54:39 | 200 |     388.273µs |     192.168.2.1 | GET      "/static/js/admin.js"
+[GIN] 2023/03/31 - 10:54:39 | 200 |     404.162µs |     192.168.2.1 | GET      "/static/img/1.png"
+[GIN] 2023/03/31 - 10:54:39 | 307 |      59.073µs |     192.168.2.1 | GET      "/favicon.ico"
+[GIN] 2023/03/31 - 10:54:39 | 200 |     653.511µs |     192.168.2.1 | GET      "/home/index"
+[GIN] 2023/03/31 - 10:54:40 | 200 |    7.778713ms |     192.168.2.1 | GET      "/admin/assignUnits?requestID=1&equipmentID=1"
+[GIN] 2023/03/31 - 10:55:28 | 200 |    3.950662ms |     192.168.2.1 | GET      "/admin/requestings"
+[GIN] 2023/03/31 - 10:55:28 | 200 |      499.68µs |     192.168.2.1 | GET      "/static/css/index.css"
+[GIN] 2023/03/31 - 10:55:28 | 200 |     649.715µs |     192.168.2.1 | GET      "/static/css/common.css"
+[GIN] 2023/03/31 - 10:55:28 | 200 |      429.81µs |     192.168.2.1 | GET      "/static/css/admin.css"
+[GIN] 2023/03/31 - 10:55:28 | 200 |    3.126763ms |     192.168.2.1 | GET      "/static/js/admin.js"
+[GIN] 2023/03/31 - 10:55:28 | 200 |    2.807619ms |     192.168.2.1 | GET      "/static/img/1.png"
+[GIN] 2023/03/31 - 10:55:28 | 307 |     105.573µs |     192.168.2.1 | GET      "/favicon.ico"
+[GIN] 2023/03/31 - 10:55:28 | 200 |    1.098544ms |     192.168.2.1 | GET      "/home/index"
+[GIN] 2023/03/31 - 10:55:29 | 200 |   18.305678ms |     192.168.2.1 | GET      "/admin/assignUnits?requestID=1&equipmentID=1"
+[GIN] 2023/03/31 - 10:55:39 | 200 |    4.068883ms |     192.168.2.1 | GET      "/admin/requestings"
+[GIN] 2023/03/31 - 10:55:39 | 200 |     430.181µs |     192.168.2.1 | GET      "/static/css/admin.css"
+[GIN] 2023/03/31 - 10:55:39 | 200 |     568.846µs |     192.168.2.1 | GET      "/static/css/index.css"
+[GIN] 2023/03/31 - 10:55:39 | 200 |     785.436µs |     192.168.2.1 | GET      "/static/css/common.css"
+[GIN] 2023/03/31 - 10:55:39 | 200 |     811.529µs |     192.168.2.1 | GET      "/static/js/admin.js"
+[GIN] 2023/03/31 - 10:55:39 | 200 |     828.899µs |     192.168.2.1 | GET      "/static/img/1.png"
+[GIN] 2023/03/31 - 10:55:39 | 307 |     185.942µs |     192.168.2.1 | GET      "/favicon.ico"
+[GIN] 2023/03/31 - 10:55:39 | 200 |     935.397µs |     192.168.2.1 | GET      "/home/index"
+[GIN] 2023/03/31 - 10:55:40 | 200 |   16.460346ms |     192.168.2.1 | GET      "/admin/assignUnits?requestID=1&equipmentID=1"
+[GIN] 2023/03/31 - 10:56:48 | 200 |    4.057792ms |     192.168.2.1 | GET      "/admin/requestings"
+[GIN] 2023/03/31 - 10:56:48 | 200 |     458.459µs |     192.168.2.1 | GET      "/static/css/index.css"
+[GIN] 2023/03/31 - 10:56:48 | 200 |     575.476µs |     192.168.2.1 | GET      "/static/css/common.css"
+[GIN] 2023/03/31 - 10:56:48 | 200 |     412.996µs |     192.168.2.1 | GET      "/static/css/admin.css"
+[GIN] 2023/03/31 - 10:56:48 | 200 |     718.881µs |     192.168.2.1 | GET      "/static/js/admin.js"
+[GIN] 2023/03/31 - 10:56:48 | 200 |     778.658µs |     192.168.2.1 | GET      "/static/img/1.png"
+[GIN] 2023/03/31 - 10:56:48 | 307 |      99.795µs |     192.168.2.1 | GET      "/favicon.ico"
+[GIN] 2023/03/31 - 10:56:48 | 200 |    1.226302ms |     192.168.2.1 | GET      "/home/index"
+[GIN] 2023/03/31 - 10:56:49 | 200 |   18.484033ms |     192.168.2.1 | GET      "/admin/assignUnits?requestID=1&equipmentID=1"
+[GIN] 2023/03/31 - 10:57:01 | 200 |    1.873944ms |     192.168.2.1 | GET      "/admin/requestings"
+[GIN] 2023/03/31 - 10:57:01 | 200 |     476.236µs |     192.168.2.1 | GET      "/static/css/index.css"
+[GIN] 2023/03/31 - 10:57:01 | 200 |     330.941µs |     192.168.2.1 | GET      "/static/css/common.css"
+[GIN] 2023/03/31 - 10:57:01 | 200 |     266.182µs |     192.168.2.1 | GET      "/static/css/admin.css"
+[GIN] 2023/03/31 - 10:57:01 | 200 |     413.255µs |     192.168.2.1 | GET      "/static/js/admin.js"
+[GIN] 2023/03/31 - 10:57:01 | 200 |     442.514µs |     192.168.2.1 | GET      "/static/img/1.png"
+[GIN] 2023/03/31 - 10:57:01 | 307 |      65.166µs |     192.168.2.1 | GET      "/favicon.ico"
+[GIN] 2023/03/31 - 10:57:01 | 200 |      795.01µs |     192.168.2.1 | GET      "/home/index"
+[GIN] 2023/03/31 - 10:57:02 | 200 |    7.877864ms |     192.168.2.1 | GET      "/admin/assignUnits?requestID=1&equipmentID=1"
+[GIN] 2023/03/31 - 10:57:27 | 200 |    1.848629ms |     192.168.2.1 | GET      "/admin/requestings"
+[GIN] 2023/03/31 - 10:57:27 | 200 |     335.071µs |     192.168.2.1 | GET      "/static/css/index.css"
+[GIN] 2023/03/31 - 10:57:27 | 200 |     215.461µs |     192.168.2.1 | GET      "/static/css/admin.css"
+[GIN] 2023/03/31 - 10:57:27 | 200 |     308.108µs |     192.168.2.1 | GET      "/static/css/common.css"
+[GIN] 2023/03/31 - 10:57:27 | 200 |     380.367µs |     192.168.2.1 | GET      "/static/js/admin.js"
+[GIN] 2023/03/31 - 10:57:27 | 200 |     487.218µs |     192.168.2.1 | GET      "/static/img/1.png"
+[GIN] 2023/03/31 - 10:57:27 | 307 |      56.407µs |     192.168.2.1 | GET      "/favicon.ico"
+[GIN] 2023/03/31 - 10:57:27 | 200 |      785.77µs |     192.168.2.1 | GET      "/home/index"
+[GIN] 2023/03/31 - 10:57:28 | 200 |    7.776032ms |     192.168.2.1 | GET      "/admin/assignUnits?requestID=1&equipmentID=1"
+[GIN] 2023/03/31 - 10:57:48 | 200 |    1.903277ms |     192.168.2.1 | GET      "/admin/requestings"
+[GIN] 2023/03/31 - 10:57:48 | 200 |     254.183µs |     192.168.2.1 | GET      "/static/css/index.css"
+[GIN] 2023/03/31 - 10:57:48 | 200 |     254.071µs |     192.168.2.1 | GET      "/static/css/admin.css"
+[GIN] 2023/03/31 - 10:57:48 | 200 |     915.954µs |     192.168.2.1 | GET      "/static/css/common.css"
+[GIN] 2023/03/31 - 10:57:48 | 200 |     422.237µs |     192.168.2.1 | GET      "/static/js/admin.js"
+[GIN] 2023/03/31 - 10:57:49 | 200 |     406.626µs |     192.168.2.1 | GET      "/static/img/1.png"
+[GIN] 2023/03/31 - 10:57:49 | 307 |      59.833µs |     192.168.2.1 | GET      "/favicon.ico"
+[GIN] 2023/03/31 - 10:57:49 | 200 |     618.475µs |     192.168.2.1 | GET      "/home/index"
+[GIN] 2023/03/31 - 10:57:49 | 200 |     7.80531ms |     192.168.2.1 | GET      "/admin/assignUnits?requestID=1&equipmentID=1"
+[GIN] 2023/03/31 - 10:58:04 | 200 |    4.189643ms |     192.168.2.1 | GET      "/admin/requestings"
+[GIN] 2023/03/31 - 10:58:04 | 200 |     484.847µs |     192.168.2.1 | GET      "/static/css/index.css"
+[GIN] 2023/03/31 - 10:58:04 | 200 |     417.699µs |     192.168.2.1 | GET      "/static/css/admin.css"
+[GIN] 2023/03/31 - 10:58:04 | 200 |     706.808µs |     192.168.2.1 | GET      "/static/css/common.css"
+[GIN] 2023/03/31 - 10:58:04 | 200 |     836.548µs |     192.168.2.1 | GET      "/static/js/admin.js"
+[GIN] 2023/03/31 - 10:58:04 | 200 |     822.139µs |     192.168.2.1 | GET      "/static/img/1.png"
+[GIN] 2023/03/31 - 10:58:04 | 307 |     112.888µs |     192.168.2.1 | GET      "/favicon.ico"
+[GIN] 2023/03/31 - 10:58:04 | 200 |     871.158µs |     192.168.2.1 | GET      "/home/index"
+[GIN] 2023/03/31 - 10:58:05 | 200 |   20.204093ms |     192.168.2.1 | GET      "/admin/assignUnits?requestID=1&equipmentID=1"
+[GIN] 2023/03/31 - 11:01:10 | 200 |    2.114813ms |     192.168.2.1 | GET      "/admin/requestings"
+[GIN] 2023/03/31 - 11:01:10 | 200 |     295.127µs |     192.168.2.1 | GET      "/static/css/index.css"
+[GIN] 2023/03/31 - 11:01:10 | 200 |     356.145µs |     192.168.2.1 | GET      "/static/css/common.css"
+[GIN] 2023/03/31 - 11:01:10 | 200 |     203.831µs |     192.168.2.1 | GET      "/static/css/admin.css"
+[GIN] 2023/03/31 - 11:01:10 | 200 |     400.015µs |     192.168.2.1 | GET      "/static/js/admin.js"
+[GIN] 2023/03/31 - 11:01:10 | 200 |     414.218µs |     192.168.2.1 | GET      "/static/img/1.png"
+[GIN] 2023/03/31 - 11:01:10 | 307 |      58.055µs |     192.168.2.1 | GET      "/favicon.ico"
+[GIN] 2023/03/31 - 11:01:10 | 200 |     658.679µs |     192.168.2.1 | GET      "/home/index"
+[GIN] 2023/03/31 - 11:01:11 | 200 |     8.60012ms |     192.168.2.1 | GET      "/admin/assignUnits?requestID=1&equipmentID=1"
+[GIN] 2023/03/31 - 11:01:27 | 200 |    3.968166ms |     192.168.2.1 | GET      "/admin/requestings"
+[GIN] 2023/03/31 - 11:01:27 | 200 |     514.977µs |     192.168.2.1 | GET      "/static/css/index.css"
+[GIN] 2023/03/31 - 11:01:27 | 200 |     438.311µs |     192.168.2.1 | GET      "/static/css/admin.css"
+[GIN] 2023/03/31 - 11:01:27 | 200 |     945.102µs |     192.168.2.1 | GET      "/static/css/common.css"
+[GIN] 2023/03/31 - 11:01:27 | 200 |    2.244089ms |     192.168.2.1 | GET      "/static/js/admin.js"
+[GIN] 2023/03/31 - 11:01:27 | 200 |     827.936µs |     192.168.2.1 | GET      "/static/img/1.png"
+[GIN] 2023/03/31 - 11:01:27 | 307 |      86.832µs |     192.168.2.1 | GET      "/favicon.ico"
+[GIN] 2023/03/31 - 11:01:27 | 200 |     1.00036ms |     192.168.2.1 | GET      "/home/index"
+[GIN] 2023/03/31 - 11:01:28 | 200 |   18.937687ms |     192.168.2.1 | GET      "/admin/assignUnits?requestID=1&equipmentID=1"
+[GIN] 2023/03/31 - 11:01:59 | 200 |    2.007462ms |     192.168.2.1 | GET      "/admin/requestings"
+[GIN] 2023/03/31 - 11:01:59 | 200 |     258.331µs |     192.168.2.1 | GET      "/static/css/index.css"
+[GIN] 2023/03/31 - 11:01:59 | 200 |     269.423µs |     192.168.2.1 | GET      "/static/css/admin.css"
+[GIN] 2023/03/31 - 11:01:59 | 200 |     345.071µs |     192.168.2.1 | GET      "/static/css/common.css"
+[GIN] 2023/03/31 - 11:01:59 | 200 |     414.514µs |     192.168.2.1 | GET      "/static/js/admin.js"
+[GIN] 2023/03/31 - 11:01:59 | 200 |     479.532µs |     192.168.2.1 | GET      "/static/img/1.png"
+[GIN] 2023/03/31 - 11:01:59 | 307 |      58.074µs |     192.168.2.1 | GET      "/favicon.ico"
+[GIN] 2023/03/31 - 11:01:59 | 200 |     600.827µs |     192.168.2.1 | GET      "/home/index"
+[GIN] 2023/03/31 - 11:02:00 | 200 |   18.953929ms |     192.168.2.1 | GET      "/admin/assignUnits?requestID=1&equipmentID=1"
+[GIN] 2023/03/31 - 11:02:36 | 200 |    1.958815ms |     192.168.2.1 | GET      "/admin/requestings"
+[GIN] 2023/03/31 - 11:02:36 | 200 |     268.887µs |     192.168.2.1 | GET      "/static/css/index.css"
+[GIN] 2023/03/31 - 11:02:36 | 200 |     240.849µs |     192.168.2.1 | GET      "/static/css/admin.css"
+[GIN] 2023/03/31 - 11:02:36 | 200 |     335.274µs |     192.168.2.1 | GET      "/static/css/common.css"
+[GIN] 2023/03/31 - 11:02:36 | 200 |     419.347µs |     192.168.2.1 | GET      "/static/js/admin.js"
+[GIN] 2023/03/31 - 11:02:36 | 200 |     427.736µs |     192.168.2.1 | GET      "/static/img/1.png"
+[GIN] 2023/03/31 - 11:02:36 | 307 |      86.684µs |     192.168.2.1 | GET      "/favicon.ico"
+[GIN] 2023/03/31 - 11:02:36 | 200 |     633.549µs |     192.168.2.1 | GET      "/home/index"
+[GIN] 2023/03/31 - 11:02:37 | 200 |   16.442639ms |     192.168.2.1 | GET      "/admin/assignUnits?requestID=1&equipmentID=1"
+[GIN] 2023/03/31 - 11:02:49 | 200 |    2.047147ms |     192.168.2.1 | GET      "/admin/requestings"
+[GIN] 2023/03/31 - 11:02:49 | 200 |     299.571µs |     192.168.2.1 | GET      "/static/css/index.css"
+[GIN] 2023/03/31 - 11:02:49 | 200 |     301.516µs |     192.168.2.1 | GET      "/static/css/common.css"
+[GIN] 2023/03/31 - 11:02:49 | 200 |     265.442µs |     192.168.2.1 | GET      "/static/css/admin.css"
+[GIN] 2023/03/31 - 11:02:49 | 200 |     425.422µs |     192.168.2.1 | GET      "/static/js/admin.js"
+[GIN] 2023/03/31 - 11:02:49 | 200 |     407.441µs |     192.168.2.1 | GET      "/static/img/1.png"
+[GIN] 2023/03/31 - 11:02:49 | 307 |      67.666µs |     192.168.2.1 | GET      "/favicon.ico"
+[GIN] 2023/03/31 - 11:02:49 | 200 |     711.086µs |     192.168.2.1 | GET      "/home/index"
+[GIN] 2023/03/31 - 11:02:49 | 200 |   10.610936ms |     192.168.2.1 | GET      "/admin/assignUnits?requestID=1&equipmentID=1"
+[GIN] 2023/03/31 - 11:03:29 | 200 |    1.825205ms |     192.168.2.1 | GET      "/admin/requestings"
+[GIN] 2023/03/31 - 11:03:29 | 200 |      265.96µs |     192.168.2.1 | GET      "/static/css/index.css"
+[GIN] 2023/03/31 - 11:03:29 | 200 |     398.996µs |     192.168.2.1 | GET      "/static/css/common.css"
+[GIN] 2023/03/31 - 11:03:29 | 200 |     224.572µs |     192.168.2.1 | GET      "/static/css/admin.css"
+[GIN] 2023/03/31 - 11:03:29 | 200 |      414.94µs |     192.168.2.1 | GET      "/static/js/admin.js"
+[GIN] 2023/03/31 - 11:03:29 | 200 |     429.552µs |     192.168.2.1 | GET      "/static/img/1.png"
+[GIN] 2023/03/31 - 11:03:29 | 307 |       68.24µs |     192.168.2.1 | GET      "/favicon.ico"
+[GIN] 2023/03/31 - 11:03:29 | 200 |     628.513µs |     192.168.2.1 | GET      "/home/index"
+[GIN] 2023/03/31 - 11:03:30 | 200 |    7.912499ms |     192.168.2.1 | GET      "/admin/assignUnits?requestID=1&equipmentID=1"
+[GIN] 2023/03/31 - 11:04:49 | 307 |     115.128µs |     192.168.2.1 | GET      "/favicon.ico"
+[GIN] 2023/03/31 - 11:04:49 | 200 |    1.084656ms |     192.168.2.1 | GET      "/home/index"
+[GIN] 2023/03/31 - 11:04:51 | 200 |    5.880371ms |     192.168.2.1 | GET      "/admin/requestings"
+[GIN] 2023/03/31 - 11:04:51 | 304 |     323.145µs |     192.168.2.1 | GET      "/static/css/common.css"
+[GIN] 2023/03/31 - 11:04:51 | 307 |     176.072µs |     192.168.2.1 | GET      "/favicon.ico"
+[GIN] 2023/03/31 - 11:04:51 | 200 |    1.079101ms |     192.168.2.1 | GET      "/home/index"
+[GIN] 2023/03/31 - 11:05:15 | 200 |    1.863687ms |     192.168.2.1 | GET      "/admin/requestings"
+[GIN] 2023/03/31 - 11:05:15 | 304 |      206.48µs |     192.168.2.1 | GET      "/static/css/common.css"
+[GIN] 2023/03/31 - 11:05:15 | 307 |      67.462µs |     192.168.2.1 | GET      "/favicon.ico"
+[GIN] 2023/03/31 - 11:05:15 | 200 |     698.938µs |     192.168.2.1 | GET      "/home/index"
+[GIN] 2023/03/31 - 11:05:16 | 200 |    7.904778ms |     192.168.2.1 | GET      "/admin/assignUnits?requestID=1&equipmentID=1"
+[GIN] 2023/03/31 - 11:07:11 | 200 |     3.28071ms |     192.168.2.1 | GET      "/admin/requestings"
+[GIN] 2023/03/31 - 11:07:11 | 200 |     277.275µs |     192.168.2.1 | GET      "/static/css/index.css"
+[GIN] 2023/03/31 - 11:07:11 | 200 |     355.459µs |     192.168.2.1 | GET      "/static/css/common.css"
+[GIN] 2023/03/31 - 11:07:11 | 200 |       312.2µs |     192.168.2.1 | GET      "/static/css/admin.css"
+[GIN] 2023/03/31 - 11:07:11 | 200 |       441.2µs |     192.168.2.1 | GET      "/static/js/admin.js"
+[GIN] 2023/03/31 - 11:07:11 | 200 |     419.348µs |     192.168.2.1 | GET      "/static/img/1.png"
+[GIN] 2023/03/31 - 11:07:11 | 307 |      59.629µs |     192.168.2.1 | GET      "/favicon.ico"
+[GIN] 2023/03/31 - 11:07:11 | 200 |     701.031µs |     192.168.2.1 | GET      "/home/index"
+[GIN] 2023/03/31 - 11:07:13 | 200 |    18.36896ms |     192.168.2.1 | GET      "/admin/assignUnits?requestID=1&equipmentID=1"
+[GIN] 2023/03/31 - 11:07:16 | 307 |     100.295µs |     192.168.2.1 | GET      "/favicon.ico"
+[GIN] 2023/03/31 - 11:07:16 | 200 |     1.25784ms |     192.168.2.1 | GET      "/home/index"
+[GIN] 2023/03/31 - 11:08:14 | 200 |    1.094138ms |     192.168.2.1 | GET      "/home/index"
+[GIN] 2023/03/31 - 11:08:14 | 200 |     580.309µs |     192.168.2.1 | GET      "/static/css/index.css"
+[GIN] 2023/03/31 - 11:08:14 | 200 |     672.587µs |     192.168.2.1 | GET      "/static/css/common.css"
+[GIN] 2023/03/31 - 11:08:14 | 200 |     469.441µs |     192.168.2.1 | GET      "/static/js/index.js"
+[GIN] 2023/03/31 - 11:08:14 | 200 |     874.436µs |     192.168.2.1 | GET      "/static/img/1.png"
+[GIN] 2023/03/31 - 11:08:14 | 200 |      3.2896ms |     192.168.2.1 | GET      "/home/me"
+[GIN] 2023/03/31 - 11:08:14 | 307 |     119.091µs |     192.168.2.1 | GET      "/favicon.ico"
+[GIN] 2023/03/31 - 11:08:14 | 200 |     933.639µs |     192.168.2.1 | GET      "/home/index"
+[GIN] 2023/03/31 - 11:08:18 | 200 |    3.958464ms |     192.168.2.1 | GET      "/admin/requestings"
+[GIN] 2023/03/31 - 11:08:18 | 304 |     371.274µs |     192.168.2.1 | GET      "/static/css/common.css"
+[GIN] 2023/03/31 - 11:08:18 | 307 |     105.036µs |     192.168.2.1 | GET      "/favicon.ico"
+[GIN] 2023/03/31 - 11:08:18 | 200 |    1.059583ms |     192.168.2.1 | GET      "/home/index"
+[GIN] 2023/03/31 - 11:08:19 | 200 |   18.285887ms |     192.168.2.1 | GET      "/admin/assignUnits?requestID=1&equipmentID=1"
+[GIN] 2023/03/31 - 11:15:04 | 200 |    1.871639ms |     192.168.2.1 | GET      "/admin/requestings"
+[GIN] 2023/03/31 - 11:15:04 | 200 |     257.425µs |     192.168.2.1 | GET      "/static/css/index.css"
+[GIN] 2023/03/31 - 11:15:04 | 200 |     251.592µs |     192.168.2.1 | GET      "/static/css/admin.css"
+[GIN] 2023/03/31 - 11:15:04 | 200 |      324.85µs |     192.168.2.1 | GET      "/static/css/common.css"
+[GIN] 2023/03/31 - 11:15:04 | 200 |     1.40066ms |     192.168.2.1 | GET      "/static/js/admin.js"
+[GIN] 2023/03/31 - 11:15:04 | 200 |    1.301697ms |     192.168.2.1 | GET      "/static/img/1.png"
+[GIN] 2023/03/31 - 11:15:04 | 307 |      56.926µs |     192.168.2.1 | GET      "/favicon.ico"
+[GIN] 2023/03/31 - 11:15:04 | 200 |     623.646µs |     192.168.2.1 | GET      "/home/index"
+[GIN] 2023/03/31 - 11:15:05 | 200 |    8.131684ms |     192.168.2.1 | GET      "/admin/assignUnits?requestID=1&equipmentID=1"
+[GIN] 2023/03/31 - 11:15:39 | 200 |    4.037628ms |     192.168.2.1 | GET      "/admin/requestings"
+[GIN] 2023/03/31 - 11:15:39 | 200 |     596.997µs |     192.168.2.1 | GET      "/static/css/index.css"
+[GIN] 2023/03/31 - 11:15:39 | 200 |     571.886µs |     192.168.2.1 | GET      "/static/css/common.css"
+[GIN] 2023/03/31 - 11:15:39 | 200 |     413.313µs |     192.168.2.1 | GET      "/static/css/admin.css"
+[GIN] 2023/03/31 - 11:15:39 | 200 |     780.162µs |     192.168.2.1 | GET      "/static/js/admin.js"
+[GIN] 2023/03/31 - 11:15:39 | 200 |     732.349µs |     192.168.2.1 | GET      "/static/img/1.png"
+[GIN] 2023/03/31 - 11:15:39 | 307 |       96.37µs |     192.168.2.1 | GET      "/favicon.ico"
+[GIN] 2023/03/31 - 11:15:39 | 200 |    1.055069ms |     192.168.2.1 | GET      "/home/index"
+[GIN] 2023/03/31 - 11:15:40 | 200 |   19.023888ms |     192.168.2.1 | GET      "/admin/assignUnits?requestID=1&equipmentID=1"

@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"math"
 	"net/http"
 	"strings"
 	"time"
@@ -11,12 +12,19 @@ import (
 )
 
 func getAvailiable(ctx *gin.Context) {
+	page := str2int(ctx.Query("page"))
+	pageSize := str2int(ctx.Query("pageSize"))
+	var total int64 = 0
 	equipment := []Equipment{}
-	db.Model(&Equipment{}).Where(&Equipment{Availiable: true}).Where("name LIKE ?", "%"+ctx.Query("name")+"%").Find(&equipment)
+	db.Model(&Equipment{}).Where(&Equipment{Availiable: true}).Where("name LIKE ?", "%"+ctx.Query("name")+"%").Count(&total)
+	db.Model(&Equipment{}).Where(&Equipment{Availiable: true}).Where("name LIKE ?", "%"+ctx.Query("name")+"%").Find(&equipment).Limit(pageSize).Offset((page - 1) * pageSize)
 	ctx.HTML(http.StatusOK, "availableList.html", gin.H{
 		"heads":      []string{"序号", "设备名", "型号", "类别", "操作"},
 		"equipments": equipment,
-		"total":      len(equipment),
+		"total":      total,
+		"page":       page,
+		"pageSize":   pageSize,
+		"total_page": int(math.Ceil(float64(total) / float64(pageSize))),
 	})
 }
 

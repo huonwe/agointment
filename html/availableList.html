@@ -30,8 +30,19 @@
             </td>
         </tr>
         {{end}}
-
     </table>
-    
+    <div class="pageSelect">
+        {{if gt .page 1}}
+        <button class="prev" onclick="getAvailiable(document.querySelector('#filter').value, '{{.page}}', '{{.pageSize}}', 'prev')">上一页</button>
+        {{else}}
+        <button disabled class="prev" onclick="getAvailiable(document.querySelector('#filter').value, '{{.page}}', '{{.pageSize}}', 'prev')">上一页</button>
+        {{end}}
+        <span>{{.page}}/{{.total_page}}</span>
+        {{if lt .page .total_page}}
+        <button class="next" onclick="getAvailiable(document.querySelector('#filter').value, '{{.page}}', '{{.pageSize}}', 'next')">下一页</button>
+        {{else}}
+        <button disabled class="next" onclick="getAvailiable(document.querySelector('#filter').value, '{{.page}}', '{{.pageSize}}', 'next')">下一页</button>
+        {{end}}
+    </div>
     
 </div>

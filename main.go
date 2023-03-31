@@ -17,7 +17,7 @@ func main() {
 	handle(err)
 	initDB(db)
 
-	gin.SetMode(gin.ReleaseMode)
+	// gin.SetMode(gin.ReleaseMode)
 
 	r := gin.Default()
 	r.LoadHTMLGlob("html/*")

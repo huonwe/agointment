@@ -5,7 +5,6 @@
                 分派设备实体
             </legend>
             {{if gt .total 0}}
-
             {{range $idx,$unit := .units}}
             <div>
                 {{if $unit.Availiable}}
@@ -15,17 +14,15 @@
                 {{end}}
 
                 <label
-                    for="{{$unit.ID}}">设备UID:{{$unit.UID}}&nbsp;序列号:{{$unit.SerialNumber}}&nbsp;状态:{{$unit.Status}}&nbsp;备注:{{$unit.Remark}}</label>
+                    for="{{$unit.ID}}">编号:{{$unit.UID}}</label>
             </div>
             {{end}}
-            
-
-            <button type="submit">分配</button>
             {{else}}
             <div>没有可用的设备实体</div>
             {{end}}
-
+            
         </fieldset>
+        <button type="submit">分配</button>
     </form>
 
 </div>

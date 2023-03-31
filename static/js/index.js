@@ -45,9 +45,24 @@ function getHTML(key)
     
 }
 
-function getAvailiable(name) {
+// function getAvailiable(name) {
+//     document.querySelector("#manifest").innerHTML = "请求中...";
+//     fetch('/equipment/availiable?name='+name)
+//     .then((res)=>{
+//         res.text().then((res)=>{
+//             document.querySelector("#manifest").innerHTML = res
+//         })
+//     }
+//     )
+// }
+
+function getAvailiable(name, page, pageSize, op) {
+    page = parseInt(page) || 1;
+    pageSize = parseInt(pageSize) || 15;
+    if(op == "prev") page = page -1;
+    if(op == "next") page = page +1;
     document.querySelector("#manifest").innerHTML = "请求中...";
-    fetch('/equipment/availiable?name='+name)
+    fetch( `/equipment/availiable?name=${name}&page=${page}&pageSize=${pageSize}`)
     .then((res)=>{
         res.text().then((res)=>{
             document.querySelector("#manifest").innerHTML = res
