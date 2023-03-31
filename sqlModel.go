@@ -169,29 +169,25 @@ func (eu *EquipmentUnit) AfterCreate(tx *gorm.DB) (err error) {
 // }
 
 func initDB(db *gorm.DB) {
-	db.Exec("DROP TABLE departments")
-	db.Exec("DROP TABLE users")
-	db.Exec("DROP TABLE equipment_units")
+	// db.Exec("DROP TABLE departments")
+	// db.Exec("DROP TABLE users")
+	// db.Exec("DROP TABLE equipment_units")
 
-	db.Exec("DROP TABLE equipment") // equipment is uncountable
+	// db.Exec("DROP TABLE equipment") // equipment is uncountable
 
-	db.Exec("DROP TABLE requests")
-	db.Exec("DROP TABLE un_assigneds")
-	db.Exec("DROP TABLE ongoings")
+	// db.Exec("DROP TABLE requests")
+	// db.Exec("DROP TABLE un_assigneds")
+	// db.Exec("DROP TABLE ongoings")
 
-	db.AutoMigrate(&User{})
-	db.AutoMigrate(&Department{})
-	db.AutoMigrate(&EquipmentUnit{})
-	db.AutoMigrate(&Equipment{})
-	db.AutoMigrate(&Request{})
-	db.AutoMigrate(&UnAssigned{})
-	db.AutoMigrate(&Ongoing{})
+	// db.AutoMigrate(&User{})
+	// db.AutoMigrate(&Department{})
+	// db.AutoMigrate(&EquipmentUnit{})
+	// db.AutoMigrate(&Equipment{})
+	// db.AutoMigrate(&Request{})
+	// db.AutoMigrate(&UnAssigned{})
+	// db.AutoMigrate(&Ongoing{})
 
-	db.Create(&Department{Name: "测试部门", Description: "测试..."})
-
-	// db.Create(&User{Name: "admin", Password: "202303311700", DepartmentName: "测试部门", IsAdmin: true})
-
-	db.Create(&User{Name: "huonwe", Password: "Hhw20020120", DepartmentName: "测试部门", IsAdmin: true})
-	db.Create(&User{Name: "jimengxvan", Password: "jimengxvan", DepartmentName: "测试部门", IsAdmin: true})
+	// db.Create(&User{Name: "huonwe", Password: "Hhw20020120", DepartmentName: "智医2002", IsAdmin: true, IsSuper: true})
+	// db.Create(&User{Name: "jimengxvan", Password: "jimengxvan", DepartmentName: "智医2102", IsAdmin: true, IsSuper: true})
 
 }
