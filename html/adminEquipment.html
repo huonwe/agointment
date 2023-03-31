@@ -14,7 +14,7 @@
     <div>
         <input id="filter" class="filter" type="search" onchange="equipmenFilter(this.value)" placeholder="设备名 检索">
         <div>
-            <div class="hint">总计 {{.total}} 条记录 <a href="/static/files/template.xlsx">下载模板</a></div>
+            <div class="hint">总计 {{.total}} 条记录 <a href="/static/files/template.xlsx" target="_blank">下载模板</a> <a href="/equipment/export" target="_blank">导出当前</a></div>
             <table class="availiableTable">
                 <tr>
                     {{range $idx,$head := .heads}}

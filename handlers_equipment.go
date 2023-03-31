@@ -64,15 +64,8 @@ func equipmentRequest(ctx *gin.Context) {
 // assignUnits GET
 func getAvailiableUnits(ctx *gin.Context) {
 	equipmentID := str2uint(ctx.Query("equipmentID"))
-
-	equipment := Equipment{}
-	db.Take(&equipment, equipmentID)
-
 	units := []EquipmentUnit{}
-	db.Model(&EquipmentUnit{}).Order("availiable desc").Where(&EquipmentUnit{Name: equipment.Name}).Find(&units)
-	// for _, unit := range units {
-	// 	log.Println(unit.Availiable)
-	// }
+	db.Model(&EquipmentUnit{}).Order("availiable desc").Where(&EquipmentUnit{EquipmentID: equipmentID}).Find(&units)
 	ctx.HTML(http.StatusOK, "adminAssignUnit.html", gin.H{
 		"units": units,
 		"total": len(units),
@@ -88,11 +81,12 @@ func assignUnits(ctx *gin.Context) {
 		})
 		return
 	}
-	unitID := ctx.PostForm("unitID")
+	unitID := str2uint(ctx.PostForm("unitID"))
 	requestID := str2uint(ctx.PostForm("requestID"))
 	equipmentID := str2uint(ctx.PostForm("equipmentID"))
 	requestorID := str2uint(ctx.PostForm("requestorID"))
 	// log.Println(unitID)
+
 	unit := EquipmentUnit{
 		ID:          unitID,
 		EquipmentID: equipmentID,
@@ -102,7 +96,7 @@ func assignUnits(ctx *gin.Context) {
 
 	tx := db.Begin()
 	// 更新实体所有者
-	err := tx.Model(&unit).Updates(&unit).Error
+	err := tx.Model(&unit).Updates(&unit).Take(&unit).Error
 	if err != nil {
 		tx.Rollback()
 		handle_resp(err, ctx)
@@ -115,11 +109,13 @@ func assignUnits(ctx *gin.Context) {
 	}
 
 	request_new_state := Request{
-		ID:              requestID,
-		BeginAt:         time.Now(),
-		BeginAtStr:      now(),
-		EquipmentUnitID: unitID,
-		Status:          ONGOING,
+		ID:               requestID,
+		BeginAt:          time.Now(),
+		BeginAtStr:       now(),
+		EquipmentUnitID:  unitID,
+		EquipmentUnitUID: unit.UID,
+
+		Status: ONGOING,
 	}
 	// 更新Request状态
 	err = tx.Model(&Request{ID: requestID}).Updates(&request_new_state).Take(&request_new_state, requestID).Error
@@ -150,7 +146,7 @@ func assignUnits(ctx *gin.Context) {
 	})
 }
 
-func equipmentImport(ctx *gin.Context) {
+func adminEquipmentImport(ctx *gin.Context) {
 	file, _ := ctx.FormFile("file")
 	if !strings.HasSuffix(file.Filename, ".xlsx") {
 		ctx.JSON(http.StatusOK, gin.H{
@@ -159,7 +155,7 @@ func equipmentImport(ctx *gin.Context) {
 		})
 		return
 	}
-	log.Println(file.Filename)
+	// log.Println(file.Filename)
 	ctx.SaveUploadedFile(file, "./static/files/equipment.xlsx")
 
 	f, err := excelize.OpenFile("./static/files/equipment.xlsx")
@@ -173,7 +169,9 @@ func equipmentImport(ctx *gin.Context) {
 
 	rows, _ := f.GetRows("Sheet1")
 
-	var units []EquipmentUnit
+	var units_new []EquipmentUnit
+	// var units_exist []EquipmentUnit
+
 	for index, row := range rows {
 		if index == 0 {
 			continue
@@ -187,7 +185,7 @@ func equipmentImport(ctx *gin.Context) {
 			Brand:        row[4],
 			Factory:      row[5],
 			Price:        row[6],
-			ID:           row[7],
+			UID:          row[7],
 			SerialNumber: row[8],
 			Label:        row[9],
 			Status:       row[10],
@@ -196,10 +194,17 @@ func equipmentImport(ctx *gin.Context) {
 		if row[0] != "" {
 			unit.EquipmentID = str2uint(row[0])
 		}
-		units = append(units, unit)
-
+		var count int64
+		db.Model(&EquipmentUnit{}).Where(&EquipmentUnit{UID: unit.UID, SerialNumber: unit.SerialNumber}).Count(&count)
+		if count == 0 {
+			log.Println("count = 0")
+			units_new = append(units_new, unit)
+		} else {
+			db.Model(&EquipmentUnit{}).Where(&EquipmentUnit{UID: unit.UID, SerialNumber: unit.SerialNumber}).Updates(&unit)
+		}
 	}
-	err = db.Save(&units).Error
+	db.Create(&units_new)
+
 	handle_resp(err, ctx)
 
 	ctx.JSON(http.StatusOK, gin.H{

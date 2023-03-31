@@ -4,10 +4,12 @@ import (
 	"log"
 	"math"
 	"net/http"
+	"strconv"
 	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/xuri/excelize/v2"
 )
 
 func adminRequestings(ctx *gin.Context) {
@@ -294,4 +296,76 @@ func adminEquipment(ctx *gin.Context) {
 		"pageSize":   pageSize,
 		"total_page": int(math.Ceil(float64(total) / float64(pageSize))),
 	})
+}
+
+func adminExportRequests(ctx *gin.Context) {
+	f := excelize.NewFile()
+
+	requests := []Request{}
+	db.Unscoped().Model(&Request{}).Preload("User").Preload("Equipment").Preload("EquipmentUnit").Find(&requests)
+	heads := []string{"请求ID", "请求人", "请求人部门", "创建时间", "开始时间", "结束时间", "请求状态", "EID", "设备类别", "设备名", "设备型号", "设备品牌", "设备实体ID", "设备序列号", "工厂", "标签", "状态", "备注"}
+	for i, v := range heads {
+		f.SetCellValue("Sheet1", Num2Col(i)+"1", v)
+		// log.Println(Num2Col(i))
+	}
+	for i, request := range requests {
+		rowIdx := strconv.FormatInt(int64(i)+2, 10)
+		f.SetCellValue("Sheet1", "A"+rowIdx, request.ID)
+		f.SetCellValue("Sheet1", "B"+rowIdx, request.User.Name)
+		f.SetCellValue("Sheet1", "C"+rowIdx, request.User.DepartmentName)
+		f.SetCellValue("Sheet1", "D"+rowIdx, request.CreatedAt)
+		f.SetCellValue("Sheet1", "E"+rowIdx, request.BeginAt)
+		f.SetCellValue("Sheet1", "F"+rowIdx, request.EndAt)
+		f.SetCellValue("Sheet1", "G"+rowIdx, request.Status)
+
+		f.SetCellValue("Sheet1", "H"+rowIdx, request.Equipment.ID)
+		f.SetCellValue("Sheet1", "I"+rowIdx, request.Equipment.Class)
+		f.SetCellValue("Sheet1", "J"+rowIdx, request.Equipment.Name)
+		f.SetCellValue("Sheet1", "K"+rowIdx, request.Equipment.Type)
+		f.SetCellValue("Sheet1", "L"+rowIdx, request.EquipmentUnit.Brand)
+
+		f.SetCellValue("Sheet1", "M"+rowIdx, request.EquipmentUnit.UID)
+		f.SetCellValue("Sheet1", "N"+rowIdx, request.EquipmentUnit.SerialNumber)
+		f.SetCellValue("Sheet1", "O"+rowIdx, request.EquipmentUnit.Factory)
+		f.SetCellValue("Sheet1", "P"+rowIdx, request.EquipmentUnit.Label)
+		f.SetCellValue("Sheet1", "Q"+rowIdx, request.EquipmentUnit.Status)
+		f.SetCellValue("Sheet1", "R"+rowIdx, request.EquipmentUnit.Remark)
+
+	}
+	filename := "export_" + time.Now().Format("20060102150405") + ".xlsx"
+	err := f.SaveAs("./static/files/" + filename)
+	handle_resp(err, ctx)
+	ctx.Redirect(http.StatusTemporaryRedirect, "/static/files/"+filename)
+}
+
+func adminExportEquipment(ctx *gin.Context) {
+	f := excelize.NewFile()
+
+	units := []EquipmentUnit{}
+	db.Model(&EquipmentUnit{}).Order("equipment_id asc").Find(&units)
+	heads := []string{"EID", "类别", "设备名", "型号", "品牌", "工厂", "价格", "设备实体ID", "序列号", "标签", "状态", "备注"}
+	for i, v := range heads {
+		f.SetCellValue("Sheet1", Num2Col(i)+"1", v)
+		// log.Println(Num2Col(i))
+	}
+	for i, unit := range units {
+		rowIdx := strconv.FormatInt(int64(i)+2, 10)
+		f.SetCellValue("Sheet1", "A"+rowIdx, unit.EquipmentID)
+		f.SetCellValue("Sheet1", "B"+rowIdx, unit.Class)
+		f.SetCellValue("Sheet1", "C"+rowIdx, unit.Name)
+		f.SetCellValue("Sheet1", "D"+rowIdx, unit.Type)
+		f.SetCellValue("Sheet1", "E"+rowIdx, unit.Brand)
+		f.SetCellValue("Sheet1", "F"+rowIdx, unit.Factory)
+		f.SetCellValue("Sheet1", "G"+rowIdx, unit.Price)
+
+		f.SetCellValue("Sheet1", "H"+rowIdx, unit.UID)
+		f.SetCellValue("Sheet1", "I"+rowIdx, unit.SerialNumber)
+		f.SetCellValue("Sheet1", "J"+rowIdx, unit.Label)
+		f.SetCellValue("Sheet1", "K"+rowIdx, unit.Status)
+		f.SetCellValue("Sheet1", "L"+rowIdx, unit.Remark)
+	}
+	filename := "export_" + time.Now().Format("20060102150405") + ".xlsx"
+	err := f.SaveAs("./static/files/" + filename)
+	handle_resp(err, ctx)
+	ctx.Redirect(http.StatusTemporaryRedirect, "/static/files/"+filename)
 }

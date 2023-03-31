@@ -86,7 +86,7 @@ function adminRequestingOp(requestID, op, equipmentID, requestorID) {
                                 </div>
                                 <div>
                                     <span>设备编号</span>
-                                    <span>${detail.EquipmentUnit.ID}</span>
+                                    <span>${detail.EquipmentUnit.UID}</span>
                                 </div>
                                 <div>
                                     <span>序列号</span>

@@ -13,10 +13,10 @@
             <td>{{$request.ID}}</td>
             <td>{{$request.Equipment.Name}}</td>
             <td>{{$request.Equipment.Type}}</td>
-            {{if eq $request.EquipmentUnitID "0"}}
+            {{if eq $request.EquipmentUnitUID "0"}}
             <td></td>
             {{else}}
-            <td class="color_ok">{{$request.EquipmentUnitID}}</td>
+            <td class="color_ok">{{$request.EquipmentUnitUID}}</td>
             {{end}}
             {{if eq $request.Status "被拒绝"}}
             <td class="color_attention">不可用</td>

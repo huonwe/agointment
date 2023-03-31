@@ -47,8 +47,11 @@ func main() {
 	group_equipment.Use(LoginFilter())
 	group_equipment.GET("/availiable", getAvailiable)     // HTML
 	group_equipment.GET("/makeRequest", equipmentRequest) // JSON
-	group_equipment.POST("/import", equipmentImport)
+
+	group_equipment.Use(MustAdmin())
+	group_equipment.POST("/import", adminEquipmentImport)
 	group_equipment.GET("/equipmentOp", equipmentOp) // JSON
+	group_equipment.GET("/export", adminExportEquipment)
 
 	group_user := r.Group("/user")
 	group_user.Use(LoginFilter())
@@ -67,6 +70,8 @@ func main() {
 	group_admin.POST("/users/:op", adminUsersOp) // JSON or HTML
 
 	group_admin.GET("/equipment", adminEquipment)
+
+	group_admin.GET("/exportRequests", adminExportRequests)
 
 	r.NoRoute(redirect2home)
 

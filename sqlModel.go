@@ -40,13 +40,14 @@ type User struct {
 }
 
 type EquipmentUnit struct {
+	ID          uint `gorm:"primarykey"`
 	EquipmentID uint
 	Equipment   Equipment
 	Type        string
 	Class       string
 	Name        string
 
-	ID           string `gorm:"primarykey"`
+	UID          string
 	Brand        string
 	SerialNumber string
 	Price        string
@@ -63,9 +64,9 @@ type EquipmentUnit struct {
 
 type Equipment struct {
 	// gorm.Model
-	ID uint `gorm:"primarykey auto_increment:true"`
+	ID uint `gorm:"primarykey"`
 	// 设备名称
-	Name string `gorm:"primarykey auto_increment:false"`
+	Name string
 	// 设备型号
 	Type string
 	// 设备分类
@@ -86,15 +87,17 @@ type Request struct {
 	EndAt        time.Time
 	EndAtStr     string
 
-	EquipmentID     uint
-	EquipmentName   string
-	Equipment       Equipment
-	EquipmentUnitID string
-	EquipmentUnit   EquipmentUnit
-	UserID          uint
-	User            User
-	Status          string // REQUESTING
-	Deleted         gorm.DeletedAt
+	EquipmentID   uint
+	EquipmentName string
+	Equipment     Equipment
+	// 不是UID
+	EquipmentUnitID  uint
+	EquipmentUnitUID string
+	EquipmentUnit    EquipmentUnit
+	UserID           uint
+	User             User
+	Status           string // REQUESTING
+	Deleted          gorm.DeletedAt
 }
 
 type UnAssigned struct {
@@ -123,16 +126,46 @@ type Ongoing struct {
 // 	return errors.New("Department Unavailiable")
 // }
 
+// func (eu *EquipmentUnit) AfterCreate(tx *gorm.DB) (err error) {
+
+// }
+
 func (eu *EquipmentUnit) AfterCreate(tx *gorm.DB) (err error) {
-	var count int64
-	tx.Model(&Equipment{}).Where(&Equipment{Class: eu.Class, Name: eu.Name, Type: eu.Type}).Count(&count)
-	if count > 0 {
+	// 如果指定了equipmentID
+	// log.Println("1 eu", eu.Name, eu.UID)
+	if eu.EquipmentID != 0 {
+		// log.Println("!!!!", eu.EquipmentID)
+		err = tx.Save(&Equipment{ID: eu.EquipmentID, Name: eu.Name, Type: eu.Type, Class: eu.Class, Brand: eu.Brand, Availiable: true}).Error
 		return
 	}
-	// log.Println(eu.EquipmentID)
-	err = tx.Model(&Equipment{ID: eu.EquipmentID}).Save(&Equipment{ID: eu.EquipmentID, Name: eu.Name, Type: eu.Type, Class: eu.Class, Brand: eu.Brand, Availiable: true}).Error
+	// 如果没指定equipmentID 但 相同equipment已存在，则不需要添加
+	exist_equipment := Equipment{}
+	tx.Model(&Equipment{}).Where(&Equipment{Class: eu.Class, Name: eu.Name, Type: eu.Type}).Take(&exist_equipment)
+	if exist_equipment.ID > 0 {
+		tx.Model(&eu).Update("equipment_id", exist_equipment.ID)
+		return
+	}
+	// 如果没指定equipmentID 且 相同equipment不存在
+	// log.Println("2 eu ID", eu.ID)
+	new_equipment := Equipment{Name: eu.Name, Type: eu.Type, Class: eu.Class, Brand: eu.Brand, Availiable: true}
+	err = tx.Create(&new_equipment).Error
+	// log.Println("new equipment ID", new_equipment.ID)
+
+	tx.Model(&eu).Update("equipment_id", new_equipment.ID)
 	return
 }
+
+// func (eu *EquipmentUnit) AfterUpdate(tx *gorm.DB) (err error) {
+// 	log.Println("after update:", eu.EquipmentID)
+// 	err = tx.Save(&Equipment{ID: eu.EquipmentID, Name: eu.Name, Type: eu.Type, Class: eu.Class, Brand: eu.Brand, Availiable: true}).Error
+// 	return
+// }
+
+// func (eu *EquipmentUnit) AfterCreate(tx *gorm.DB) (err error) {
+// 	log.Println("after update:", eu.EquipmentID)
+// 	err = tx.Save(&Equipment{ID: eu.EquipmentID, Name: eu.Name, Type: eu.Type, Class: eu.Class, Brand: eu.Brand, Availiable: true}).Error
+// 	return
+// }
 
 func initDB(db *gorm.DB) {
 	db.Exec("DROP TABLE departments")
@@ -153,18 +186,12 @@ func initDB(db *gorm.DB) {
 	db.AutoMigrate(&UnAssigned{})
 	db.AutoMigrate(&Ongoing{})
 
-	db.Create(&Department{Name: "德国骨科", Description: "德国骨科..."})
 	db.Create(&Department{Name: "测试部门", Description: "测试..."})
 
-	db.Create(&User{Name: "test", Password: "123456", DepartmentName: "德国骨科", IsAdmin: false})
 	db.Create(&User{Name: "huonwe", Password: "huonwe", DepartmentName: "测试部门", IsAdmin: true})
 	db.Create(&User{Name: "jimengxvan", Password: "jimengxvan", DepartmentName: "测试部门", IsAdmin: true})
 
-	db.Create(&Equipment{Name: "测试设备", Type: "试做型", Class: "醫用設備", Availiable: true})
-	db.Create(&Equipment{Name: "测试设备", Type: "试做型", Class: "未来科技", Availiable: true})
-	db.Create(&Equipment{Name: "空想具现", Type: "试做型", Class: "宏伟制造", Availiable: true})
-
-	db.Create(&EquipmentUnit{Name: "测试设备", Type: "试做型", Class: "醫用設備", ID: "0001", Brand: "宏偉製造", SerialNumber: "001", Price: "999.9", Label: "沒有標註", Factory: "宏偉天津製造工廠", Availiable: true})
-	db.Create(&EquipmentUnit{Name: "测试设备", Type: "试做型", Class: "醫用設備", ID: "0002", Brand: "宏偉製造", SerialNumber: "001", Price: "999.9", Label: "沒有標註", Factory: "宏偉天津製造工廠", Availiable: true})
+	db.Create(&EquipmentUnit{Name: "测试设备", Type: "试做型", Class: "醫用設備", UID: "0001", Brand: "宏偉製造", SerialNumber: "001", Price: "999.9", Label: "沒有標註", Factory: "宏偉天津製造工廠", Availiable: true})
+	db.Create(&EquipmentUnit{Name: "测试设备", Type: "试做型", Class: "醫用設備", UID: "0002", Brand: "宏偉製造", SerialNumber: "001", Price: "9", Label: "沒有標註", Factory: "宏偉天津製造工廠", Availiable: true})
 
 }

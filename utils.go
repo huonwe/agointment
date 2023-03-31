@@ -108,3 +108,13 @@ func now() string {
 func order_desc_createdAt(db *gorm.DB) *gorm.DB {
 	return db.Order("created_at desc")
 }
+
+func Alphabet2Num(col rune) int {
+	return int(col - 'A')
+}
+
+func Num2Col(num int) string {
+	col := 'A'
+	target := col + int32(num)
+	return string(target)
+}
