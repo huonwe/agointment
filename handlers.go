@@ -8,7 +8,7 @@ import (
 )
 
 func redirect2home(ctx *gin.Context) {
-	ctx.Redirect(http.StatusPermanentRedirect, "/home/index")
+	ctx.Redirect(http.StatusTemporaryRedirect, "/home/index")
 }
 
 func login(ctx *gin.Context) {

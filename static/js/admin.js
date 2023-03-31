@@ -236,9 +236,6 @@ function userOp(op, username, userid) {
             }).then((res)=>{
                 res.json().then((res)=>{
                     alert(res.msg)
-                    if(res.status == "Success"){
-                        // location.reload();
-                    }
                 })
             })
             break
@@ -281,5 +278,32 @@ function userOp(op, username, userid) {
                 alert(res.msg)
             })})
             break;
+        case "userSetAdmin":
+            let formData3 = new FormData()
+            formData3.append("name", username)
+            formData3.append("id",userid)
+            fetch(`/admin/users/userSetAdmin`,{
+                method: "post",
+                body: formData3
+            }).then((res)=>{
+                console.log(res)
+                res.json().then((res)=>{
+                alert(res.msg)
+            })})
+            break;
+        case "userUnsetAdmin":
+            let formData4 = new FormData()
+            formData4.append("name", username)
+            formData4.append("id",userid)
+            fetch(`/admin/users/userUnsetAdmin`,{
+                method: "post",
+                body: formData4
+            }).then((res)=>{
+                console.log(res)
+                res.json().then((res)=>{
+                alert(res.msg)
+            })})
+            break;
     }
+    // location.reload()
 }

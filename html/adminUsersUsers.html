@@ -5,7 +5,11 @@
     <span>
         <button onclick="userOp('userDel','{{$user.Name}}','{{$user.ID}}')">删除</button>
         <button onclick="userOp('userPasswd','{{$user.Name}}','{{$user.ID}}')">修改密码</button>
-
+        {{if $user.IsAdmin}}
+        <button onclick="userOp('userUnsetAdmin','{{$user.Name}}','{{$user.ID}}')">取消管理员</button>
+        {{else}}
+        <button onclick="userOp('userSetAdmin','{{$user.Name}}','{{$user.ID}}')">设为管理员</button>
+        {{end}}
     </span>
 </div>
 {{end}}

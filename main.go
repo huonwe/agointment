@@ -52,6 +52,7 @@ func main() {
 	group_equipment.POST("/import", adminEquipmentImport)
 	group_equipment.GET("/equipmentOp", equipmentOp) // JSON
 	group_equipment.GET("/export", adminExportEquipment)
+	group_equipment.GET("/getTemplate", equipmentTemplate)
 
 	group_user := r.Group("/user")
 	group_user.Use(LoginFilter())

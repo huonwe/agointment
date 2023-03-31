@@ -35,6 +35,7 @@ type User struct {
 	DepartmentName string
 	Department     Department
 	IsAdmin        bool `gorm:"default:false"`
+	IsSuper        bool `gorm:"default:false"`
 
 	Requests []Request
 }
@@ -188,10 +189,9 @@ func initDB(db *gorm.DB) {
 
 	db.Create(&Department{Name: "测试部门", Description: "测试..."})
 
-	db.Create(&User{Name: "huonwe", Password: "huonwe", DepartmentName: "测试部门", IsAdmin: true})
-	db.Create(&User{Name: "jimengxvan", Password: "jimengxvan", DepartmentName: "测试部门", IsAdmin: true})
+	// db.Create(&User{Name: "admin", Password: "202303311700", DepartmentName: "测试部门", IsAdmin: true})
 
-	db.Create(&EquipmentUnit{Name: "测试设备", Type: "试做型", Class: "醫用設備", UID: "0001", Brand: "宏偉製造", SerialNumber: "001", Price: "999.9", Label: "沒有標註", Factory: "宏偉天津製造工廠", Availiable: true})
-	db.Create(&EquipmentUnit{Name: "测试设备", Type: "试做型", Class: "醫用設備", UID: "0002", Brand: "宏偉製造", SerialNumber: "001", Price: "9", Label: "沒有標註", Factory: "宏偉天津製造工廠", Availiable: true})
+	db.Create(&User{Name: "huonwe", Password: "Hhw20020120", DepartmentName: "测试部门", IsAdmin: true})
+	db.Create(&User{Name: "jimengxvan", Password: "jimengxvan", DepartmentName: "测试部门", IsAdmin: true})
 
 }

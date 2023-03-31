@@ -9,6 +9,7 @@ window.onload = function () {
             body: formData,
         }).then((response) => response.json()).then(result => {
             alert(result.msg)
+            // console.log(result)
             if (result.status == "Success") {
                 location.reload()
             }

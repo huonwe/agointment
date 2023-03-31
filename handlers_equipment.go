@@ -208,7 +208,7 @@ func adminEquipmentImport(ctx *gin.Context) {
 	handle_resp(err, ctx)
 
 	ctx.JSON(http.StatusOK, gin.H{
-		"stauts": "Success",
+		"status": "Success",
 		"msg":    "成功",
 	})
 }
@@ -218,7 +218,7 @@ func equipmentOp(ctx *gin.Context) {
 	id := ctx.Query("id")
 	if op == "" || id == "" {
 		ctx.JSON(http.StatusOK, gin.H{
-			"stauts": "Failed",
+			"status": "Failed",
 			"msg":    "参数错误",
 		})
 		return
@@ -229,21 +229,27 @@ func equipmentOp(ctx *gin.Context) {
 		err := db.Model(&Equipment{ID: ID}).Where(&Equipment{ID: ID}).Delete(ID).Error
 		handle_resp(err, ctx)
 
+		db.Model(&EquipmentUnit{}).Where(&EquipmentUnit{EquipmentID: ID}).Delete(&EquipmentUnit{})
+
 		ctx.JSON(http.StatusOK, gin.H{
-			"stauts": "Success",
+			"status": "Success",
 			"msg":    "删除成功",
 		})
 	case "enable":
 		db.Model(&Equipment{ID: ID}).Where(&Equipment{ID: ID}).Update("availiable", true)
 		ctx.JSON(http.StatusOK, gin.H{
-			"stauts": "Success",
+			"status": "Success",
 			"msg":    "启用成功",
 		})
 	case "disable":
 		db.Model(&Equipment{ID: ID}).Where(&Equipment{ID: ID}).Update("availiable", false)
 		ctx.JSON(http.StatusOK, gin.H{
-			"stauts": "Success",
+			"status": "Success",
 			"msg":    "禁用成功",
 		})
 	}
+}
+
+func equipmentTemplate(ctx *gin.Context) {
+	ctx.Redirect(http.StatusTemporaryRedirect, "/static/template/template.xlsx")
 }

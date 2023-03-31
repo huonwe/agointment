@@ -272,6 +272,20 @@ func adminUsersOp(ctx *gin.Context) {
 			"status": "Success",
 			"msg":    "更新密码成功",
 		})
+	case "userSetAdmin":
+		id := str2uint(ctx.PostForm("id"))
+		db.Model(&User{ID: id}).Update("is_admin", true)
+		ctx.JSON(http.StatusOK, gin.H{
+			"status": "Success",
+			"msg":    "设置管理员成功",
+		})
+	case "userUnsetAdmin":
+		id := str2uint(ctx.PostForm("id"))
+		db.Model(&User{ID: id}).Update("is_admin", false)
+		ctx.JSON(http.StatusOK, gin.H{
+			"status": "Success",
+			"msg":    "取消管理员成功",
+		})
 	}
 }
 
