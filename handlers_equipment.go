@@ -95,15 +95,15 @@ func assignUnits(ctx *gin.Context) {
 	}
 	unitID := str2uint(ctx.PostForm("unitID"))
 	requestID := str2uint(ctx.PostForm("requestID"))
-	equipmentID := str2uint(ctx.PostForm("equipmentID"))
+	// equipmentID := str2uint(ctx.PostForm("equipmentID"))
 	requestorID := str2uint(ctx.PostForm("requestorID"))
 	// log.Println(unitID)
 
 	unit := EquipmentUnit{
-		ID:          unitID,
-		EquipmentID: equipmentID,
-		UserID:      requestorID,
-		Availiable:  false, // 0值, updates不会更新这条
+		ID: unitID,
+		// EquipmentID: equipmentID,
+		UserID: requestorID,
+		// Availiable: false, // 0值, updates不会更新这条
 	}
 
 	tx := db.Begin()

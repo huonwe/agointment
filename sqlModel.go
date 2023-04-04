@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"time"
 
 	"gorm.io/gorm"
@@ -33,7 +34,7 @@ type User struct {
 	// 微信的openid
 	WeChat string
 
-	// DeptName     string
+	DeptName     string
 	DepartmentID uint
 	Department   Department
 	IsAdmin      bool `gorm:"default:false"`
@@ -204,22 +205,17 @@ func (eu *EquipmentUnit) AfterCreate(tx *gorm.DB) (err error) {
 	// log.Println("2 eu ID", eu.ID)
 	new_equipment := Equipment{Name: eu.Name, Type: eu.Type, Class: eu.Class, Brand: eu.Brand, Availiable: true}
 	err = tx.Create(&new_equipment).Error
-	// log.Println("new equipment ID", new_equipment.ID)
+
+	log.Println("new equipment ID", new_equipment.ID)
 
 	tx.Model(&eu).Update("equipment_id", new_equipment.ID)
 	return
 }
 
-// func (eu *EquipmentUnit) AfterUpdate(tx *gorm.DB) (err error) {
-// 	// log.Println("after update:", eu.EquipmentID)
-// 	err = tx.Save(&Equipment{ID: eu.EquipmentID, Name: eu.Name, Type: eu.Type, Class: eu.Class, Brand: eu.Brand, Availiable: true}).Error
-// 	return
-// }
-
 func initDB(db *gorm.DB) {
-	// db.Exec("SET FOREIGN_KEY_CHECKS=0;")
-	// db.Exec("DROP TABLE departments, users, equipment_units, equipment, requests, un_assigneds, ongoings")
-	// db.Exec("SET FOREIGN_KEY_CHECKS=1;")
+	db.Exec("SET FOREIGN_KEY_CHECKS=0;")
+	db.Exec("DROP TABLE departments, users, equipment_units, equipment, requests, un_assigneds, ongoings")
+	db.Exec("SET FOREIGN_KEY_CHECKS=1;")
 
 	db.AutoMigrate(&Department{})
 	db.AutoMigrate(&User{})
@@ -229,10 +225,10 @@ func initDB(db *gorm.DB) {
 	// db.AutoMigrate(&UnAssigned{})
 	// db.AutoMigrate(&Ongoing{})
 
-	// db.Create(&Department{Name: "智医2002", Description: "智能医学工程", Availiable: true})
-	// db.Create(&Department{Name: "智医2102", Description: "智能医学工程", Availiable: true})
+	db.Create(&Department{Name: "智医2002", Description: "智能医学工程", Availiable: true})
+	db.Create(&Department{Name: "智医2102", Description: "智能医学工程", Availiable: true})
 
-	db.Create(&User{Name: "huonwe", Password: "Hhw20020120", DepartmentID: 1, IsAdmin: true, IsSuper: true})
-	db.Create(&User{Name: "jimengxvan", Password: "jimengxvan", DepartmentID: 2, IsAdmin: true, IsSuper: true})
+	db.Create(&User{ID: 1, Name: "huonwe", Password: "Hhw20020120", DepartmentID: 1, DeptName: "智医2002", IsAdmin: true, IsSuper: true})
+	db.Create(&User{ID: 2, Name: "jimengxvan", Password: "jimengxvan", DepartmentID: 2, DeptName: "智医2102", IsAdmin: true, IsSuper: true})
 
 }

@@ -19,7 +19,7 @@ function adminRequestingOp(requestID, op, equipmentID, requestorID) {
                         ev.preventDefault();
                         let data = new FormData(form);
                         data.append("requestID", requestID);
-                        data.append("equipmentID", requestID);
+                        data.append("equipmentID", equipmentID);
                         data.append("requestorID", requestorID);
                         fetch("/admin/assignUnits", {
                             method: "post",

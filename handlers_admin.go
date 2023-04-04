@@ -77,11 +77,10 @@ func adminRequestingsOp(ctx *gin.Context) {
 
 		tx := db.Begin()
 		// 更新request状态
-		tx.Model(&request).Updates(&request).Take(&request, requestID)
+		tx.Model(&request).Updates(&request)
+		tx.Model(&Request{}).Take(&request, requestID)
 		// 更新unit状态
-		tx.Model(&EquipmentUnit{ID: request.EquipmentUnitID}).Updates(&EquipmentUnit{
-			Availiable: true,
-		})
+		tx.Model(&EquipmentUnit{ID: request.EquipmentUnitID}).Update("availiable", true)
 
 		err := tx.Commit().Error
 		handle_resp(err, ctx)
@@ -250,7 +249,12 @@ func adminUsersOp(ctx *gin.Context) {
 		name := ctx.Query("name")
 		dept := ctx.Query("dept")
 		users := []User{}
-		db.Model(&User{}).Where("name LIKE ? AND department_name LIKE ?", "%"+name+"%", "%"+dept+"%").Find(&users)
+		// department := Department{}
+		// db.Where("name like ?", "%"+dept+"%").First(&department)
+		// db.Joins("JOIN emails ON emails.user_id = users.id AND emails.email = ?", "jinzhu@example.org")
+		user := User{}
+		user.Department.Name = dept
+		db.Model(&User{}).Where("name like ? and dept_name like ?", "%"+name+"%", "%"+dept+"%").Preload("Department").Find(&users)
 		ctx.HTML(http.StatusOK, "adminUsersUsers.html", gin.H{
 			"users": users,
 		})

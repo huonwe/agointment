@@ -70,6 +70,7 @@ func signup(ctx *gin.Context) {
 		return
 	}
 	user.DepartmentID = dept.ID
+	user.DeptName = dept.Name
 
 	var count int64
 	db.Model(&User{}).Where(&User{Name: user.Name, DepartmentID: dept.ID}).Count(&count)
