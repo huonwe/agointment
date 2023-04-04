@@ -76,37 +76,38 @@ function adminRequestingOp(requestID, op, equipmentID, requestorID) {
                         if (res.status != "Success") {
                             alert(res.msg)
                         } else {    // Success
+                            console.log(res.detail)
                             let detail = res.detail
                             mask.innerHTML = `
                             <div class="detail">
                                 <div>详细信息</div>
                                 <div>
                                     <span>设备名称</span>
-                                    <span>${detail.Equipment.Name}</span>
+                                    <span>${detail.EquipmentName}</span>
                                 </div>
                                 <div>
                                     <span>设备编号</span>
-                                    <span>${detail.EquipmentUnit.UID}</span>
+                                    <span>${detail.UnitUID}</span>
                                 </div>
                                 <div>
                                     <span>序列号</span>
-                                    <span>${detail.EquipmentUnit.SerialNumber}</span>
+                                    <span>${detail.UnitSerialNumber}</span>
                                 </div>
                                 <div>
                                     <span>型号</span>
-                                    <span>${detail.Equipment.Type}</span>
+                                    <span>${detail.EquipmentType}</span>
                                 </div>
                                 <div>
                                     <span>品牌</span>
-                                    <span>${detail.EquipmentUnit.Brand}</span>
+                                    <span>${detail.EquipmentBrand}</span>
                                 </div>
                                 <div>
                                     <span>单价</span>
-                                    <span>${detail.EquipmentUnit.Price}</span>
+                                    <span>${detail.UnitPrice}</span>
                                 </div>
                                 <div>
                                     <span>所在科室</span>
-                                    <span>${detail.User.DepartmentName}</span>
+                                    <span>${detail.User.Department.Name}</span>
                                 </div>
                                 <div>
                                     <span>联系人</span>
@@ -122,23 +123,23 @@ function adminRequestingOp(requestID, op, equipmentID, requestorID) {
                                 </div>
                                 <div>
                                     <span>设备状态</span>
-                                    <span>${detail.EquipmentUnit.Status}</span>
+                                    <span>${detail.UnitStatus}</span>
                                 </div>
                                 <div>
                                     <span>设备分类</span>
-                                    <span>${detail.Equipment.Class}</span>
+                                    <span>${detail.EquipmentClass}</span>
                                 </div>
                                 <div>
                                     <span>设备标注</span>
-                                    <span>${detail.EquipmentUnit.Label}</span>
+                                    <span>${detail.UnitLabel}</span>
                                 </div>
                                 <div>
                                     <span>厂家信息</span>
-                                    <span>${detail.EquipmentUnit.Factory}</span>
+                                    <span>${detail.UnitFactory}</span>
                                 </div>
                                 <div>
                                     <span>备注</span>
-                                    <span>${detail.EquipmentUnit.Remark}</span>
+                                    <span>${detail.UnitRemark}</span>
                                 </div>
                             </div>
                             
@@ -306,4 +307,15 @@ function userOp(op, username, userid) {
             break;
     }
     // location.reload()
+}
+
+function adminEmptyEnds() {
+    let yes = confirm("确定要一键清空已结束(取消、拒绝、完成)的请求吗？\n强烈建议您在使用本功能前先导出excel, 并且定期执行本功能.")
+    if(!yes){
+        return
+    }
+    fetch(`/admin/emptyEnded`).then((res)=>{res.json().then((res)=>{
+        alert(res.msg)
+        location.reload()
+    })})
 }

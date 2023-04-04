@@ -55,22 +55,24 @@ func signup(ctx *gin.Context) {
 	}
 
 	user := User{
-		Name:           ctx.PostForm("username"),
-		Password:       ctx.PostForm("pass"),
-		DepartmentName: ctx.PostForm("dept"),
+		Name:     ctx.PostForm("username"),
+		Password: ctx.PostForm("pass"),
+		// DepartmentName: ctx.PostForm("dept"),
 	}
 
-	var count int64
-	db.Model(&Department{}).Where(&Department{Name: user.DepartmentName}).Count(&count)
-	if count == 0 {
+	dept := Department{}
+	db.Model(&Department{}).Where(&Department{Name: ctx.PostForm("dept")}).Take(&dept)
+	if dept.ID == 0 {
 		ctx.JSON(http.StatusOK, gin.H{
 			"status": "Failed",
 			"msg":    "没有这个部门",
 		})
 		return
 	}
+	user.DepartmentID = dept.ID
 
-	db.Model(&User{}).Where(&User{Name: user.Name, DepartmentName: user.DepartmentName}).Count(&count)
+	var count int64
+	db.Model(&User{}).Where(&User{Name: user.Name, DepartmentID: dept.ID}).Count(&count)
 	if count > 0 {
 		ctx.JSON(http.StatusOK, gin.H{
 			"status": "Failed",
@@ -107,8 +109,10 @@ func index(ctx *gin.Context) {
 		req := Request{}
 		db.Where(&Request{UserID: user.ID}).Order("created_at desc").First(&req)
 
+		dept := Department{}
+		db.Take(&dept, user.DepartmentID)
 		ctx.HTML(http.StatusOK, "me.html", gin.H{
-			"greeting": fmt.Sprintf("欢迎您，%s 的 %s", user.DepartmentName, user.Name),
+			"greeting": fmt.Sprintf("欢迎您，%s 的 %s", dept.Name, user.Name),
 			"user":     user,
 			"l_req":    req,
 		})

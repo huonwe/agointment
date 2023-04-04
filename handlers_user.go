@@ -21,7 +21,7 @@ func myRequest(ctx *gin.Context) {
 	}
 	db.Model(&user).Preload("Requests", order_desc_createdAt, func(db *gorm.DB) *gorm.DB {
 		return db.Where("equipment_name LIKE ?", "%"+ctx.Query("name")+"%").Limit(pageSize).Offset((page - 1) * pageSize)
-	}).Preload("Requests.Equipment").Take(&user)
+	}).Take(&user)
 
 	db.Model(&Request{}).Where("user_id = ?", claim.UserID).Where("equipment_name LIKE ?", "%"+ctx.Query("name")+"%").Count(&total)
 	ctx.HTML(http.StatusOK, "statusTemplate.html", gin.H{
@@ -46,7 +46,7 @@ func myRequestOp(ctx *gin.Context) {
 	}
 	switch op {
 	case "cancel":
-		handle_resp(db.Model(&UnAssigned{}).Delete(&UnAssigned{request}).Error, ctx)
+		// handle_resp(db.Model(&UnAssigned{}).Delete(&UnAssigned{request}).Error, ctx)
 		handle_resp(db.Model(&request).Update("status", CANCELED).Delete(&request).Error, ctx)
 		ctx.JSON(http.StatusOK, gin.H{
 			"status": "Success",

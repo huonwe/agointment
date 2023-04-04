@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"math"
 	"net/http"
@@ -40,13 +41,18 @@ func equipmentRequest(ctx *gin.Context) {
 	equipment := Equipment{}
 	db.Take(&equipment, equipmentID)
 	request := Request{
-		EquipmentID:   equipment.ID,
-		EquipmentName: equipment.Name,
-		UserID:        user.ID,
+		EquipmentID:    equipment.ID,
+		EquipmentName:  equipment.Name,
+		EquipmentType:  equipment.Type,
+		EquipmentClass: equipment.Class,
+		EquipmentBrand: equipment.Brand,
+		UserID:         user.ID,
+		// UserName:       user.Name,
+		// UserDeptName:   user.DeptName,
 	}
 
 	var count int64
-	db.Model(&UnAssigned{}).Where(&UnAssigned{request}).Count(&count)
+	db.Model(&Request{}).Where("status = ?", REQUESTING).Where(&request).Count(&count)
 	if count > 0 {
 		ctx.JSON(http.StatusOK, gin.H{
 			"status": "Failed",
@@ -58,8 +64,6 @@ func equipmentRequest(ctx *gin.Context) {
 	request.Status = REQUESTING
 
 	err := db.Model(&Request{}).Create(&request).Error
-	handle_resp(err, ctx)
-	err = db.Model(&UnAssigned{}).Create(&UnAssigned{request}).Error
 	handle_resp(err, ctx)
 
 	ctx.JSON(http.StatusOK, gin.H{
@@ -117,11 +121,20 @@ func assignUnits(ctx *gin.Context) {
 	}
 
 	request_new_state := Request{
-		ID:               requestID,
-		BeginAt:          time.Now(),
-		BeginAtStr:       now(),
-		EquipmentUnitID:  unitID,
-		EquipmentUnitUID: unit.UID,
+		ID:              requestID,
+		BeginAt:         time.Now(),
+		BeginAtStr:      now(),
+		EquipmentUnitID: unitID,
+		UnitUID:         unit.UID,
+
+		UnitSerialNumber: unit.SerialNumber,
+		UnitPrice:        unit.Price,
+		UnitLabel:        unit.Label,
+		UnitFactory:      unit.Factory,
+		UnitRemark:       unit.Remark,
+		UnitStatus:       unit.Status,
+
+		UserID: requestorID,
 
 		Status: ONGOING,
 	}
@@ -131,17 +144,7 @@ func assignUnits(ctx *gin.Context) {
 		tx.Rollback()
 		handle_resp(err, ctx)
 	}
-	// 更新Request池
-	err = tx.Delete(&UnAssigned{Request{ID: requestID}}).Error
-	if err != nil {
-		tx.Rollback()
-		handle_resp(err, ctx)
-	}
-	err = tx.Create(&Ongoing{request_new_state}).Error
-	if err != nil {
-		tx.Rollback()
-		handle_resp(err, ctx)
-	}
+
 	err = tx.Commit().Error
 	if err != nil {
 		tx.Rollback()
@@ -200,14 +203,35 @@ func adminEquipmentImport(ctx *gin.Context) {
 			Remark:       row[11],
 		}
 		if row[0] != "" {
-			unit.EquipmentID = str2uint(row[0])
+			eid, err := str2uint_err(row[0])
+			if err != nil {
+				ctx.JSON(http.StatusOK, gin.H{
+					"status": "Failed",
+					"msg":    fmt.Sprintf("警告, 第%d行EID %s 有误", index+1, row[0]),
+				})
+				return
+			}
+			unit.EquipmentID = eid
+			equipment_exist := Equipment{}
+			db.Model(&Equipment{}).Take(&equipment_exist, eid)
+			equipment_new := Equipment{Name: unit.Name, Class: unit.Class, Type: unit.Type, Brand: unit.Brand}
+			if equipment_exist.ID != 0 {
+				db.Model(&Equipment{ID: equipment_exist.ID}).Updates(&equipment_new)
+			} else {
+				db.Create(&equipment_new)
+			}
 		}
+
 		var count int64
 		db.Model(&EquipmentUnit{}).Where(&EquipmentUnit{UID: unit.UID, SerialNumber: unit.SerialNumber}).Count(&count)
 		if count == 0 {
-			// log.Println("count = 0")
 			units_new = append(units_new, unit)
 		} else {
+			// unit_exist := EquipmentUnit{}
+			// db.Model(&EquipmentUnit{}).Where(&EquipmentUnit{UID: unit.UID, SerialNumber: unit.SerialNumber}).Take(&unit_exist)
+			// if unit.EquipmentID != 0 && unit.EquipmentID != unit_exist.ID {
+
+			// }
 			db.Model(&EquipmentUnit{}).Where(&EquipmentUnit{UID: unit.UID, SerialNumber: unit.SerialNumber}).Updates(&unit)
 		}
 	}

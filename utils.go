@@ -95,6 +95,11 @@ func str2uint(id string) uint {
 	return uint(ID)
 }
 
+func str2uint_err(id string) (uint, error) {
+	ID, err := strconv.ParseUint(id, 10, 32)
+	return uint(ID), err
+}
+
 func str2int(i string) int {
 	I, err := strconv.ParseInt(i, 10, 32)
 	handle(err)

@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"gorm.io/driver/sqlite"
+	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
@@ -13,7 +13,9 @@ var db *gorm.DB
 
 func main() {
 	var err error
-	db, err = gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
+	dsn := "root:password@tcp(127.0.0.1:3306)/ago?charset=utf8mb4&parseTime=True&loc=Local"
+
+	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	handle(err)
 	initDB(db)
 
@@ -71,6 +73,8 @@ func main() {
 	group_admin.GET("/all", adminAll)
 	group_admin.GET("/users", adminUsers)
 	group_admin.POST("/users/:op", adminUsersOp) // JSON or HTML
+
+	group_admin.GET("/emptyEnded", emptyEnded)
 
 	group_admin.GET("/equipment", adminEquipment)
 

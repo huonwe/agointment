@@ -11,12 +11,12 @@
         {{range $index,$request := .requests}}
         <tr>
             <td>{{$request.ID}}</td>
-            <td>{{$request.Equipment.Name}}</td>
-            <td>{{$request.Equipment.Type}}</td>
-            {{if eq $request.EquipmentUnitUID "0"}}
+            <td>{{$request.EquipmentName}}</td>
+            <td>{{$request.EquipmentType}}</td>
+            {{if eq $request.UnitUID "0"}}
             <td></td>
             {{else}}
-            <td class="color_ok">{{$request.EquipmentUnitUID}}</td>
+            <td class="color_ok">{{$request.UnitUID}}</td>
             {{end}}
             {{if eq $request.Status "被拒绝"}}
             <td class="color_attention">不可用</td>

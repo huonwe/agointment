@@ -12,6 +12,7 @@
 <body>
     <div style="overflow: auto;">
         <div class="hint"><a href="/admin/exportRequests" target="_blank">导出excel</a></div>
+        <button class="button" onclick="adminEmptyEnds()">一键清空已结束请求</button>
         <table class="availiableTable">
             <tr>
                 {{ range $idx,$head := .heads }}
@@ -24,14 +25,14 @@
             {{range $index,$request := .requests}}
             <tr>
                 <td>{{$request.ID}}</td>
-                <td>{{$request.User.Name}}@{{$request.User.DepartmentName}}</td>
-                {{if eq $request.EquipmentUnitUID "0"}}
+                <td>{{$request.User.Name}}@{{$request.User.Department.Name}}</td>
+                {{if eq $request.UnitUID "0"}}
                 <td></td>
                 {{else}}
-                <td>{{$request.EquipmentUnitUID}}</td>
+                <td>{{$request.UnitUID}}</td>
                 {{end}}
-                <td>{{$request.Equipment.Name}}</td>
-                <td>{{$request.Equipment.Type}}</td>
+                <td>{{$request.EquipmentName}}</td>
+                <td>{{$request.EquipmentType}}</td>
                 <td>{{$request.BeginAtStr}}</td>
                 <td>{{$request.EndAtStr}}</td>
                 <td>{{$request.Status}}</td>

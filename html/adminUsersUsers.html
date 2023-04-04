@@ -1,6 +1,6 @@
 {{range $user := .users}}
 <div>
-    <span>{{$user.DepartmentName}}</span>
+    <span>{{$user.Department.Name}}</span>
     <span>{{$user.Name}}</span>
     <span>
         <button onclick="userOp('userDel','{{$user.Name}}','{{$user.ID}}')">删除</button>

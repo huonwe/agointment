@@ -7,19 +7,11 @@
     <link rel="stylesheet" href="/static/css/index.css">
     <link rel="stylesheet" href="/static/css/common.css">
     <script src="/static/js/admin.js"></script>
-    <style>
-        pre {outline: 1px solid #ccc; padding: 5px; margin: 5px; }
-        .string { color: green; }
-        .number { color: darkorange; }
-        .boolean { color: blue; }
-        .null { color: magenta; }
-        .key { color: red; }
-    </style>
     <title>管理</title>
 </head>
 <body>
     <div>
-        <div>总计 {{.total}} 条待归还</div>
+        <div class="hint">总计 {{.total}} 条待归还</div>
         <table class="availiableTable">
             <tr>
                 {{ range $idx,$head := .heads }}
@@ -31,10 +23,10 @@
             {{range $index,$request := .ongoings}}
             <tr>
                 <td>{{$index}}</td>
-                <td>{{$request.User.Name}}@{{$request.User.DepartmentName}}</td>
-                <td>{{$request.EquipmentUnitID}}</td>
-                <td>{{$request.Equipment.Name}}</td>
-                <td>{{$request.Equipment.Type}}</td>
+                <td>{{$request.User.Name}}@{{$request.User.Department.Name}}</td>
+                <td>{{$request.UnitUID}}</td>
+                <td>{{$request.EquipmentName}}</td>
+                <td>{{$request.EquipmentType}}</td>
                 <td>{{$request.BeginAtStr}}</td>
                 
                 <td>
