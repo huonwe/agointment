@@ -24,7 +24,6 @@
             {{ if gt .total 0}}
             {{range $index,$request := .requests}}
             <tr>
-                <td>{{$request.ID}}</td>
                 <td>{{$request.User.Name}}@{{$request.User.Department.Name}}</td>
                 {{if eq $request.UnitUID "0"}}
                 <td></td>
@@ -32,7 +31,6 @@
                 <td>{{$request.UnitUID}}</td>
                 {{end}}
                 <td>{{$request.EquipmentName}}</td>
-                <td>{{$request.EquipmentType}}</td>
                 <td>{{$request.BeginAtStr}}</td>
                 <td>{{$request.EndAtStr}}</td>
                 <td>{{$request.Status}}</td>

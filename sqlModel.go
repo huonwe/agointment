@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"time"
 
 	"gorm.io/gorm"
@@ -53,7 +52,7 @@ type APIUser struct {
 
 type EquipmentUnit struct {
 	ID          uint `gorm:"primarykey"`
-	EquipmentID uint
+	EquipmentID uint `gorm:"index"`
 	Type        string
 	Class       string
 	Name        string
@@ -66,6 +65,8 @@ type EquipmentUnit struct {
 	Factory      string
 	Remark       string
 	Status       string
+
+	LastMaintained time.Time
 
 	Availiable bool `gorm:"default:true"`
 	// 佔用這個設備的人
@@ -95,7 +96,7 @@ type Request struct {
 	CreatedAtStr string
 	BeginAt      time.Time
 	BeginAtStr   string
-	EndAt        time.Time
+	EndAt        time.Time `gorm:"index"`
 	EndAtStr     string
 
 	EquipmentID    uint
@@ -117,8 +118,29 @@ type Request struct {
 
 	UserID  uint
 	User    User
-	Status  string
+	Status  string `gorm:"index"`
 	Deleted gorm.DeletedAt
+}
+
+type Maintain struct {
+	ID uint `gorm:"primaryKey"`
+
+	UnitID   uint
+	UnitName string
+	UID      string
+	Type     string
+	Serial   string
+	// Unit   EquipmentUnit
+	DoAt    time.Time `gorm:"index"`
+	DoAtStr string
+}
+
+type UnitMaintainAPI struct {
+	ID                uint
+	Name              string
+	UID               string
+	LastMaintained    time.Time
+	LastMaintainedStr string `gorm:"-"`
 }
 
 // func (u *User) AfterFind(tx *gorm.DB) (err error) {
@@ -206,7 +228,7 @@ func (eu *EquipmentUnit) AfterCreate(tx *gorm.DB) (err error) {
 	new_equipment := Equipment{Name: eu.Name, Type: eu.Type, Class: eu.Class, Brand: eu.Brand, Availiable: true}
 	err = tx.Create(&new_equipment).Error
 
-	log.Println("new equipment ID", new_equipment.ID)
+	// log.Println("new equipment ID", new_equipment.ID)
 
 	tx.Model(&eu).Update("equipment_id", new_equipment.ID)
 	return
@@ -214,7 +236,7 @@ func (eu *EquipmentUnit) AfterCreate(tx *gorm.DB) (err error) {
 
 func initDB(db *gorm.DB) {
 	db.Exec("SET FOREIGN_KEY_CHECKS=0;")
-	db.Exec("DROP TABLE departments, users, equipment_units, equipment, requests, un_assigneds, ongoings")
+	db.Exec("DROP TABLE departments, users, equipment_units, equipment, requests, maintains")
 	db.Exec("SET FOREIGN_KEY_CHECKS=1;")
 
 	db.AutoMigrate(&Department{})
@@ -222,8 +244,7 @@ func initDB(db *gorm.DB) {
 	db.AutoMigrate(&EquipmentUnit{})
 	db.AutoMigrate(&Equipment{})
 	db.AutoMigrate(&Request{})
-	// db.AutoMigrate(&UnAssigned{})
-	// db.AutoMigrate(&Ongoing{})
+	db.AutoMigrate(&Maintain{})
 
 	db.Create(&Department{Name: "智医2002", Description: "智能医学工程", Availiable: true})
 	db.Create(&Department{Name: "智医2102", Description: "智能医学工程", Availiable: true})

@@ -111,7 +111,7 @@ func adminAll(ctx *gin.Context) {
 	db.Unscoped().Model(&Request{}).Count(&total)
 
 	ctx.HTML(http.StatusOK, "adminAll.html", gin.H{
-		"heads":      []string{"记录号", "联系人", "设备ID", "设备名", "型号", "开始时间", "完成时间", "状态", "操作"},
+		"heads":      []string{"联系人", "设备ID", "设备名", "开始时间", "完成时间", "状态", "操作"},
 		"requests":   requests,
 		"total":      total,
 		"page":       page,
@@ -325,7 +325,12 @@ func adminExportRequests(ctx *gin.Context) {
 	f := excelize.NewFile()
 
 	requests := []Request{}
-	db.Unscoped().Model(&Request{}).Preload("User").Preload("Department").Find(&requests)
+	db.Unscoped().Model(&Request{}).Joins("User").Preload("User.Department").Find(&requests)
+	//
+	// for _, request := range requests {
+	// 	log.Println(request.User.DeptName)
+	// }
+	//
 	heads := []string{"请求ID", "请求人", "请求人部门", "创建时间", "开始时间", "结束时间", "请求状态", "EID", "设备类别", "设备名", "设备型号", "设备品牌", "设备实体ID", "设备序列号", "工厂", "标签", "状态", "备注"}
 	for i, v := range heads {
 		f.SetCellValue("Sheet1", Num2Col(i)+"1", v)
@@ -337,7 +342,7 @@ func adminExportRequests(ctx *gin.Context) {
 		db.Take(&user, request.UserID)
 		f.SetCellValue("Sheet1", "A"+rowIdx, request.ID)
 		f.SetCellValue("Sheet1", "B"+rowIdx, user.Name)
-		f.SetCellValue("Sheet1", "C"+rowIdx, user.Department.Name)
+		f.SetCellValue("Sheet1", "C"+rowIdx, user.DeptName)
 		f.SetCellValue("Sheet1", "D"+rowIdx, request.CreatedAt)
 		f.SetCellValue("Sheet1", "E"+rowIdx, request.BeginAt)
 		f.SetCellValue("Sheet1", "F"+rowIdx, request.EndAt)
@@ -402,4 +407,95 @@ func emptyEnded(ctx *gin.Context) {
 		"status": "Success",
 		"msg":    "清除成功",
 	})
+}
+
+func maintain(ctx *gin.Context) {
+	pageSize, err := str2int_err(ctx.Query("pageSize"))
+	if err != nil {
+		pageSize = 20
+	}
+	page, err := str2int_err(ctx.Query("page"))
+	if err != nil {
+		page = 1
+	}
+
+	units := []UnitMaintainAPI{}
+	var count int64
+	db.Model(&EquipmentUnit{}).Count(&count)
+	db.Model(&EquipmentUnit{}).Order("last_maintained asc").Limit(pageSize).Offset((page - 1) * pageSize).Find(&units)
+	for i, unit := range units {
+		unit.LastMaintainedStr = unit.LastMaintained.Format("2006-01-02 15:04")
+		units[i] = unit
+	}
+	ctx.HTML(http.StatusOK, "maintain.html", gin.H{
+		"heads":      []string{"设备UID", "设备名", "上次维护", "操作"},
+		"units":      units,
+		"total":      count,
+		"page":       page,
+		"pageSize":   pageSize,
+		"total_page": int(math.Ceil(float64(count) / float64(pageSize))),
+	})
+}
+
+func doMaintain(ctx *gin.Context) {
+	id := ctx.PostForm("id")
+	ID, err := str2uint_err(id)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, nil)
+		return
+	}
+	now := time.Now()
+
+	unit := EquipmentUnit{}
+	db.First(&unit, ID)
+	// log.Println(time.Duration(now.Sub(unit.LastMaintained)))
+	// log.Println(time.Duration(time.Duration.Minutes(5)))
+	if time.Duration(now.Sub(unit.LastMaintained)) < 5*time.Minute {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"status": "Failed",
+			"msg":    "您在之前5分钟内已经维护过这个设备啦, 休息一下吧~",
+		})
+		return
+	}
+
+	db.Model(&EquipmentUnit{ID: ID}).Update("last_maintained", now.Local())
+	maintain := Maintain{
+		UnitID:   ID,
+		DoAt:     now,
+		DoAtStr:  now.Format("2006-01-02 15:04"),
+		UID:      unit.UID,
+		UnitName: unit.Name,
+		Type:     unit.Type,
+		Serial:   unit.SerialNumber,
+	}
+	db.Model(&Maintain{}).Create(&maintain)
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"status": "Success",
+		"msg":    "维护成功",
+	})
+}
+
+func exportMaintain(ctx *gin.Context) {
+	f := excelize.NewFile()
+	heads := []string{"维护时间", "设备名", "型号", "设备实体ID", "序列号"}
+	for i, v := range heads {
+		f.SetCellValue("Sheet1", Num2Col(i)+"1", v)
+	}
+
+	maintains := []Maintain{}
+	db.Model(&Maintain{}).Order("do_at desc").Find(&maintains)
+	for i, maintain := range maintains {
+		rowIdx := strconv.FormatInt(int64(i)+2, 10)
+		f.SetCellValue("Sheet1", "A"+rowIdx, maintain.DoAt.Format("2006-01-02 15:04"))
+		f.SetCellValue("Sheet1", "B"+rowIdx, maintain.UnitName)
+		f.SetCellValue("Sheet1", "C"+rowIdx, maintain.Type)
+		f.SetCellValue("Sheet1", "D"+rowIdx, maintain.UID)
+		f.SetCellValue("Sheet1", "E"+rowIdx, maintain.Serial)
+	}
+
+	filename := "export_" + time.Now().Format("20060102150405") + ".xlsx"
+	err := f.SaveAs("./static/files/" + filename)
+	handle_resp(err, ctx)
+	ctx.Redirect(http.StatusTemporaryRedirect, "/static/files/"+filename)
 }

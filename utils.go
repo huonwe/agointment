@@ -106,8 +106,13 @@ func str2int(i string) int {
 	return int(I)
 }
 
+func str2int_err(i string) (int, error) {
+	I, err := strconv.ParseInt(i, 10, 32)
+	return int(I), err
+}
+
 func now() string {
-	return time.Now().In(time.FixedZone("CST", 8*3600)).Format("2006-01-02 15:04")
+	return time.Now().In(time.FixedZone("CST", 8*3600)).Format("2006-01-02")
 }
 
 func order_desc_createdAt(db *gorm.DB) *gorm.DB {

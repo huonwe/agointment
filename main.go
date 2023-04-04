@@ -73,12 +73,13 @@ func main() {
 	group_admin.GET("/all", adminAll)
 	group_admin.GET("/users", adminUsers)
 	group_admin.POST("/users/:op", adminUsersOp) // JSON or HTML
-
 	group_admin.GET("/emptyEnded", emptyEnded)
-
 	group_admin.GET("/equipment", adminEquipment)
-
 	group_admin.GET("/exportRequests", adminExportRequests)
+
+	group_admin.GET("/maintain", maintain)
+	group_admin.POST("/maintain", doMaintain)
+	group_admin.GET("/exportMaintain", exportMaintain)
 
 	r.NoRoute(redirect2home)
 

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/common.css">
+    <script src="/static/js/maintain.js"></script>
+    <title>设备维护</title>
+</head>
+
+<body>
+    <div>
+        <div class="hint">总计 {{.total}} 条记录</div>
+        <div class="hint"><a href="/admin/exportMaintain">导出记录</a></div>
+        <table class="availiableTable">
+            <tr>
+                {{ range $idx,$head := .heads }}
+                <th> {{$head}} </th>
+                {{end}}
+            </tr>
+
+            {{ if gt .total 0}}
+            {{range $unit := .units}}
+            <tr>
+                <td>{{$unit.UID}}</td>
+                <td>{{$unit.Name}}</td>
+                <td>{{$unit.LastMaintainedStr}}</td>
+                <td>
+                    <button onclick="maintain('{{$unit.ID}}')">维护</button>
+                </td>
+            </tr>
+            {{end}}
+            {{else}}
+            <tr>
+                <td>未找到设备</td>
+                <td>换个关键词</td>
+                <td>
+                    试试吧
+                </td>
+            </tr>
+            {{end}}
+        </table>
+        <div class="pageSelect">
+            {{if gt .page 1}}
+            <button class="prev" onclick="getMaintain('{{.page}}', '{{.pageSize}}', 'prev')">上一页</button>
+            {{else}}
+            <button disabled class="prev" onclick="getMaintain('{{.page}}', '{{.pageSize}}', 'prev')">上一页</button>
+            {{end}}
+            <span>{{.page}}/{{.total_page}}</span>
+            {{if lt .page .total_page}}
+            <button class="next" onclick="getMaintain( '{{.page}}', '{{.pageSize}}', 'next')">下一页</button>
+            {{else}}
+            <button disabled class="next" onclick="getMaintain( '{{.page}}', '{{.pageSize}}', 'next')">下一页</button>
+            {{end}}
+        </div>
+
+    </div>
+</body>
+
+</html>
