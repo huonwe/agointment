@@ -19,7 +19,7 @@ func main() {
 	handle(err)
 	initDB(db)
 
-	gin.SetMode(gin.ReleaseMode)
+	// gin.SetMode(gin.ReleaseMode)
 
 	r := gin.Default()
 	r.LoadHTMLGlob("html/*")
@@ -62,6 +62,9 @@ func main() {
 	group_user.Use(LoginFilter())
 	group_user.GET("/myRequest", myRequest)
 	group_user.GET("/myRequestOp", myRequestOp)
+	group_user.POST("/changeDept", changeDept)
+	group_user.POST("/changeName", changeName)
+	group_user.POST("/changePasswd", changePasswd)
 
 	group_admin := r.Group("/admin")
 	group_admin.Use(LoginFilter(), MustAdmin())

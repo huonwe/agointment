@@ -106,7 +106,53 @@ function myRequestOp(requestID, op) {
     )
 }
 
-// window.addEventListener("load", ()=>{
-//     key = getQueryVariable("key");
-//     if(){}
-// })
+function changeDept(){
+    let value = prompt("请输入新的部门")
+    if(value == null){
+        return
+    }
+    let formData = new FormData()
+    formData.append("dept",value)
+    fetch(`/user/changeDept`,{
+        method: "POST",
+        body:formData
+    }).then((res)=>{res.json().then((res)=>{
+        alert(res.msg)
+    })})
+}
+
+function changeName(){
+    let value = prompt("请输入新的用户名")
+    if(value == null){
+        return
+    }
+    let formData = new FormData()
+    formData.append("name",value)
+    fetch(`/user/changeName`,{
+        method: "POST",
+        body:formData
+    }).then((res)=>{res.json().then((res)=>{
+        alert(res.msg)
+    })})
+}
+
+function changePasswd(){
+    let value_old = prompt("请输入目前的密码")
+    if(value_old == null){
+        return
+    }
+    let value_new = prompt("请输入新的密码")
+    if(value_new == null){
+        return
+    }
+    let formData = new FormData()
+
+    formData.append("passwd_old",value_old)
+    formData.append("passwd_new",value_new)
+    fetch(`/user/changePasswd`,{
+        method: "POST",
+        body:formData
+    }).then((res)=>{res.json().then((res)=>{
+        alert(res.msg)
+    })})
+}

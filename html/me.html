@@ -1,9 +1,9 @@
 <div>
     <div class="flex1 gap_from_top">
         <div id="greeting" class="line">{{.greeting}}</div>
-        {{if gt .l_req.ID 0}}
-        <div class="line">您于&nbsp;{{.l_req.CreatedAtStr}}&nbsp;申请&nbsp;{{.l_req.EquipmentName}}&nbsp;的状态为&nbsp;{{.l_req.Status}}&nbsp;,请于状态页查看详情</div>
-        {{end}}
+        <button onclick="changeDept()">修改部门</button>
+        <button onclick="changeName()">修改名称</button>
+        <button onclick="changePasswd()">修改密码</button>
     </div>
     {{if .user.IsAdmin }}
     <fieldset class="adminOperation">

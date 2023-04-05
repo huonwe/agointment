@@ -13,18 +13,20 @@ func redirect2home(ctx *gin.Context) {
 
 func login(ctx *gin.Context) {
 	user := User{}
-	if ctx.PostForm("username") == "" || ctx.PostForm("password") == "" {
+	username_ := ctx.PostForm("username")
+	password_ := ctx.PostForm("password")
+	if username_ == "" || password_ == "" {
 		ctx.JSON(http.StatusOK, gin.H{
 			"status": "Failed",
-			"msg":    "Username or Password Empty.",
+			"msg":    "参数错误",
 		})
 		return
 	}
-	db.Model(&User{}).Where(&User{Name: ctx.PostForm("username"), Password: ctx.PostForm("password")}).Preload("Department").Take(&user)
+	db.Model(&User{}).Where(&User{Name: username_, Password: md5_str(password_)}).Preload("Department").First(&user)
 	if user.ID == 0 {
 		ctx.JSON(http.StatusOK, gin.H{
 			"status": "Failed",
-			"msg":    "Username or Password Incorrect.",
+			"msg":    "用户名或密码错误",
 		})
 		return
 	}
@@ -61,16 +63,16 @@ func signup(ctx *gin.Context) {
 	}
 
 	dept := Department{}
-	db.Model(&Department{}).Where(&Department{Name: ctx.PostForm("dept")}).Take(&dept)
+	db.Model(&Department{}).Where(&Department{Name: ctx.PostForm("dept"), Availiable: true}).Take(&dept)
 	if dept.ID == 0 {
 		ctx.JSON(http.StatusOK, gin.H{
 			"status": "Failed",
-			"msg":    "没有这个部门",
+			"msg":    "没有这个部门或部门不可用",
 		})
 		return
 	}
 	user.DepartmentID = dept.ID
-	user.DeptName = dept.Name
+	// user.DeptName = dept.Name
 
 	var count int64
 	db.Model(&User{}).Where(&User{Name: user.Name, DepartmentID: dept.ID}).Count(&count)

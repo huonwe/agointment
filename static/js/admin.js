@@ -76,7 +76,7 @@ function adminRequestingOp(requestID, op, equipmentID, requestorID) {
                         if (res.status != "Success") {
                             alert(res.msg)
                         } else {    // Success
-                            console.log(res.detail)
+                            // console.log(res.detail)
                             let detail = res.detail
                             mask.innerHTML = `
                             <div class="detail">

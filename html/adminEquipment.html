@@ -42,7 +42,7 @@
                         <button onclick="equipmentOp('{{$equipment.ID}}', 'enable')">启用</button>
                         {{end}}
                         <button onclick="equipmentOp('{{$equipment.ID}}', 'del')">删除</button>
-                        <button onclick="equipmentOp('{{$equipment.ID}}', 'units')">单元</button>
+                        <!-- <button onclick="equipmentOp('{{$equipment.ID}}', 'units')">单元</button> -->
 
                     </td>
                 </tr>
@@ -62,18 +62,18 @@
             <div class="pageSelect">
                 {{if gt .page 1}}
                 <button class="prev"
-                    onclick="equipmenFilter(document.querySelector('#filter').value, '{{.page}}', '{{.pageSize}}', 'prev')">上一页</button>
+                    onclick="getEquipment(document.querySelector('#filter').value, '{{.page}}', '{{.pageSize}}', 'prev')">上一页</button>
                 {{else}}
                 <button disabled class="prev"
-                    onclick="equipmenFilter(document.querySelector('#filter').value, '{{.page}}',  '{{.pageSize}}', 'prev')">上一页</button>
+                    onclick="getEquipment(document.querySelector('#filter').value, '{{.page}}',  '{{.pageSize}}', 'prev')">上一页</button>
                 {{end}}
                 <span>{{.page}}/{{.total_page}}</span>
                 {{if lt .page .total_page}}
                 <button class="next"
-                    onclick="equipmenFilter(document.querySelector('#filter').value, '{{.page}}',  '{{.pageSize}}', 'next')">下一页</button>
+                    onclick="getEquipment(document.querySelector('#filter').value, '{{.page}}',  '{{.pageSize}}', 'next')">下一页</button>
                 {{else}}
                 <button disabled class="next"
-                    onclick="equipmenFilter(document.querySelector('#filter').value, '{{.page}}',  '{{.pageSize}}', 'next')">下一页</button>
+                    onclick="getEquipment(document.querySelector('#filter').value, '{{.page}}',  '{{.pageSize}}', 'next')">下一页</button>
                 {{end}}
             </div>
         </div>

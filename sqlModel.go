@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"time"
 
 	"gorm.io/gorm"
@@ -20,7 +21,7 @@ const (
 
 type Department struct {
 	ID          uint   `gorm:"primarykey"`
-	Name        string `gorm:"primarykey"`
+	Name        string `gorm:"unique"`
 	Description string
 	Availiable  bool `gorm:"default:true"`
 	// ...
@@ -30,14 +31,17 @@ type User struct {
 	ID       uint `gorm:"primarykey"`
 	Name     string
 	Password string
-	// 微信的openid
+	// 微信的openid 待用
 	WeChat string
 
-	DeptName     string
+	// DeptName     string
 	DepartmentID uint
 	Department   Department
-	IsAdmin      bool `gorm:"default:false"`
-	IsSuper      bool `gorm:"default:false"`
+
+	UpdatedAt time.Time
+
+	IsAdmin bool `gorm:"default:false"`
+	IsSuper bool `gorm:"default:false"`
 
 	Requests []Request
 }
@@ -143,6 +147,22 @@ type UnitMaintainAPI struct {
 	LastMaintainedStr string `gorm:"-"`
 }
 
+func (u *User) BeforeCreate(tx *gorm.DB) (err error) {
+	if u.Password == "" {
+		return errors.New("创建用户时密码为空")
+	}
+	u.Password = md5_str(u.Password)
+	return nil
+}
+
+func (u *User) BeforeUpdate(tx *gorm.DB) (err error) {
+	if u.Password == "" {
+		return
+	}
+	u.Password = md5_str(u.Password)
+	return nil
+}
+
 // func (u *User) AfterFind(tx *gorm.DB) (err error) {
 // 	dept := Department{}
 // 	err = db.Take(&dept, u.DepartmentID).Error
@@ -246,10 +266,18 @@ func initDB(db *gorm.DB) {
 	db.AutoMigrate(&Request{})
 	db.AutoMigrate(&Maintain{})
 
-	db.Create(&Department{Name: "智医2002", Description: "智能医学工程", Availiable: true})
-	db.Create(&Department{Name: "智医2102", Description: "智能医学工程", Availiable: true})
+	var count int64
+	var dept Department
+	db.First(&dept, 1)
+	if dept.ID == 0 {
+		dept.Name = "保留部门"
+		dept.Availiable = false
+		db.Create(&dept)
+		// db.Where(&Department{Name: dept.Name}).Select("Name", "Availiable").Updates(&dept)
+	}
 
-	db.Create(&User{ID: 1, Name: "huonwe", Password: "Hhw20020120", DepartmentID: 1, DeptName: "智医2002", IsAdmin: true, IsSuper: true})
-	db.Create(&User{ID: 2, Name: "jimengxvan", Password: "jimengxvan", DepartmentID: 2, DeptName: "智医2102", IsAdmin: true, IsSuper: true})
-
+	db.Where(&User{Name: "admin", IsAdmin: true}).Count(&count)
+	if count == 0 {
+		db.Create(&User{ID: 1, Name: "admin", Password: "password123456", DepartmentID: 1, IsAdmin: true, IsSuper: true})
+	}
 }

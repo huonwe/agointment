@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"math"
 	"net/http"
 	"strconv"
@@ -13,16 +12,9 @@ import (
 )
 
 func adminRequestings(ctx *gin.Context) {
-	// token, _ := ctx.Cookie("token")
-	// claim, _ := ParseToken(token)
-
 	un_assigneds := []Request{}
 	db.Model(&Request{}).Where("status = ?", REQUESTING).Order("created_at desc").Joins("User").Preload("User.Department").Find(&un_assigneds)
 
-	for _, ua := range un_assigneds {
-		// log.Println(ua)
-		log.Println(ua.User)
-	}
 	ctx.HTML(http.StatusOK, "adminRequestings.html", gin.H{
 		"heads":        []string{"序号", "申请人", "设备名", "型号", "创建时间", "操作"},
 		"un_assigneds": un_assigneds,
@@ -31,19 +23,12 @@ func adminRequestings(ctx *gin.Context) {
 }
 
 func adminOngoings(ctx *gin.Context) {
-	// token, _ := ctx.Cookie("token")
-	// claim, _ := ParseToken(token)
-
-	ongoing := []Request{}
-	db.Model(&Request{}).Where("status = ?", ONGOING).Joins("User").Preload("User.Department").Order("begin_at desc").Find(&ongoing)
-
-	for _, og := range ongoing {
-		og.User.Password = ""
-	}
+	ongoings := []Request{}
+	db.Model(&Request{}).Where("status = ?", ONGOING).Order("begin_at desc").Joins("User").Preload("User.Department").Find(&ongoings)
 	ctx.HTML(http.StatusOK, "adminOngoings.html", gin.H{
 		"heads":    []string{"序号", "联系人", "设备ID", "设备名", "型号", "开始时间", "操作"},
-		"ongoings": ongoing,
-		"total":    len(ongoing),
+		"ongoings": ongoings,
+		"total":    len(ongoings),
 	})
 }
 
@@ -66,7 +51,8 @@ func adminRequestingsOp(ctx *gin.Context) {
 			"msg":    "",
 		})
 	case "assign":
-		ctx.Redirect(http.StatusPermanentRedirect, "/admin/assignUnits")
+		ctx.JSON(http.StatusBadGateway, nil)
+		// ctx.Redirect(http.StatusPermanentRedirect, "/admin/assignUnits")
 	case "finish":
 		request := Request{
 			ID:       requestID,
@@ -93,7 +79,7 @@ func adminRequestingsOp(ctx *gin.Context) {
 	case "detail":
 		request := Request{}
 		db.Where(&Request{ID: requestID}).Joins("User").Preload("User.Department").Take(&request)
-		// log.Println(request)
+		request.User.Password = ""
 		ctx.JSON(http.StatusOK, gin.H{
 			"status": "Success",
 			"detail": request,
@@ -240,7 +226,7 @@ func adminUsersOp(ctx *gin.Context) {
 			handle_resp(err, ctx)
 		}
 
-		log.Println(user)
+		// log.Println(user)
 		ctx.JSON(http.StatusOK, gin.H{
 			"status": "Success",
 			"msg":    "创建成功",
@@ -249,12 +235,8 @@ func adminUsersOp(ctx *gin.Context) {
 		name := ctx.Query("name")
 		dept := ctx.Query("dept")
 		users := []User{}
-		// department := Department{}
-		// db.Where("name like ?", "%"+dept+"%").First(&department)
-		// db.Joins("JOIN emails ON emails.user_id = users.id AND emails.email = ?", "jinzhu@example.org")
-		user := User{}
-		user.Department.Name = dept
-		db.Model(&User{}).Where("name like ? and dept_name like ?", "%"+name+"%", "%"+dept+"%").Preload("Department").Find(&users)
+
+		db.Model(&User{}).InnerJoins("Department", db.Where(&Department{Name: dept})).Where("users.name LIKE ?", "%"+name+"%").Find(&users)
 		ctx.HTML(http.StatusOK, "adminUsersUsers.html", gin.H{
 			"users": users,
 		})
@@ -299,12 +281,14 @@ func adminUsersOp(ctx *gin.Context) {
 }
 
 func adminEquipment(ctx *gin.Context) {
-	if ctx.Query("page") == "" || ctx.Query("pageSize") == "" {
-		ctx.JSON(http.StatusBadRequest, nil)
-		return
+	page, err := str2int_err(ctx.Query("page"))
+	if err != nil {
+		page = 1
 	}
-	page := str2int(ctx.Query("page"))
-	pageSize := str2int(ctx.Query("pageSize"))
+	pageSize, err := str2int_err(ctx.Query("pageSize"))
+	if err != nil {
+		pageSize = 20
+	}
 	var total int64 = 0
 
 	equipments := []Equipment{}
@@ -334,15 +318,12 @@ func adminExportRequests(ctx *gin.Context) {
 	heads := []string{"请求ID", "请求人", "请求人部门", "创建时间", "开始时间", "结束时间", "请求状态", "EID", "设备类别", "设备名", "设备型号", "设备品牌", "设备实体ID", "设备序列号", "工厂", "标签", "状态", "备注"}
 	for i, v := range heads {
 		f.SetCellValue("Sheet1", Num2Col(i)+"1", v)
-		// log.Println(Num2Col(i))
 	}
 	for i, request := range requests {
 		rowIdx := strconv.FormatInt(int64(i)+2, 10)
-		user := User{}
-		db.Take(&user, request.UserID)
 		f.SetCellValue("Sheet1", "A"+rowIdx, request.ID)
-		f.SetCellValue("Sheet1", "B"+rowIdx, user.Name)
-		f.SetCellValue("Sheet1", "C"+rowIdx, user.DeptName)
+		f.SetCellValue("Sheet1", "B"+rowIdx, request.User.Name)
+		f.SetCellValue("Sheet1", "C"+rowIdx, request.User.Department.Name)
 		f.SetCellValue("Sheet1", "D"+rowIdx, request.CreatedAt)
 		f.SetCellValue("Sheet1", "E"+rowIdx, request.BeginAt)
 		f.SetCellValue("Sheet1", "F"+rowIdx, request.EndAt)
@@ -362,7 +343,7 @@ func adminExportRequests(ctx *gin.Context) {
 		f.SetCellValue("Sheet1", "R"+rowIdx, request.UnitRemark)
 	}
 
-	filename := "export_" + time.Now().Format("20060102150405") + ".xlsx"
+	filename := "export_requests_" + time.Now().Format("20060102150405") + ".xlsx"
 	err := f.SaveAs("./static/files/" + filename)
 	handle_resp(err, ctx)
 	ctx.Redirect(http.StatusTemporaryRedirect, "/static/files/"+filename)
@@ -394,14 +375,14 @@ func adminExportEquipment(ctx *gin.Context) {
 		f.SetCellValue("Sheet1", "K"+rowIdx, unit.Status)
 		f.SetCellValue("Sheet1", "L"+rowIdx, unit.Remark)
 	}
-	filename := "export_" + time.Now().Format("20060102150405") + ".xlsx"
+	filename := "export_equipment_" + time.Now().Format("20060102150405") + ".xlsx"
 	err := f.SaveAs("./static/files/" + filename)
 	handle_resp(err, ctx)
 	ctx.Redirect(http.StatusTemporaryRedirect, "/static/files/"+filename)
 }
 
 func emptyEnded(ctx *gin.Context) {
-	err := db.Unscoped().Model(&Request{}).Where("status = ? or status = ? or status = ?", CANCELED, FINISHED, REJECTED).Delete(&Request{}).Error
+	err := db.Unscoped().Model(&Request{}).Where("status IN ?", []string{CANCELED, FINISHED, REJECTED}).Delete(&Request{}).Error
 	handle_resp(err, ctx)
 	ctx.JSON(http.StatusOK, gin.H{
 		"status": "Success",

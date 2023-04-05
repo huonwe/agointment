@@ -18,7 +18,7 @@ func getAvailiable(ctx *gin.Context) {
 	var total int64 = 0
 	equipment := []Equipment{}
 	db.Model(&Equipment{}).Where(&Equipment{Availiable: true}).Where("name LIKE ?", "%"+ctx.Query("name")+"%").Count(&total)
-	db.Model(&Equipment{}).Where(&Equipment{Availiable: true}).Where("name LIKE ?", "%"+ctx.Query("name")+"%").Find(&equipment).Limit(pageSize).Offset((page - 1) * pageSize)
+	db.Model(&Equipment{}).Where(&Equipment{Availiable: true}).Where("name LIKE ?", "%"+ctx.Query("name")+"%").Limit(pageSize).Offset((page - 1) * pageSize).Find(&equipment)
 	ctx.HTML(http.StatusOK, "availableList.html", gin.H{
 		"heads":      []string{"序号", "设备名", "型号", "类别", "操作"},
 		"equipments": equipment,

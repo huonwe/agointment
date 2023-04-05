@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/md5"
 	"fmt"
 	"log"
 	"net/http"
@@ -127,4 +128,10 @@ func Num2Col(num int) string {
 	col := 'A'
 	target := col + int32(num)
 	return string(target)
+}
+
+func md5_str(str string) string {
+	data := []byte(str)
+	has := md5.Sum(data)
+	return fmt.Sprintf("%x", has)
 }
