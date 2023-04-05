@@ -32,7 +32,7 @@ type User struct {
 	Name     string
 	Password string
 	// 微信的openid 待用
-	WeChat string
+	// WeChat string
 
 	// DeptName     string
 	DepartmentID uint
@@ -41,7 +41,7 @@ type User struct {
 	UpdatedAt time.Time
 
 	IsAdmin bool `gorm:"default:false"`
-	IsSuper bool `gorm:"default:false"`
+	// IsSuper bool `gorm:"default:false"`
 
 	Requests []Request
 }
@@ -205,18 +205,22 @@ func initDB(db *gorm.DB) {
 	db.AutoMigrate(&Request{})
 	db.AutoMigrate(&Maintain{})
 	db.AutoMigrate(&Attention{})
-	var count int64
 	var dept Department
 	db.First(&dept, 1)
 	if dept.ID == 0 {
 		dept.Name = "保留部门"
 		dept.Availiable = false
 		db.Create(&dept)
-		// db.Where(&Department{Name: dept.Name}).Select("Name", "Availiable").Updates(&dept)
+		db.Model(&Department{}).Where(&Department{Name: dept.Name}).Select("Availiable").Updates(&dept)
 	}
 
-	db.Where(&User{Name: "admin", IsAdmin: true}).Count(&count)
+	var count int64
+	// users := []User{}
+	// db.Where(&User{Name: "admin", IsAdmin: true}).Find(&users)
+	// log.Println(users)
+	db.Model(&User{}).Where(&User{Name: "admin", IsAdmin: true}).Count(&count)
+	// log.Println(count)
 	if count == 0 {
-		db.Create(&User{ID: 1, Name: "admin", Password: "password123456", DepartmentID: 1, IsAdmin: true, IsSuper: true})
+		db.Create(&User{ID: 1, Name: "admin", Password: "password123456", DepartmentID: 1, IsAdmin: true})
 	}
 }

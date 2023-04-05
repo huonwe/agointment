@@ -146,7 +146,7 @@ func adminUsersOp(ctx *gin.Context) {
 			Name:       deptName,
 			Availiable: false,
 		}
-		db.Where(&Department{Name: dept.Name}).Select("Name", "Availiable").Updates(&dept)
+		db.Model(&dept).Where(&Department{Name: dept.Name}).Select("Name", "Availiable").Updates(&dept)
 		ctx.JSON(http.StatusOK, gin.H{
 			"status": "Success",
 			"msg":    "禁用成功",

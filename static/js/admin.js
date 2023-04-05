@@ -230,7 +230,7 @@ function userOp(op, username, userid) {
             formData.append("user_dept", user_dpt);
             formData.append("user_name", user_name);
             formData.append("user_password", user_password);
-            console.log(formData.get("user_dept"))
+            // console.log(formData.get("user_dept"))
             fetch(`/admin/users/${op}`,{
                 method: "post",
                 body: formData

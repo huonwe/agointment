@@ -84,7 +84,7 @@ func changeDept(ctx *gin.Context) {
 	user_ := User{}
 	db.First(&user_, user.(User).ID)
 	h := time.Until(user_.UpdatedAt).Abs().Hours()
-	if h < 7*24 {
+	if h < 7*24 && !user_.IsAdmin {
 		ctx.JSON(http.StatusOK, gin.H{
 			"status": "Failed",
 			"msg":    fmt.Sprintf("您在一周内只可修改一次个人信息\n距离下次可修改还剩%.1f小时", 7*24-h),
@@ -117,7 +117,7 @@ func changeName(ctx *gin.Context) {
 	user_ := User{}
 	db.First(&user_, user.(User).ID)
 	h := time.Until(user_.UpdatedAt).Abs().Hours()
-	if h < 7*24 {
+	if h < 7*24 && !user_.IsAdmin {
 		ctx.JSON(http.StatusOK, gin.H{
 			"status": "Failed",
 			"msg":    fmt.Sprintf("您在一周内只可修改一次个人信息\n距离下次可修改还剩%.1f小时", 7*24-h),
