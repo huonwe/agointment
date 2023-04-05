@@ -58,6 +58,13 @@
             <div class="users_found" id="users_found"></div>
             
         </fieldset>
+
+        <fieldset class="">
+            <legend>公告修改</legend>
+            <textarea id="attentionContent" cols="30" rows="10"></textarea>
+            <button class="button" onclick="attentionUpdate(document.querySelector('#attentionContent').value)">发布</button>
+        </fieldset>
+
         <div class="hint" style="margin-bottom: 1rem;font-size: small;">注: 操作完成后请手动刷新</div>
     </div>
 </body>

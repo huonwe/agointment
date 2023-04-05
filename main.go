@@ -65,6 +65,7 @@ func main() {
 	group_user.POST("/changeDept", changeDept)
 	group_user.POST("/changeName", changeName)
 	group_user.POST("/changePasswd", changePasswd)
+	group_user.GET("/attention", getAttention)
 
 	group_admin := r.Group("/admin")
 	group_admin.Use(LoginFilter(), MustAdmin())
@@ -83,6 +84,8 @@ func main() {
 	group_admin.GET("/maintain", maintain)
 	group_admin.POST("/maintain", doMaintain)
 	group_admin.GET("/exportMaintain", exportMaintain)
+
+	group_admin.POST("/attentionUpdate", attentionUpdate)
 
 	r.NoRoute(redirect2home)
 

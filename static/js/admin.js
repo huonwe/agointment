@@ -319,3 +319,14 @@ function adminEmptyEnds() {
         location.reload()
     })})
 }
+
+function attentionUpdate(content) {
+    let formData = new FormData()
+    formData.append("content", content)
+    fetch(`/admin/attentionUpdate`,{
+        method: "POST",
+        body: formData
+    }).then((res)=>{res.json().then((res)=>{
+        alert(res.msg)
+    })})
+}

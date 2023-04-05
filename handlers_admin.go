@@ -480,3 +480,12 @@ func exportMaintain(ctx *gin.Context) {
 	handle_resp(err, ctx)
 	ctx.Redirect(http.StatusTemporaryRedirect, "/static/files/"+filename)
 }
+
+func attentionUpdate(ctx *gin.Context) {
+	content := ctx.PostForm("content")
+	db.Model(&Attention{}).Create(&Attention{Content: content})
+	ctx.JSON(http.StatusOK, gin.H{
+		"status": "Success",
+		"msg":    "提交成功",
+	})
+}

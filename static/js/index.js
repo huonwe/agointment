@@ -35,6 +35,7 @@ function getHTML(key)
                     break;
                 case "me":
                     document.title = "我的信息";
+                    getAttention()
             };
 
         })
@@ -44,17 +45,6 @@ function getHTML(key)
     })
     
 }
-
-// function getAvailiable(name) {
-//     document.querySelector("#manifest").innerHTML = "请求中...";
-//     fetch('/equipment/availiable?name='+name)
-//     .then((res)=>{
-//         res.text().then((res)=>{
-//             document.querySelector("#manifest").innerHTML = res
-//         })
-//     }
-//     )
-// }
 
 function getAvailiable(name, page, pageSize, op) {
     page = parseInt(page) || 1;
@@ -155,4 +145,16 @@ function changePasswd(){
     }).then((res)=>{res.json().then((res)=>{
         alert(res.msg)
     })})
+}
+
+function getAttention() {
+    fetch(`/user/attention`).then((res)=>{
+        res.json().then((res)=>{
+            if(res.status != "Success"){
+                document.querySelector("#attentionContent").innerHTML = "获取失败"
+                return
+            }
+            document.querySelector("#attentionContent").innerHTML = res.content
+        })
+    })
 }

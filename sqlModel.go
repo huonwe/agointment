@@ -139,6 +139,11 @@ type Maintain struct {
 	DoAtStr string
 }
 
+type Attention struct {
+	gorm.Model
+	Content string
+}
+
 type UnitMaintainAPI struct {
 	ID                uint
 	Name              string
@@ -199,7 +204,7 @@ func initDB(db *gorm.DB) {
 	db.AutoMigrate(&Equipment{})
 	db.AutoMigrate(&Request{})
 	db.AutoMigrate(&Maintain{})
-
+	db.AutoMigrate(&Attention{})
 	var count int64
 	var dept Department
 	db.First(&dept, 1)

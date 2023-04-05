@@ -173,3 +173,13 @@ func changePasswd(ctx *gin.Context) {
 		"msg":    "密码修改成功",
 	})
 }
+
+func getAttention(ctx *gin.Context) {
+	attention := Attention{}
+	db.Model(&Attention{}).Order("created_at desc").First(&attention)
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"status":  "Success",
+		"content": attention.Content,
+	})
+}
