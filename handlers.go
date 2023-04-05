@@ -109,13 +109,11 @@ func index(ctx *gin.Context) {
 	} else if name == "status" {
 		ctx.HTML(http.StatusOK, "status.html", nil)
 	} else if name == "me" {
-		req := Request{}
 		dept := Department{}
 		db.Take(&dept, user.DepartmentID)
 		ctx.HTML(http.StatusOK, "me.html", gin.H{
 			"greeting": fmt.Sprintf("欢迎您，%s 的 %s", dept.Name, user.Name),
 			"user":     user,
-			"l_req":    req,
 		})
 	} else if name == "index" {
 		ctx.HTML(http.StatusOK, "index.html", nil)
