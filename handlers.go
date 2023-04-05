@@ -110,8 +110,6 @@ func index(ctx *gin.Context) {
 		ctx.HTML(http.StatusOK, "status.html", nil)
 	} else if name == "me" {
 		req := Request{}
-		db.Where(&Request{UserID: user.ID}).Order("created_at desc").First(&req)
-
 		dept := Department{}
 		db.Take(&dept, user.DepartmentID)
 		ctx.HTML(http.StatusOK, "me.html", gin.H{
