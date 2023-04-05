@@ -31,7 +31,7 @@ func login(ctx *gin.Context) {
 		return
 	}
 
-	if !user.Department.Availiable {
+	if !user.Department.Availiable && !user.IsAdmin {
 		ctx.JSON(http.StatusOK, gin.H{
 			"status": "Failed",
 			"msg":    "用户不可用",

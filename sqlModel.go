@@ -163,72 +163,6 @@ func (u *User) BeforeUpdate(tx *gorm.DB) (err error) {
 	return nil
 }
 
-// func (u *User) AfterFind(tx *gorm.DB) (err error) {
-// 	dept := Department{}
-// 	err = db.Take(&dept, u.DepartmentID).Error
-// 	if err != nil {
-// 		return err
-// 	}
-// 	u.DeptName = dept.Name
-// 	return nil
-// }
-
-// func (u *User) AfterTake(tx *gorm.DB) (err error) {
-// 	dept := Department{}
-// 	err = db.Take(&dept, u.DepartmentID).Error
-// 	if err != nil {
-// 		return err
-// 	}
-// 	u.DeptName = dept.Name
-// 	return nil
-// }
-
-// type UnAssigned struct {
-// 	Request
-// }
-
-// type Ongoing struct {
-// 	Request
-// }
-
-// func (req *Request) AfterUpdate(tx *gorm.DB) (err error) {
-// 	// 维护 UnAssigned 和 Ongoing
-// 	switch req.Status {
-// 	case ONGOING:
-// 		req_new := Request{}
-// 		db.Take(&req_new, req.ID)
-// 		err = tx.Unscoped().Delete(&UnAssigned{Request{ID: req.ID}}).Error
-// 		if err != nil {
-// 			return err
-// 		}
-// 		err = tx.Model(&Ongoing{}).Create(&Ongoing{req_new}).Error
-// 		if err != nil {
-// 			return err
-// 		}
-// 		return nil
-
-// 	case CANCELED:
-// 		err = tx.Unscoped().Delete(&UnAssigned{Request{ID: req.ID}}).Error
-// 		return err
-
-// 	case REJECTED:
-// 		err = tx.Unscoped().Delete(&UnAssigned{Request{ID: req.ID}}).Error
-// 		return err
-
-// 	case FINISHED:
-// 		err = tx.Unscoped().Delete(&Ongoing{Request{ID: req.ID}}).Error
-// 		return err
-
-// 	}
-
-// 	return nil
-// }
-
-// func (req *Request) AfterCreate(tx *gorm.DB) (err error) {
-// 	err = tx.Create(&UnAssigned{*req}).Error
-// 	return err
-// }
-
 func (eu *EquipmentUnit) AfterCreate(tx *gorm.DB) (err error) {
 	// 如果指定了equipmentID
 	// log.Println("1 eu", eu.Name, eu.UID)
@@ -255,9 +189,9 @@ func (eu *EquipmentUnit) AfterCreate(tx *gorm.DB) (err error) {
 }
 
 func initDB(db *gorm.DB) {
-	db.Exec("SET FOREIGN_KEY_CHECKS=0;")
-	db.Exec("DROP TABLE departments, users, equipment_units, equipment, requests, maintains")
-	db.Exec("SET FOREIGN_KEY_CHECKS=1;")
+	// db.Exec("SET FOREIGN_KEY_CHECKS=0;")
+	// db.Exec("DROP TABLE departments, users, equipment_units, equipment, requests, maintains")
+	// db.Exec("SET FOREIGN_KEY_CHECKS=1;")
 
 	db.AutoMigrate(&Department{})
 	db.AutoMigrate(&User{})

@@ -107,7 +107,7 @@ function myRequestOp(requestID, op) {
 }
 
 function changeDept(){
-    let value = prompt("请输入新的部门")
+    let value = prompt("请输入新的部门\n请注意,一周之内更改一次个人信息!")
     if(value == null){
         return
     }
@@ -122,7 +122,7 @@ function changeDept(){
 }
 
 function changeName(){
-    let value = prompt("请输入新的用户名")
+    let value = prompt("请输入新的用户名\n请注意,一周之内更改一次个人信息!")
     if(value == null){
         return
     }
@@ -137,7 +137,7 @@ function changeName(){
 }
 
 function changePasswd(){
-    let value_old = prompt("请输入目前的密码")
+    let value_old = prompt("请输入目前的密码\n请注意,一周之内更改一次个人信息!")
     if(value_old == null){
         return
     }

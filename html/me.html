@@ -1,24 +1,39 @@
 <div>
-    <div class="flex1 gap_from_top">
+    <div class="flex1 userTop">
         <div id="greeting" class="line">{{.greeting}}</div>
-        <button onclick="changeDept()">修改部门</button>
-        <button onclick="changeName()">修改名称</button>
-        <button onclick="changePasswd()">修改密码</button>
+        <div class="userButton">
+            <button onclick="changeDept()">修改部门</button>
+            <button onclick="changeName()">修改名称</button>
+            <button onclick="changePasswd()">修改密码</button>
+        </div>
+        <div class="attention">
+            <p class="title">公告</p>
+            <p id="attentionContent">
+                暂时没有公告
+            </p>
+        </div>
+
     </div>
     {{if .user.IsAdmin }}
     <fieldset class="adminOperation">
         <legend>管理员操作</legend>
         <div>
-            <a href="/admin/users"><img src="/static/img/user.ico" width="64px" height="64px" alt="人员"><span>部门人员</span></a>
-            <a href="/admin/equipment?page=1&pageSize=18"><img src="/static/img/equipment.ico" width="64px" height="64px" alt="设备"><span>设备管理</span></a>
-            <a href="/admin/all?page=1&pageSize=18"><img src="/static/img/all.ico" width="64px" height="64px" alt="全部"><span>全部记录</span></a>
+            <a href="/admin/users"><img src="/static/img/user.ico" width="64px" height="64px"
+                    alt="人员"><span>部门人员</span></a>
+            <a href="/admin/equipment?page=1&pageSize=18"><img src="/static/img/equipment.ico" width="64px"
+                    height="64px" alt="设备"><span>设备管理</span></a>
+            <a href="/admin/all?page=1&pageSize=18"><img src="/static/img/all.ico" width="64px" height="64px"
+                    alt="全部"><span>全部记录</span></a>
         </div>
         <div>
-            <a href="/admin/requestings"><img src="/static/img/request.ico" width="64px" height="64px" alt="申请"><span>申请管理</span></a>
-            <a href="/admin/ongoings"><img src="/static/img/back.ico" width="64px" height="64px" alt="归还"><span>归还管理</span></a>
-            <a href="/admin/maintain"><img src="/static/img/maintain.ico" width="64px" height="64px" alt="归还"><span>设备维护</span></a>
+            <a href="/admin/requestings"><img src="/static/img/request.ico" width="64px" height="64px"
+                    alt="申请"><span>申请管理</span></a>
+            <a href="/admin/ongoings"><img src="/static/img/back.ico" width="64px" height="64px"
+                    alt="归还"><span>归还管理</span></a>
+            <a href="/admin/maintain"><img src="/static/img/maintain.ico" width="64px" height="64px"
+                    alt="归还"><span>设备维护</span></a>
         </div>
-        
+
     </fieldset>
     {{end}}
 </div>
