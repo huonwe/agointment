@@ -176,6 +176,7 @@ td button:hover {
 
 
 .adminOperation {
+    /* flex: 1; */
     margin-top: 20px;
     color: purple;
     border-color: plum ;
@@ -235,11 +236,12 @@ a img {
 
 .userTop {
     flex: 1;
+    height: fit-content;
     margin-top: 10px;
     word-break: keep-all;
     border-radius: 10px;
 
-    height: fit-content;
+    /* overflow: hidden; */
     background-color: rgba(138, 170, 255, 0.607);
     padding: 1rem;
 }
@@ -267,7 +269,9 @@ a img {
 }
 
 .userTop .attention {
-    height: 20vh;
+    max-height: 12rem;
+    overflow-y: auto;
+
 }
 
 .attention .title {
