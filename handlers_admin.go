@@ -78,7 +78,7 @@ func adminRequestingsOp(ctx *gin.Context) {
 
 	case "detail":
 		request := Request{}
-		db.Where(&Request{ID: requestID}).Joins("User").Preload("User.Department").Take(&request)
+		db.Unscoped().Where(&Request{ID: requestID}).Joins("User").Preload("User.Department").Take(&request)
 		request.User.Password = ""
 		ctx.JSON(http.StatusOK, gin.H{
 			"status": "Success",
@@ -136,7 +136,7 @@ func adminUsersOp(ctx *gin.Context) {
 	}
 	switch op {
 	case "deptDel":
-		db.Delete(&Department{Name: deptName})
+		db.Model(&Department{}).Where(&Department{Name: deptName}).Delete(&Department{Name: deptName})
 		ctx.JSON(http.StatusOK, gin.H{
 			"status": "Success",
 			"msg":    "删除成功",

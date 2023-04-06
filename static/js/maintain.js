@@ -14,6 +14,9 @@ function maintain(unitID){
 }
 
 function getMaintain(page, pageSize, op) {
+    page = parseInt(page)
+    pageSize = parseInt(pageSize)
+
     page = page || 1
     pageSize = pageSize || 20
     if(op == "prev") {
